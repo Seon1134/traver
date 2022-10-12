@@ -77,7 +77,7 @@ main .container .mem_02_tab01, .mem_02_tab02{width : 100%; padding : 0 80px; mar
 .place_main .place_table table th:nth-of-type(1n+1) {background: #e6e6e6; height: 30px;}
 .place_main .place_table table th, .place_main .place_table table td{border : 1px solid #ccc; padding : 10px; vertical-align: middle;}
 
-.place_main .place_table .num_list { display: flex; justify-content: center; margin-top: 50px;} 
+.place_main .place_table .num_list { display: flex; justify-content: center; margin: 50px 0 100px;} 
 .place_main .place_table .place_btn_type { vertical-align: middle; height: 30px; width: 50px; box-sizing: border-box; background: inherit; border: 1px solid #ccc; }
 
 /* place_list 끝 */

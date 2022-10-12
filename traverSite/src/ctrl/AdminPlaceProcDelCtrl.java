@@ -20,7 +20,7 @@ public class AdminPlaceProcDelCtrl extends HttpServlet {
 	    String piid = request.getParameter("piid");
 	    String where = " where ";
 	    if (piid.indexOf(',') > 0) {
-	        String arr[] = piid.split(","); 
+	        String arr[] = piid.split(",");
 	        for (int i = 0; i < arr.length; i++) {
 	            if (i == 0) {
 	                where += " pi_id = " + arr[i]; 

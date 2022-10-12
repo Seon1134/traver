@@ -68,7 +68,6 @@ function addrCoords (addr) {
    geocoder.addressSearch(addr, function(result, status) { // 주소좌표 검색
        if (status === kakao.maps.services.Status.OK) { // 정상적으로 검색완료시
            coords = new kakao.maps.LatLng(result[0].y, result[0].x); // 좌표저장
-           alert(coords);
          document.getElementById('sample6_addressCoords').value = coords;
       } else {
          alert(coords);
