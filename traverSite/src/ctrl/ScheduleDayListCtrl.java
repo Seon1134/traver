@@ -17,7 +17,7 @@ public class ScheduleDayListCtrl extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         
         
-        String sddnum = request.getParameter("sddnum");     // 해당 일차
+        int sddnum = Integer.parseInt(request.getParameter("sddnum"));     // 해당 일차
         String sddate = request.getParameter("sddate");     // 해당 날짜
         String piid =  request.getParameter("piid");        // 장소 id
         String piname = request.getParameter("piname");     // 장소 이름
@@ -40,7 +40,7 @@ public class ScheduleDayListCtrl extends HttpServlet {
         if (scheduleDayList.size() < 10) {
             ScheduleDay sd = new ScheduleDay();
             sd.setSd_dnum(sddnum);
-            sd.setSd_date(sddnum);
+            sd.setSd_date(sddate);
             sd.setPi_id(piid);
             sd.setPi_name(piname);
             

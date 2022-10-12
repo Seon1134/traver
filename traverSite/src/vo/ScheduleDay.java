@@ -2,7 +2,8 @@ package vo;
 
 public class ScheduleDay {
 // 스케줄의 일차, 선택한 장소 하나가 모두 저장될 클래스
-    private String sd_id, si_id, pi_id, pi_name, sd_dnum, sd_seq, sd_date;
+    private String sd_id, si_id, pi_id, pi_name, sd_seq, sd_date;
+    private int sd_dnum;
 
     public String getSd_id() {
         return sd_id;
@@ -36,14 +37,6 @@ public class ScheduleDay {
         this.pi_name = pi_name;
     }
 
-    public String getSd_dnum() {
-        return sd_dnum;
-    }
-
-    public void setSd_dnum(String sd_dnum) {
-        this.sd_dnum = sd_dnum;
-    }
-
     public String getSd_seq() {
         return sd_seq;
     }
@@ -59,4 +52,13 @@ public class ScheduleDay {
     public void setSd_date(String sd_date) {
         this.sd_date = sd_date;
     }
+
+    public int getSd_dnum() {
+        return sd_dnum;
+    }
+
+    public void setSd_dnum(int sd_dnum) {
+        this.sd_dnum = sd_dnum;
+    }
+    
 }

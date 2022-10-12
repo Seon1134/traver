@@ -40,21 +40,27 @@ for (int i = 0; i < placeList.size(); i++ ) { // 장소들을 가져온다.
 <script type="text/javascript" src="/traverSite/file/jq/map_main_move.js" ></script>
 <script type="text/javascript" src="/traverSite/file/jq/map_main_view.js" ></script>
 <script type="text/javascript" src="/traverSite/file/jq/map_main_schedule_day.js" ></script>
+<script type="text/javascript" src="/traverSite/file/jq/map_main_schedule_info.js" ></script>
 <script type="text/javascript" src="/traverSite/file/js/map_main_move.js" ></script>
 <script type="text/javascript" src="/traverSite/file/js/map_main_calendar.js" ></script>
 </head>
 <body>
-<form action="#">
 <%@ include file="../../cni/header.jsp" %>
 <!-- 좌측 사이드박스 -->
-<% if (isLogin) { 
-ArrayList<ScheduleDay> scheduleDayList = (ArrayList<ScheduleDay>)session.getAttribute("scheduleDayList");
+<form action="#">
+<% 
+if (isLogin) { 
+	ArrayList<ScheduleDay> scheduleDayList = (ArrayList<ScheduleDay>)session.getAttribute("scheduleDayList");
+	ScheduleInfo si = (ScheduleInfo)session.getAttribute("scheduleInfo");
+	String selectDate = (String)session.getAttribute("selectDate");
+	String selectDay = (String)session.getAttribute("selectDay");
+	
+	if (!selectDay.equals(" ")) {
 %>
-
 <div class="left-side open">
 	<div class="schedule-info">
-		<span class="schedule_day_num">Day N</span>
-		<span class="schedule_day_date">2022-09-18</span>
+		<span class="schedule_day_num"><%=selectDay%></span>
+		<span class="schedule_day_date"><%=selectDate%></span>
 	</div>
 	<div class="schedule-area">
 		<ul class="schedule-list sortable">
@@ -76,8 +82,115 @@ ArrayList<ScheduleDay> scheduleDayList = (ArrayList<ScheduleDay>)session.getAttr
 		<button type="button"  class="side__open left_open"><img src="../../file/img/open.png" class="side__open_img"></button>
 	</div>
 </div>
+	<% } %>
 <!-- //좌측 사이드 박스 -->
+
+<!-- 컨테이너 -->
+<div class="main">
+	<div class="main-top_area">
+		<div class="schedule_date">
+		<% if (si.getSi_sdate() == null) { %>
+			<input type="date" class="" id="sdate" name="sdate" onchange="limitDate(); setDay(this.value, this.form.edate.value, this.form.schedule_day);">~
+			<input type="date" id="edate" name="edate" disabled onchange="setDay(this.form.sdate.value, this.value, this.form.schedule_day);">
+		<% } else {  %>
+			<input type="date" class="" id="sdate" name="sdate" value="<%=si.getSi_sdate()%>"onchange="limitDate(); setDay(this.value, this.form.edate.value, this.form.schedule_day);">~
+			<input type="date" id="edate" name="edate" value="<%=si.getSi_edate()%>"disabled onchange="setDay(this.form.sdate.value, this.value, this.form.schedule_day);">
+		<% }  %>
+		</div>
+		<div class="">
+			<select id="schedule_day" name="schedule_day" class="schedule_day" onchange="getDate(this.value, this.form.sdate.value);">
+				<% //if () %>
+				<option value="" class="schedule_day1">일차 선택</option>
+				
+			</select>
+			<select name="schedule_group" class="schedule_group" id="">
+				<option value="1">전체보기</option>
+				<option value="2">추가한 장소</option>
+				<option value="3">찜한 장소</option>
+				<option value="4">추가 + 찜한 장소</option>
+			</select>
+		</div>
+	</div>
+	<div class="main-bottom-area">
+		<div class="schedule_all_view_box">
+			<input type="button" class="schedule_all_view_button go_schedule" value="일정 보러가기" />
+		</div>
+	</div>
+	
+	<% if (!selectDay.equals(" ")) {  %>
+	<!-- 일정 보러가기 -->
+	<div class="go_schedule_area_box display_none">
+		<div class="go_schedule_area">
+			<div class="go_schedule_left">
+				<button><img src="" alt="&lt;" /></button>
+			</div>
+			<div class="schedule_item">
+				<div class="go_schedule_top">
+					<input type="text" class="schedule_title" placeholder="일정명을 입력하세요" />
+					<div class="chedule_button_box">
+						<input type="button" class="chedule_button go_map" value="지도로 돌아가기"/>
+						<input type="button" class="chedule_button save_schdule" value="내 일정 등록"/>
+					</div>
+				</div>
+				<div class="go_schedule_contnt-area">
+					<div class="go_schedule_contnt">
+						<div class="go_scheduel_day_box">
+							<div class="schedule-info">
+								<span class="schedule_day_num">Day 1</span>
+								<span class="schedule_day_date">2022-09-18</span>
+							</div>
+							<div class="schedule-area">
+								<ul class="schedule-list sortable">
+									<li class="schedule ui-state-default">제주호텔
+										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
+										<input type="hidden" />
+									</li>
+									<li class="schedule ui-state-default">제주음식점
+										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
+										<input type="hidden" />
+									</li>
+								</ul>
+							<div class="schedule-del_box">
+								<input type="button" class="schedule__all_del" value="전체 삭제" onclick="scheAllDel()"/>
+							</div>
+							</div>
+						</div>
+						<div class="go_scheduel_day_box">
+							<div class="schedule-info">
+								<span class="schedule_day_num">Day 2</span>
+								<span class="schedule_day_date">2022-09-19</span>
+							</div>
+							<div class="schedule-area">
+								<ul class="schedule-list sortable">
+									<li class="schedule ui-state-default">호텔신라
+										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
+										<input type="hidden" />
+									</li>
+									<li class="schedule ui-state-default">음식점신라
+										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
+										<input type="hidden" />
+									</li>
+								</ul>
+							<div class="schedule-del_box">
+								<input type="button" class="schedule__all_del" value="전체 삭제" onclick="scheAllDel()"/>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="go_schedule_right">
+				<button><img src="" alt="&gt;" /></button>
+			</div>
+		</div>
+	</div>
+	<!-- //일정 보러가기 -->
+	<% } %>
+</div>
+<!-- //컨테이너 -->
 <% } %>
+
+
  
 
 <!-- 우측 사이드 박스 -->
@@ -209,105 +322,7 @@ ArrayList<ScheduleDay> scheduleDayList = (ArrayList<ScheduleDay>)session.getAttr
 </div>
 
 <!-- //우측 사이드 박스 -->
-
-
-
-<% if (isLogin) { %>
-<!-- 컨테이너 -->
-<div class="main">
-	<div class="main-top_area">
-		<div class="schedule_date">
-			 <input type="date" class="" id="sdate" name="sdate" onchange="limitDate(); setDay(this.value, this.form.edate.value, this.form.schedule_day);">~
-			 <input type="date" id="edate" name="edate" disabled onchange="setDay(this.form.sdate.value, this.value, this.form.schedule_day);">
-		</div>
-		<div class="">
-			<select id="schedule_day" name="schedule_day" class="schedule_day" onchange="getDate(this.value, this.form.sdate.value);">
-				<option value="" class="schedule_day1">일차 선택</option>
-			</select>
-			<select name="schedule_group" class="schedule_group" id="">
-				<option value="1">전체보기</option>
-				<option value="2">추가한 장소</option>
-				<option value="3">찜한 장소</option>
-				<option value="4">추가 + 찜한 장소</option>
-			</select>
-		</div>
-	</div>
-	<div class="main-bottom-area">
-		<div class="schedule_all_view_box">
-			<input type="button" class="schedule_all_view_button go_schedule" value="일정 보러가기" />
-		</div>
-	</div>
-	<!-- 일정 보러가기 -->
-	<div class="go_schedule_area_box display_none">
-		<div class="go_schedule_area">
-			<div class="go_schedule_left">
-				<button><img src="" alt="&lt;" /></button>
-			</div>
-			<div class="schedule_item">
-				<div class="go_schedule_top">
-					<input type="text" class="schedule_title" placeholder="일정명을 입력하세요" />
-					<div class="chedule_button_box">
-						<input type="button" class="chedule_button go_map" value="지도로 돌아가기"/>
-						<input type="button" class="chedule_button save_schdule" value="내 일정 등록"/>
-					</div>
-				</div>
-				<div class="go_schedule_contnt-area">
-					<div class="go_schedule_contnt">
-						<div class="go_scheduel_day_box">
-							<div class="schedule-info">
-								<span class="schedule_day_num">Day 1</span>
-								<span class="schedule_day_date">2022-09-18</span>
-							</div>
-							<div class="schedule-area">
-								<ul class="schedule-list sortable">
-									<li class="schedule ui-state-default">제주호텔
-										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
-										<input type="hidden" />
-									</li>
-									<li class="schedule ui-state-default">제주음식점
-										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
-										<input type="hidden" />
-									</li>
-								</ul>
-							<div class="schedule-del_box">
-								<input type="button" class="schedule__all_del" value="전체 삭제" onclick="scheAllDel()"/>
-							</div>
-							</div>
-						</div>
-						<div class="go_scheduel_day_box">
-							<div class="schedule-info">
-								<span class="schedule_day_num">Day 2</span>
-								<span class="schedule_day_date">2022-09-19</span>
-							</div>
-							<div class="schedule-area">
-								<ul class="schedule-list sortable">
-									<li class="schedule ui-state-default">호텔신라
-										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
-										<input type="hidden" />
-									</li>
-									<li class="schedule ui-state-default">음식점신라
-										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
-										<input type="hidden" />
-									</li>
-								</ul>
-							<div class="schedule-del_box">
-								<input type="button" class="schedule__all_del" value="전체 삭제" onclick="scheAllDel()"/>
-							</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="go_schedule_right">
-				<button><img src="" alt="&gt;" /></button>
-			</div>
-		</div>
-	</div>
-	<!-- //일정 보러가기 -->
-</div>
 </form>
-<!-- //컨테이너 -->
-<% } %>
 
 
 <%@ include file="place_review.jsp" %>
