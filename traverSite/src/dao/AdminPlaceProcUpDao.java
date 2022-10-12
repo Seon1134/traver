@@ -43,9 +43,7 @@ public class AdminPlaceProcUpDao {
                 placeInfo.setPi_img3(rs.getString("pi_img3"));
                 placeInfo.setPi_img4(rs.getString("pi_img4"));
                 placeInfo.setPi_img5(rs.getString("pi_img5"));
-                
             }
-            
         } catch(Exception e) {
             System.out.println("AdminPlaceProcUpDao 클래스의 getAdminPlaceInfo() 메소드 오류");
             e.printStackTrace();

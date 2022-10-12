@@ -19,13 +19,13 @@ public class AdminPlaceFormUpCtrl extends HttpServlet {
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         String piid = request.getParameter("piid");
-        
         String where = " where pi_id = " + piid;
         
         AdminPlaceFormUpSvc adminPlaceFormUpSvc = new AdminPlaceFormUpSvc();
         PlaceInfo placeInfo = adminPlaceFormUpSvc.getAdminPlaceInfo(where);
-        
         request.setAttribute("placeInfo", placeInfo);
+        System.out.println(piid);
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("lmth/admin/02_place/place_form_up.jsp");
         dispatcher.forward(request, response);
     }
@@ -35,6 +35,6 @@ public class AdminPlaceFormUpCtrl extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    doProcess(request, response);
+        doProcess(request, response);
 	}
 }

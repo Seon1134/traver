@@ -50,12 +50,16 @@ function getSelectedValues() {
 	var chk = document.frm_place_table.chk;
 	var idxs = "";	// chk컨트롤 배열에서 선택된 체크박스의 값들을 누적 저장할 변수(ex 1,2,3)
 	for (var i = 0 ; i < chk.length ; i++) {
-		if (chk[i].checked)	idxs += "," + chk[i].value;
+		if (chk[i].checked)	{
+			idxs += "," + chk[i].value;
+		}
 	}
 	adminPlaceDel(idxs.substring(1))
 	return idxs.substring(1);
 }
-	
+
+
+
 $(document).ready(function() {
 	$("#chkAll").click(function() {
 		if($("#chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
@@ -101,7 +105,7 @@ $(document).ready(function() {
 				</form>
 				</div>
 			</div>
-			<form action="" name="frm_place_table" method="post">
+			<form action="adminPlaceFormUp" name="frm_place_table" method="post">
 			<div class="place_table">
 				<table>
 					<thead>
@@ -123,7 +127,10 @@ $(document).ready(function() {
 							PlaceInfo pi = placeInfo.get(i);
 								%> 
 								<tr align="center">
-									<td><input type="checkbox" name="chk" value="<%=pi.getPi_id() %>"></td>
+									<td>
+										<input type="checkbox" name="chk" value="<%=pi.getPi_id() %>">
+										<input type="hidden" name="piid" value="<%=pi.getPi_id() %>">
+									</td>
 									<td><%=pi.getPi_name() %></td>
 									<td><%=pi.getPi_phone() %></td>
 									<td>
@@ -144,7 +151,10 @@ $(document).ready(function() {
 									<% } %>
 									</td>
 									<td><%=pi.getPi_addr1() %></td>
-									<td><input type="button" value="수정" onclick="location.href='adminPlaceFormUp'" class="place_btn_type"></td>
+									<td>
+										<input type="submit" value="수정" class="place_btn_type" >
+									</td>
+									
 								</tr>
 								<%
 						}

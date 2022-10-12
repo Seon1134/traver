@@ -12,16 +12,6 @@ if (placeInfo == null) {
 	out.close();
 }
 	
-int idx = Integer.parseInt(request.getParameter("idx"));
-int cpage = Integer.parseInt(request.getParameter("cpage"));
-String args = "?cpage=" + cpage;
-
-String schtype = request.getParameter("schtype");
-String keyword = request.getParameter("keyword");
-if (schtype != null && keyword != null && !schtype.equals("") && !keyword.equals("")) {
-	keyword = keyword.trim().replace("'", "''");
-	args += "&schtype=" + schtype + "&keyword=" + keyword;
-}
 %>
 <!DOCTYPE html>
 <html>
@@ -153,20 +143,20 @@ function checkSize(input) {
          <div class="place_02_h2">
             <h2>장소 수정</h2>
          </div>
-         <form name="frm_place_up" action="/traverSite/adminPlaceProcup" method="post">
+         <form name="frm_place_up" action="/traverSite/adminPlaceProcUp" method="post">
             <div class="place_02_tab01">
                <h3>장소 기본 정보</h3>
                <table>
                <tbody>
                   <tr>
                      <th scope="row">장소명</th>
-                     <td></td>
+                     <td><input type="text" name="pf_name" value="<%=placeInfo.getPi_name() %>"></td>
                      <th scope="row">전화번호</th>
-                     <td><input type="text" name="pf_phone"></td>
+                     <td><input type="text" name="pf_phone" value="<%=placeInfo.getPi_phone() %>"></td>
                   </tr>
                   <tr>
                      <th scope="row">홈페이지</th>
-                     <td><input type="text" name="pf_homepage"></td>
+                     <td><input type="text" name="pf_homepage" value="<%=placeInfo.getPi_link() %>"></td>
                      <th scope="row">분류</th>
                      <td><select class="sel_style" name="pf_ctgr">
                      	   <option value="1">숙소</option>
@@ -178,15 +168,15 @@ function checkSize(input) {
                      <th scope="row">위치</th>
                      <td>
                         <div class="location_sty_01">
-                           <input type="text" id="sample6_postcode" placeholder="우편번호" readonly="readonly" name="pf_postcode"> 
+                           <input type="text" id="sample6_postcode" placeholder="우편번호" readonly="readonly" name="pf_postcode" value="<%=placeInfo.getPi_zip() %>"> 
                            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="vertical-align: middle;">
                         </div>
                         <div class="location_sty_02"> 
-                           <input type="text" id="sample6_address" placeholder="주소" readonly="readonly" name="pf_address">
+                           <input type="text" id="sample6_address" placeholder="주소" readonly="readonly" name="pf_address" value="<%=placeInfo.getPi_addr1() %>">
                         </div>
                         <div class="location_sty_03">
-                           <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="pf_detailAddress"> 
-                           <input type="text" id="sample6_extraAddress" placeholder="여분주소" name="pf_extraAddress">
+                           <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="pf_detailAddress" > 
+                           <input type="text" id="sample6_extraAddress" placeholder="여분주소" name="pf_extraAddress" >
                         </div>
                          <input type="hidden" id="sample6_addressCoords" value="" name="pf_addressCoords">
                      </td>
@@ -200,7 +190,7 @@ function checkSize(input) {
                   </tr>
                   <tr>
                      <th scope="row">설명</th>
-                     <td colspan="3"><textarea rows="15" cols="2" style="height: 200px; width: 800px;" name="pf_text"></textarea></td>
+                     <td colspan="3"><textarea rows="15" cols="2" style="height: 200px; width: 800px;" name="pf_text" ><%=placeInfo.getPi_desc() %></textarea></td>
                   </tr>
                   <tr>
                      <th scope="row">이미지(썸네일)</th>
@@ -208,7 +198,7 @@ function checkSize(input) {
                         <div class="filebox">
                            <input class="upload-name" value="파일선택" disabled="disabled">
                            <label for="filename">업로드</label> 
-                           <input type="file" id="filename" name="file_path_ssum" class="upload-hidden" accept="image/png, image/jpeg" onchange="checkSize(this)">
+                           <input type="file" id="filename" name="file_path_ssum" class="upload-hidden" accept="image/png, image/jpeg" onchange="checkSize(this)" value="<%=placeInfo.getPi_img1() %>">
                            <span class="imgSel">＊이미지 크기는 2MB이하로 해주세요. (등록 가능한 이미지 JPG, PNG, JPEG)</span>
                         </div>
                      </td>
@@ -220,23 +210,22 @@ function checkSize(input) {
                         <div class="filebox" style="margin-bottom: 10px;">
                            <input class="upload-name" value="파일선택" disabled="disabled">
                            <label for="ex_filename_01">업로드</label>
-                           <input type="file" id="ex_filename_01" name="file_path1" class="upload-hidden" onchange="checkSize(this)">
-                           <!-- <input type="button" value="추가" class="file_in_sel" id="button-add-file">  -->
+                           <input type="file" id="ex_filename_01" name="file_path1" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img2() %>">
                         </div>
                         <div class="filebox" style="margin-bottom: 10px;">
                            <input class="upload-name" value="파일선택" disabled="disabled">
                            <label for="ex_filename_02">업로드</label>
-                           <input type="file" id="ex_filename_02" name="file_path2" class="upload-hidden" onchange="checkSize(this)">
+                           <input type="file" id="ex_filename_02" name="file_path2" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img3() %>">
                         </div>
                         <div class="filebox" style="margin-bottom: 10px;">
                            <input class="upload-name" value="파일선택" disabled="disabled">
                            <label for="ex_filename_03">업로드</label>
-                           <input type="file" id="ex_filename_03" name="file_path3" class="upload-hidden" onchange="checkSize(this)">
+                           <input type="file" id="ex_filename_03" name="file_path3" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img4() %>">
                         </div>
                         <div class="filebox" style="margin-bottom: 10px;">
                            <input class="upload-name" value="파일선택" disabled="disabled">
                            <label for="ex_filename_04">업로드</label>
-                           <input type="file" id="ex_filename_04" name="file_path4" class="upload-hidden" onchange="checkSize(this)">
+                           <input type="file" id="ex_filename_04" name="file_path4" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img5() %>">
                         </div>
                         </div>
                      </td>
