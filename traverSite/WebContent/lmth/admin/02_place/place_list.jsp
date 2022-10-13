@@ -59,7 +59,6 @@ function getSelectedValues() {
 }
 
 
-
 $(document).ready(function() {
 	$("#chkAll").click(function() {
 		if($("#chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
@@ -105,27 +104,27 @@ $(document).ready(function() {
 				</form>
 				</div>
 			</div>
-			<form action="adminPlaceFormUp" name="frm_place_table" method="post">
-			<div class="place_table">
-				<table>
-					<thead>
-						<tr>
-							<th scope="col"><input type="checkbox" id="chkAll"></th>
-							<th scope="col">장 소 명</th>
-							<th scope="col">번 호</th>
-							<th scope="col">분 류</th>
-							<th scope="col">등 록 일</th>
-							<th scope="col">게 시 여 부</th>
-							<th scope="col">주 소</th>
-							<th scope="col">관 리</th>
-						</tr>
-					</thead>
-					<tbody>
-					<%
-					if (placeInfo.size() > 0) {	
-						for (int i = 0; i < placeInfo.size(); i++) {
-							PlaceInfo pi = placeInfo.get(i);
-								%> 
+				<div class="place_table">
+					<table>
+						<thead>
+							<tr>
+								<th scope="col"><input type="checkbox" id="chkAll"></th>
+								<th scope="col">장 소 명</th>
+								<th scope="col">번 호</th>
+								<th scope="col">분 류</th>
+								<th scope="col">등 록 일</th>
+								<th scope="col">게 시 여 부</th>
+								<th scope="col">주 소</th>
+								<th scope="col">관 리</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+							if (placeInfo.size() > 0) {	
+								for (int i = 0; i < placeInfo.size(); i++) {
+									PlaceInfo pi = placeInfo.get(i);
+							%> 
+							<form action="adminPlaceFormUp" name="frm_place_test" method="post">
 								<tr align="center">
 									<td>
 										<input type="checkbox" name="chk" value="<%=pi.getPi_id() %>">
@@ -133,78 +132,61 @@ $(document).ready(function() {
 									</td>
 									<td><%=pi.getPi_name() %></td>
 									<td><%=pi.getPi_phone() %></td>
-									<td>
-									<% if (pi.getPi_ctgr().equals("1")){ %>
-									호텔
-									<% } else if (pi.getPi_ctgr().equals("2")) { %>
-									음식점
-									<% } else {%>
-									관광지
-									<% } %>
-									</td>
+									<td><% if (pi.getPi_ctgr().equals("1")){ %>호텔<% } else if (pi.getPi_ctgr().equals("2")) { %>음식점<% } else {%>관광지<% } %></td>
 									<td><%=pi.getPi_date() %></td>
-									<td>
-									<% if (pi.getPi_isview().equals("y")) { %>
-									게시 중
-									<% } else if (pi.getPi_isview().equals("n")) { %>
-									게시 중단
-									<% } %>
-									</td>
+									<td><% if (pi.getPi_isview().equals("y")) { %>게시 중<% } else if (pi.getPi_isview().equals("n")) { %>게시 중단<% } %></td>
 									<td><%=pi.getPi_addr1() %></td>
-									<td>
-										<input type="submit" value="수정" class="place_btn_type" >
-									</td>
-									
+									<td><input type="submit" value="수정" class="place_btn_type" style="cursor: pointer;"></td><!-- adminPlaceFormUp -->
 								</tr>
-								<%
+							</form>
+							<%
+							}
+						} else {	// 글목록이 없으면
+							out.println("<tr><td colspan='8' align='center'>");
+							out.println("검색결과가 없습니다.</td></tr>");
 						}
-					} else {	// 글목록이 없으면
-						out.println("<tr><td colspan='8' align='center'>");
-						out.println("검색결과가 없습니다.</td></tr>");
-					}
-					%>
-					</tbody>
-				</table>
-				<div class="num_list">
-					<tr>
-					<td>
-					<%
-					if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
-						String lnk = "adminPlaceList?cpage=";
-						pcnt = rcnt / psize;
-						if (rcnt % psize > 0)	pcnt++;	// 전체 페이지 수
-					
-						if (cpage == 1) {
-							out.println("[처음]&nbsp;&nbsp;&nbsp;[이전]&nbsp;&nbsp;");
-						} else {
-							out.println("<a href='" + lnk + "1" + schargs + "'>[처음]</a>&nbsp;&nbsp;&nbsp;");
-							out.println("<a href='" + lnk + (cpage - 1) + schargs + "'>[이전]</a>&nbsp;&nbsp;");
-						}
-					
-						spage = (cpage - 1) / bsize * bsize + 1;	// 현재 블록에서의 시작 페이지 번호
-						for (int i = 1, j = spage ; i <= bsize && j <= pcnt ; i++, j++) {
-						// i : 블록에서 보여줄 페이지의 개수만큼 루프를 돌릴 조건으로 사용되는 변수
-						// j : 실제 출력한 페이지 번호로 전체 페이지 개수(마지막 페이지 번호)를 넘지 않게 사용해야 함
-							if (cpage == j) {
-								out.println("&nbsp;<strong>" + j + "</strong>&nbsp;");
+						%>
+						</tbody>
+					</table>
+					<div class="num_list">
+						<tr>
+						<td>
+						<%
+						if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
+							String lnk = "adminPlaceList?cpage=";
+							pcnt = rcnt / psize;
+							if (rcnt % psize > 0)	pcnt++;	// 전체 페이지 수
+						
+							if (cpage == 1) {
+								out.println("[처음]&nbsp;&nbsp;&nbsp;[이전]&nbsp;&nbsp;");
 							} else {
-								out.println("&nbsp;<a href='" + lnk + j + schargs + "'>" + j + "</a>&nbsp;");
+								out.println("<a href='" + lnk + "1" + schargs + "'>[처음]</a>&nbsp;&nbsp;&nbsp;");
+								out.println("<a href='" + lnk + (cpage - 1) + schargs + "'>[이전]</a>&nbsp;&nbsp;");
+							}
+						
+							spage = (cpage - 1) / bsize * bsize + 1;	// 현재 블록에서의 시작 페이지 번호
+							for (int i = 1, j = spage ; i <= bsize && j <= pcnt ; i++, j++) {
+							// i : 블록에서 보여줄 페이지의 개수만큼 루프를 돌릴 조건으로 사용되는 변수
+							// j : 실제 출력한 페이지 번호로 전체 페이지 개수(마지막 페이지 번호)를 넘지 않게 사용해야 함
+								if (cpage == j) {
+									out.println("&nbsp;<strong>" + j + "</strong>&nbsp;");
+								} else {
+									out.println("&nbsp;<a href='" + lnk + j + schargs + "'>" + j + "</a>&nbsp;");
+								}
+							}
+						
+							if (cpage == pcnt) {
+								out.println("&nbsp;&nbsp;[다음]&nbsp;&nbsp;&nbsp;[마지막]");
+							} else {
+								out.println("&nbsp;&nbsp;<a href='" + lnk + (cpage + 1) + schargs + "'>[다음]</a>");
+								out.println("&nbsp;&nbsp;&nbsp;<a href='" + lnk + pcnt + schargs + "'>[마지막]</a>");
 							}
 						}
-					
-						if (cpage == pcnt) {
-							out.println("&nbsp;&nbsp;[다음]&nbsp;&nbsp;&nbsp;[마지막]");
-						} else {
-							out.println("&nbsp;&nbsp;<a href='" + lnk + (cpage + 1) + schargs + "'>[다음]</a>");
-							out.println("&nbsp;&nbsp;&nbsp;<a href='" + lnk + pcnt + schargs + "'>[마지막]</a>");
-						}
-					}
-					%>
-					</td>
-					</tr>
+						%>
+						</td>
+						</tr>
+					</div>
 				</div>
-			</div>
-			</form>
 		</div>
 	</div>
 </body>

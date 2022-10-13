@@ -24,7 +24,6 @@ public class AdminPlaceFormUpCtrl extends HttpServlet {
         AdminPlaceFormUpSvc adminPlaceFormUpSvc = new AdminPlaceFormUpSvc();
         PlaceInfo placeInfo = adminPlaceFormUpSvc.getAdminPlaceInfo(where);
         request.setAttribute("placeInfo", placeInfo);
-        System.out.println(piid);
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("lmth/admin/02_place/place_form_up.jsp");
         dispatcher.forward(request, response);

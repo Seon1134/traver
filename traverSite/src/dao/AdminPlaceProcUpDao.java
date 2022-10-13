@@ -37,6 +37,7 @@ public class AdminPlaceProcUpDao {
                 placeInfo.setPi_zip(rs.getString("pi_zip"));
                 placeInfo.setPi_addr1(rs.getString("pi_addr1"));
                 placeInfo.setPi_addr2(rs.getString("pi_addr2"));
+                placeInfo.setPi_isview(rs.getString("pi_isview"));
                 placeInfo.setPi_desc(rs.getString("pi_desc"));
                 placeInfo.setPi_img1(rs.getString("pi_img1"));
                 placeInfo.setPi_img2(rs.getString("pi_img2"));

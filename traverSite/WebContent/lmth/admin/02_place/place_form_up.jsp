@@ -20,7 +20,9 @@ if (placeInfo == null) {
 <title>Insert title here</title>
 <link href="/traverSite/lmth/admin/file/css/reset.css" type="text/css" rel="stylesheet">
 <link href="/traverSite/lmth/admin/file/css/style.css" type="text/css" rel="stylesheet">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/traverSite/lmth/admin/file/js/jquery-3.6.1.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=16147bc7c24202d21b21c1b0b06cf459&libraries=services"></script>
 <script>
 function sample6_execDaumPostcode() {
    new daum.Postcode({
@@ -79,7 +81,6 @@ function addrCoords (addr) {
    geocoder.addressSearch(addr, function(result, status) { // 주소좌표 검색
        if (status === kakao.maps.services.Status.OK) { // 정상적으로 검색완료시
            coords = new kakao.maps.LatLng(result[0].y, result[0].x); // 좌표저장
-           alert(coords);
          document.getElementById('sample6_addressCoords').value = coords;
       } else {
          alert(coords);
@@ -158,33 +159,35 @@ function checkSize(input) {
                      <th scope="row">홈페이지</th>
                      <td><input type="text" name="pf_homepage" value="<%=placeInfo.getPi_link() %>"></td>
                      <th scope="row">분류</th>
-                     <td><select class="sel_style" name="pf_ctgr">
-                     	   <option value="1">숙소</option>
-                           <option value="2">음식점</option>
-                           <option value="3">관광지(놀거리, 명소 등)</option>
-                     </select></td>
+                     <td>
+                     	<select class="sel_style" name="pf_ctgr">
+                     	   <option value="1"<% if (placeInfo.getPi_ctgr().equals("1")) { %> selected="selected" <% } %>>숙소</option>
+                           <option value="2"<% if (placeInfo.getPi_ctgr().equals("2")) { %> selected="selected" <% } %>>음식점</option>
+                           <option value="3"<% if (placeInfo.getPi_ctgr().equals("3")) { %> selected="selected" <% } %>>관광지(놀거리, 명소 등)</option>
+                     	</select>
+                     </td>
                   </tr>
                   <tr>
                      <th scope="row">위치</th>
                      <td>
                         <div class="location_sty_01">
                            <input type="text" id="sample6_postcode" placeholder="우편번호" readonly="readonly" name="pf_postcode" value="<%=placeInfo.getPi_zip() %>"> 
-                           <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="vertical-align: middle;">
+                           <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="vertical-align: middle;" class="location_btn">
                         </div>
                         <div class="location_sty_02"> 
                            <input type="text" id="sample6_address" placeholder="주소" readonly="readonly" name="pf_address" value="<%=placeInfo.getPi_addr1() %>">
                         </div>
                         <div class="location_sty_03">
-                           <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="pf_detailAddress" > 
-                           <input type="text" id="sample6_extraAddress" placeholder="여분주소" name="pf_extraAddress" >
+                           <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="pf_detailAddress" value="<%=placeInfo.getPi_addr2() %>"> 
+                           <input type="text" id="sample6_extraAddress" placeholder="여분주소" name="pf_extraAddress">
                         </div>
                          <input type="hidden" id="sample6_addressCoords" value="" name="pf_addressCoords">
                      </td>
                      <th scope="row">게시 여부</th>
                      <td>
                      	<select class="sel_style">
-                     		<option value="1">게시</option>
-                     		<option value="2">게시 중단</option>
+                     		<option value="y" <% if (placeInfo.getPi_isview().equals("y")) { %> selected="selected" <% } %>>게시</option>
+                     		<option value="n" <% if (placeInfo.getPi_isview().equals("n")) { %> selected="selected" <% } %>>게시 중단</option>
                      	</select>
                      </td>
                   </tr>
@@ -196,7 +199,7 @@ function checkSize(input) {
                      <th scope="row">이미지(썸네일)</th>
                      <td colspan="3">
                         <div class="filebox">
-                           <input class="upload-name" value="파일선택" disabled="disabled">
+                           <input class="upload-name" value="<%=placeInfo.getPi_img1() %>" disabled="disabled">
                            <label for="filename">업로드</label> 
                            <input type="file" id="filename" name="file_path_ssum" class="upload-hidden" accept="image/png, image/jpeg" onchange="checkSize(this)" value="<%=placeInfo.getPi_img1() %>">
                            <span class="imgSel">＊이미지 크기는 2MB이하로 해주세요. (등록 가능한 이미지 JPG, PNG, JPEG)</span>
@@ -208,22 +211,22 @@ function checkSize(input) {
                      <td colspan="3" id="addItem">
                         <div class="sub_img_con">
                         <div class="filebox" style="margin-bottom: 10px;">
-                           <input class="upload-name" value="파일선택" disabled="disabled">
+                           <input class="upload-name" value="<% if (placeInfo.getPi_img2() == null ) { %>파일 선택<% } else { %><%=placeInfo.getPi_img2() %><% } %>" disabled="disabled">
                            <label for="ex_filename_01">업로드</label>
                            <input type="file" id="ex_filename_01" name="file_path1" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img2() %>">
                         </div>
                         <div class="filebox" style="margin-bottom: 10px;">
-                           <input class="upload-name" value="파일선택" disabled="disabled">
+                           <input class="upload-name" value="<% if (placeInfo.getPi_img3() == null ) { %>파일 선택<% } else { %><%=placeInfo.getPi_img3() %><% } %>" disabled="disabled">
                            <label for="ex_filename_02">업로드</label>
                            <input type="file" id="ex_filename_02" name="file_path2" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img3() %>">
                         </div>
                         <div class="filebox" style="margin-bottom: 10px;">
-                           <input class="upload-name" value="파일선택" disabled="disabled">
+                           <input class="upload-name" value="<% if (placeInfo.getPi_img4() == null ) { %>파일 선택<% } else { %><%=placeInfo.getPi_img4() %><% } %>" disabled="disabled">
                            <label for="ex_filename_03">업로드</label>
                            <input type="file" id="ex_filename_03" name="file_path3" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img4() %>">
                         </div>
                         <div class="filebox" style="margin-bottom: 10px;">
-                           <input class="upload-name" value="파일선택" disabled="disabled">
+                           <input class="upload-name" value="<% if (placeInfo.getPi_img5() == null ) { %>파일 선택<% } else { %><%=placeInfo.getPi_img5() %><% } %>" disabled="disabled">
                            <label for="ex_filename_04">업로드</label>
                            <input type="file" id="ex_filename_04" name="file_path4" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img5() %>">
                         </div>

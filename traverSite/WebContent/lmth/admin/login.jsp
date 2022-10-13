@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vo.*" %>
 <%
-AdminInfo adminInfo = (AdminInfo)session.getAttribute("adminInfo");
-if (adminInfo != null) {
-	out.println("<script> alert('잘못된 경로로 들어오셨습니다.'); history.back(); </script>");
-	out.close();
-}
-
 request.setCharacterEncoding("utf-8");
 String url = request.getParameter("url"); // 로그인 후 이동할 페이지 주소
 if (url == null) {
@@ -32,6 +26,9 @@ if (url == null) {
 .container .inner form div:first-child{margin-right : 10px;}
 .container .inner label{display : inline-block; width : 90px; font-size : 16px;}
 .container .inner label:nth-of-type(1){margin-bottom : 20px;}
+.container .inner input{height : 25px; padding : 0 10px;}
+.container .inner #id{margin-right: 25px; width: 150px; }
+.container .inner #pw{margin-right: 25px; width: 150px; }
 .container .inner input{height : 25px; padding : 0 10px;}
 .container .inner form div:nth-of-type(2) input{height : 72px; background-color : #fff; border: 1px solid #999; cursor : pointer;}
 .container .inner p{text-align : center; font-size : 13px; margin : 14px 0 0;}

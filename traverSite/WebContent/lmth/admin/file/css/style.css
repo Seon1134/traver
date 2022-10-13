@@ -79,6 +79,7 @@ main .container .mem_02_tab01, .mem_02_tab02{width : 100%; padding : 0 80px; mar
 
 .place_main .place_table .num_list { display: flex; justify-content: center; margin: 50px 0 100px;} 
 .place_main .place_table .place_btn_type { vertical-align: middle; height: 30px; width: 50px; box-sizing: border-box; background: inherit; border: 1px solid #ccc; }
+.place_main .place_table .place_btn_type:hover { color : #fff; background-color : #666; }
 
 /* place_list 끝 */
 
@@ -90,6 +91,7 @@ main .container .mem_02_tab01, .mem_02_tab02{width : 100%; padding : 0 80px; mar
 .place_02_contents table th, .place_02_contents table td{border: 1px solid #ccc; padding : 10px; vertical-align: middle;}
 .place_02_contents .container .place_02_h2 {padding: 0 0 0 80px;}
 .place_02_contents .container .place_02_tab01 {padding: 0 80px 0; margin-bottom: 60px;}
+.place_02_contents .container .place_02_tab01 .location_btn{vertical-align: middle; height: 21px; box-sizing: border-box; background: inherit; border: 1px solid #ccc; padding: 0 10px; border-radius: 3px;}
 .place_02_contents .confirm{position : static; text-align : center; margin-bottom: 60px;}
 .place_02_contents .confirm input{font-size : 16px; font-weight: 600; padding : 12px 40px; border-radius : 5px; border : 0px solid #ccc;}
 .place_02_contents .confirm input:nth-of-type(2){color : #fff; background-color : #1ebbab;}
