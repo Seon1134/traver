@@ -6,16 +6,18 @@ import java.sql.*;
 import dao.*;
 import vo.*;
 
-public class AdminPlaceFormUpSvc {
-    public PlaceInfo getAdminPlaceInfo(String piid) {
-        PlaceInfo placeInfo = null;
+public class AdminPlaceProcUpSvc {
+    public int AdminPlaceProcUp(PlaceInfo placeInfo) {
+        int result = 0;
         Connection conn = getConnection();
         AdminPlaceProcUpDao adminPlaceProcUpDao = AdminPlaceProcUpDao.getInstance();
         adminPlaceProcUpDao.setConnection(conn);
 
-        placeInfo = adminPlaceProcUpDao.getAdminPlaceInfo(piid);
+        result = adminPlaceProcUpDao.AdminPlaceProcUp(placeInfo);
+        if (result == 1)    commit(conn);
+        else                rollback(conn);
         close(conn);
-        
-        return placeInfo;
+
+        return result;
     }
 }

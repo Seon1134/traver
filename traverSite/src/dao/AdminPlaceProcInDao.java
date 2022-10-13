@@ -22,14 +22,14 @@ public class AdminPlaceProcInDao {
     }
 
     public int placeInsert(String name, String phone, String link, String ctgr, String zip, String coords, String addr1,
-            String addr2, String desc, String img1, String img2, String img3, String img4, String img5) {
+            String addr2, String isview, String desc, String img1, String img2, String img3, String img4, String img5) {
         PreparedStatement pstmt = null;
         int result = 0;
         
         try {
             String sql = "insert into t_place_info (pi_name, pi_phone, pi_link, pi_coords, " +
                 " pi_addr1, pi_addr2, pi_zip, pi_img1, pi_img2, pi_img3, pi_img4, pi_img5, " + 
-                " pi_desc, pi_ctgr) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                " pi_desc, pi_ctgr, pi_isview) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setString(2, phone);
@@ -45,6 +45,7 @@ public class AdminPlaceProcInDao {
             pstmt.setString(12, img5);
             pstmt.setString(13, desc);
             pstmt.setString(14, ctgr);
+            pstmt.setString(15, isview);
             result = pstmt.executeUpdate();
             
         } catch (Exception e) {

@@ -29,6 +29,7 @@ public class AdminPlaceProcInCtrl extends HttpServlet {
         String addr22 = request.getParameter("pf_extraAddress");
         String addr2 = addr21 + addr22;
         
+        String isview = request.getParameter("pf_isview");
         String desc = request.getParameter("pf_text");
         String img1 = request.getParameter("file_path_ssum");
         String img2 = request.getParameter("file_path1");
@@ -39,7 +40,7 @@ public class AdminPlaceProcInCtrl extends HttpServlet {
         
         AdminPlaceProcInSvc placeProcInSvc = new AdminPlaceProcInSvc();
         int result = placeProcInSvc.placeInsert(name, phone, link, ctgr, zip, coords,
-                addr1, addr2, desc, img1, img2, img3, img4, img5);
+                addr1, addr2, isview, desc, img1, img2, img3, img4, img5);
         
         
         if (result > 0) {

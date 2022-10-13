@@ -173,7 +173,7 @@ function checkSize(input) {
                      </td>
                      <th scope="row">게시 여부</th>
                      <td>
-                     	<select class="sel_style">
+                     	<select class="sel_style" name="pf_isview">
                      		<option value="y">게시</option>
                      		<option value="n">게시 중단</option>
                      	</select>
