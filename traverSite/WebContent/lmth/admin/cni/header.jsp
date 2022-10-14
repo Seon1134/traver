@@ -32,8 +32,9 @@ if (adminInfo != null) {
 			</nav>
 		</div>
 		<div class="nav2">
-			<ul>
+			<ul style="display: flex;">
 			<% if (isLogin) { %>
+				<li><a href="/traverSite/index.jsp">사이트 바로가기</a></li>
 				<li><a href="/traverSite/lmth/admin/logout.jsp">로그아웃</a></li>
 			<% } else { %>
 				<li><a href="/traverSite/lmth/admin/login.jsp">로그인</a></li>

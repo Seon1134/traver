@@ -59,6 +59,7 @@ function getSelectedValues() {
 }
 
 
+
 $(document).ready(function() {
 	$("#chkAll").click(function() {
 		if($("#chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
@@ -105,7 +106,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 				<div class="place_table">
-				<form action="adminPlaceFormUp" name="frm_place_table" method="post">
+				<form action="adminPlaceFormUp" name="frm_place_table" method="get">
 					<table>
 						<thead>
 							<tr>
@@ -124,6 +125,7 @@ $(document).ready(function() {
 							if (placeInfo.size() > 0) {	
 								for (int i = 0; i < placeInfo.size(); i++) {
 									PlaceInfo pi = placeInfo.get(i);
+									String piid = pi.getPi_id();
 							%> 
 							<tr align="center">
 								<td>
@@ -135,7 +137,9 @@ $(document).ready(function() {
 								<td><%=pi.getPi_date() %></td>
 								<td><% if (pi.getPi_isview().equals("y")) { %>게시 중<% } else if (pi.getPi_isview().equals("n")) { %>게시 중단<% } %></td>
 								<td><%=pi.getPi_addr1() %></td>
-								<td><input type="button" value="수정<%=pi.getPi_id() %>" name="piid" class="place_btn_type" onclick="location.href='adminPlaceFormUp';"></td><!-- adminPlaceFormUp -->
+								<td>
+									<input type="button" value="수정" class="place_btn_type" onclick="location.href='adminPlaceFormUp?piid=<%=piid %>';">
+								</td>
 							</tr>
 							<%
 							}

@@ -5,16 +5,25 @@ html {
 	
 }
 .header {
+	/* 
 	position: sticky;
 	width: 100%;
 	height: 100px;
 	background-color: #fff;
 	box-shadow: 0px 3px 7px 0px rgb(28 175 214 / 11%);
-	display: flex;
+	display: flex; 
+	*/
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
 }
 .header_area {
+	/* 
 	position: fixed;
-	margin: auto; /* header의 양쪽 여백(margin)을 동등하게 맞춤 -> 수평가운데정렬 */
+	margin: auto; header의 양쪽 여백(margin)을 동등하게 맞춤 -> 수평가운데정렬
 	width: 1200px;
 	height: 76px;
 	display: flex;
@@ -23,8 +32,16 @@ html {
 	background-color: #fff;
 	text-align: center;
     justify-content: space-around;
-	z-index: 100;
+	z-index: 100; 
+	*/
+	margin: 0 auto;
+    width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
  }
+ 
+ul, li {margin: 0; padding: 0; list-style: none;}
 
 .logo_box {
 	width: 10px;
@@ -55,8 +72,8 @@ html {
 
 .gnb_link_menu {
 	display: block;
-	padding: 0 41px;
-	line-height: 72px;
+	padding: 0 36px;
+	line-height: 85px;
 	font-weight: 700;
 	color: var(--baseForeground);
 /* 	border: 1px solid #f00; */
@@ -64,6 +81,12 @@ html {
 }
 
 .gnb_link_sub {
+	position: absolute;
+	background: #182952;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.15s ease-in;
+	/* 
 	position: absolute;
     top: 70px;
     padding: 0 24px;
@@ -77,17 +100,66 @@ html {
     border-style: solid;
     border-width: 0 1px 1px 1px;
     border-color: #444;
-    display: none;
+    display: none; 
+    */
+    
 }
+.gnb_link_sub > li {
+	padding: 16px 30px;
+  	border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+
+.gnb_link_sub > li > a {
+	color: rgba(255,255,255,0.6);
+  	text-decoration: none;
+  	font-weight: bold;
+  	font-size: 15px;
+}
+
+.main_menu > li {
+	float: left;
+  	position: relative;
+}
+
+.main_menu > li > a {
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  display: block;
+  padding: 0px 36px;
+  border-right: 1px solid rgba(0,0,0,0.15);
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+}
+
+.main_menu > li:nth-child(1) > a {
+	border-left: 1px solid rgba(0,0,0,0.15);
+}
+
+.main_menu > li:hover .gnb_link_sub {
+	opacity: 1;
+	visibility: visible;
+	z-index: 100;
+	border-radius: 0 0 10px 10px;
+}
+
+.gnb_link_sub > li > a:hover {
+	text-decoration: underline;
+}
+
 .link_sub1 {
+	/* 
 	position: absolute;
     width: 156px;
-    left: 523px;
+    left: 523px; 
+    */
 }
 .link_sub2 {
+	/*
 	position: absolute;
     width: 167px;
     left: 681px;
+    */
 }
 .main_text {font-size: 20px;
     position: absolute;

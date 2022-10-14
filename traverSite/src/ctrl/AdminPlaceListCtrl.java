@@ -38,7 +38,7 @@ public class AdminPlaceListCtrl extends HttpServlet {
             // 쿼리스트링으로 주고 받는 검색어가 한글일 경우 IE에서 간혹 문제가 발생할 수 있으므로 유니코드로 변환시킴
             where = " where pi_" + schtype + " like '%" + keyword + "%' ";
         }
-
+        
         AdminPlaceListSvc adminPlaceListSvc = new AdminPlaceListSvc();
         ArrayList<PlaceInfo> placeInfo = adminPlaceListSvc.getAdminPlaceList(where, cpage, psize);
 

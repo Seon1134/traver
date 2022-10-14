@@ -10,6 +10,7 @@ import svc.*;
 import vo.*;
 
 @WebServlet("/adminPlaceProcUp")
+
 public class AdminPlaceProcUpCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -52,13 +53,14 @@ public class AdminPlaceProcUpCtrl extends HttpServlet {
         placeInfo.setPi_isview(isview);
         placeInfo.setPi_desc(desc);
         placeInfo.setPi_img1(img1);
-        placeInfo.setPi_img1(img2);
-        placeInfo.setPi_img1(img3);
-        placeInfo.setPi_img1(img4);
-        placeInfo.setPi_img1(img5);
+        placeInfo.setPi_img2(img2);
+        placeInfo.setPi_img3(img3);
+        placeInfo.setPi_img4(img4);
+        placeInfo.setPi_img5(img5);
         
         AdminPlaceProcUpSvc adminPlaceProcUpSvc = new AdminPlaceProcUpSvc();
         int result = adminPlaceProcUpSvc.AdminPlaceProcUp(placeInfo);
+        
         
         if (result > 0) {   // 정상적으로 글이 수정되었다면
             response.sendRedirect("/traverSite/adminPlaceList");

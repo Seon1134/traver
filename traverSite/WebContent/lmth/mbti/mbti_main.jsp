@@ -28,6 +28,7 @@ ArrayList<GoodPost> popPostList = (ArrayList<GoodPost>)request.getAttribute("pop
 	top: 150%;
 	display: inline;
 	margin-left: 150px;
+	z-index: 0;
 }
 .container-default_box {
 	padding: 20px 15px 20px 15px;

@@ -259,7 +259,7 @@ if (isLogin) {
 		%>
 				<div class="place">
 					<div class="place__img">
-						<img src="#" alt="" />
+						<img src="file/place_img/<%=pi.getPi_img1() %>" alt="" />
 					</div>
 					<div class="place-info">
 						<div class="place__title"><%=pi.getPi_name() %></div>

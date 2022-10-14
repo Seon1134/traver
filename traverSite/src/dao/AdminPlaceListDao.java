@@ -45,7 +45,7 @@ public class AdminPlaceListDao {
                     pl.setPi_addr1(rs.getString("pi_addr1"));
                     placeInfo.add(pl);
                 }
-                
+
             } catch (Exception e) {
                 System.out.println("AdminPlaceListDao 클래스의 getAdminPlaceList() 메소드 오류");
                 e.printStackTrace();
