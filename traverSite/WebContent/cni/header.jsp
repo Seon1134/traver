@@ -29,7 +29,7 @@ if (loginInfo != null)  isLogin = true;
 				</li>
 				<li>
 					<%  if (isLogin) { %> <!-- 로그인 상태이면 --> 
-					<a href="/traverSite/lmth/mysche/mschd_list.jsp" class="gnb_link_menu">내 일정/장소</a>
+					<a href="/traverSite/mschdList" class="gnb_link_menu">내 일정/장소</a>
 						<ul class="gnb_link_sub link_sub2">
 							<li><a href="/traverSite/lmth/mysche/mschd_list.jsp  /traverSite/mschdList">내 일정</a></li>
 							<li><a href="/traverSite/lmth/mysche/ischd_list.jsp">관심 일정</a></li>

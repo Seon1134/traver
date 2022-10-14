@@ -24,7 +24,16 @@ if (url == null)    url = "/traverSite/index.jsp";
 
 .img1 { width:400px; height:400px; }
 .img2 { width:90px; height:60px; } 
-#memberjoin {width: 160px; height: 15px; border: 1px solid #e9faf6; background-color: #e9faf6; text-align: center; font-weight: bold; margin: 0 0 50px 50px; }
+#memberjoin {
+	width: 160px; height: 15px; border: 1px solid #e9faf6; 
+	background-color: #e9faf6; text-align: center; font-weight: bold; 
+	margin: 0 0 50px 50px; 
+}
+#adminLogin { 
+	width: 160px; height: 15px; border: 1px solid #e9faf6;
+	background-color: #e9faf6; text-align: center; font-weight: bold;  
+	margin: 0 0 20px 50px; 
+}
 #uid, #pwd { 
 	border:none; margin-bottom:10px;
 }
@@ -53,6 +62,9 @@ if (isLogin) {
 	  			<img src="../../file/img/login.png" alt="서브 이미지" class="img1" />
   			</div>
 			<div id="box2">
+				<div id=adminLogin>
+	   				<a href="/traverSite/lmth/admin/login.jsp" style="color:gray;">관리자 로그인</a>
+				</div>
 				<div id=memberjoin>
 	   				<a href="join_agreement.jsp" style="color:gray;">트레버 회원 가입</a>
 				</div>

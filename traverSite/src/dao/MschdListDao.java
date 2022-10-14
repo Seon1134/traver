@@ -30,19 +30,21 @@ public class MschdListDao {
         
         try {   
             stmt = conn.createStatement();
-            String sql = "select si_id, si_sdate, si_edate, si_dnum, si_date, si_name from t_schedule_info "
+            String sql = "select mi_id, si_id, si_sdate, si_edate, si_dnum, si_date, si_name, si_img from t_schedule_info "
             + where + " order by si_date desc ";
-            //System.out.println(sql);
+            // System.out.println(sql);
             rs = stmt.executeQuery(sql);
             
             while (rs.next()) {
                 si = new ScheduleInfo();    // 하나의 일정을 저장할 인스턴스 생성
-                si.setSi_id(rs.getInt("si_id"));
+                si.setMi_id(rs.getString("mi_id"));
+                si.setSi_id(rs.getString("si_id"));
                 si.setSi_sdate(rs.getString("si_sdate"));
                 si.setSi_edate(rs.getString("si_edate"));
                 si.setSi_dnum(rs.getInt("si_dnum"));
                 si.setSi_date(rs.getString("si_date"));
                 si.setSi_name(rs.getString("si_name"));
+                si.setSi_img(rs.getString("si_img"));
                 scheduleList.add(si);
                 // 루프를 돌면서 rs에 들어있는 일정 정보들을 scheduleList에 저장 
             }

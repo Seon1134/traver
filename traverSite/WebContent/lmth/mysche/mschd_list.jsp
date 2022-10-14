@@ -1,23 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.time.*" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>내 일정 목록</title>
 <script>
-link = 'mschdList';
-function enterKey(e) {
-    if (e.keyCode == 13){
-   		location.href = link;
-    }
-}
+function btnClick() {
+	var frm = document.frmSch;
+	var keyword = frm.keyword.value;
+	if (keyword == "") {
+		alert("검색어를 입력해 주세요.");
+	}
+ } 
 </script>
 <style>
 .container-default_box { padding: 0px 40px 0px 40px; }
 
 /* 재덕 수정 시작 */
 .sch_h2 {margin: 40px 0;}
-.contents_sch {height: 100px;}
+.contents_sch {height: 100px; width: 400px}
 .contents_con {height: 600px;}
  
 /* 재덕 수정 끝 */
@@ -25,26 +27,35 @@ function enterKey(e) {
 #title { color: #000; }
 select { height: 29px; vertical-align: middle; cursor: pointer; }
 #search-box {
-	display: inline-block;
-    width: 190px;
-    height: 26px;
     border: 1px solid #767676;
-    position: flex;
-    align-items: center;
+    width:200px;
+    height:30px;
+    margin-left:800px;
+    margin-bottom:50px;
 }
-input[type="text"] { height:23px; border: none; }
-#x-sch { width:10px; margin-left: 5px; border: none; }
+input[type="text"] { height:23px; border: none; margin-left: 5px; }
+
+.schNbtn { display: flex;  }
+#schBtn { 
+	width:70px; height:35px; 
+	margin-left: 5px; 
+	border: none; 
+}
 .btn {
-	background: inherit; border: none; box-shadow: none; border-radius: 0; 
-	padding: 0; overflow: visible; cursor: pointer;
+	margin-bottom:60px;
+	background: inherit; border: none; 
+	box-shadow: none; border-radius: 0; 
+	padding: 0;  cursor: pointer; 
 }
+.upBox { 
+	background: #efefef; width:178px; height:50px; 
+	border:solid 1px lightgray; color:black;
+}
+.mouseEventBox:hover { background: #efefef; width:178px; height:230px; }
+
+
 #subtitle { font-size: 25px; font-weight: bold;}
-#schbox { float: right }
-#sch { 
-	width: 250px; height: 24px; 
-	margin-bottom: 5px; vertical-align: -1px;
-	font-size: 14px; 
-}
+
 #list { width: 100%; }
 .post { float: left; margin: 10px 20px 10px 20px;}
 .post_title { 
@@ -55,8 +66,9 @@ input[type="text"] { height:23px; border: none; }
 }
 .small { font-size: 14px; }
 .postimg { width: 200px; height: 200px; }
-
 .display_none { display: none; }
+
+.tableBox { width:100%; height:70%; overflow:auto; }
 </style>
 </head>
 <body>
@@ -66,99 +78,111 @@ request.setCharacterEncoding("utf-8");
 ArrayList<ScheduleInfo> scheduleList = (ArrayList<ScheduleInfo>)request.getAttribute("scheduleList");
 // 자유게시판 글목록이 들어있는 ArrayList<ScheduleInfo>를 형변환하여 받아옴
 
-String keyword =  (String)request.getParameter("keyword");
+String keyword = (String)request.getParameter("keyword");
 String schargs = "";
 if (keyword != null && !keyword.equals("")) {// 검색어가 있으면
-	schargs = "&keyword=" + keyword; // ???????????????????????????????????
-	// 검색어가 있으면 검색관련 데이터들을 쿼리스트링으로 저장
+	schargs = "&keyword=" + keyword; // ex) '제주'로 검색했을 때 쿼리스트링 ?&keyword=제주
+} else { // 검색어가 없으면
+	keyword = "";
 }
 
-%>
+/*
+String oargs = "";
+String o = (String)request.getParameter("o");
+if (o != null && !o.equals(""))		oargs += "?o=" + o;
+*/
 
+%>
 <div class="container">
    <div class="container-default_box">
-   <div class="contents_con">
+   
+   	<div class="contents_con">
    		<div class="contents_sch">
 	   		<div class="sch_h2">
-	   			<a href="mschd_list.jsp" id="title"><span id="subtitle">내 일정</span></a>
+	   			<a href="/traverSite/mschdList" id="title"><span id="subtitle">내 일정</span></a>
 	   		</div>
 	   		
-	   		<form name="frmSch" method="get">
-		   		<div class="sch_contor">
-			   		<select class="year">
-						<option value="total">전체보기</option>
-						<option value="2022">2022</option>
-						<option value="2021">나중에 수정</option>
-					 </select>
-					 <select class="o">
-						<option value="datedesc">등록 최신 순</option>
-						<option value="dateasc">등록 오래된 순</option>
-					 </select>
-					 <span> 총 일정 수 : </span>
-					 <!-- 추후 일정제목/장소명 셀렉트 박스는 삭제하고 검색박스만 남겨놓을 예정 -->
-					 <div id="schbox">
-					 	<select class="sch">
-							<option value="schdname">일정 제목</option>
-							<option value="place">장소명</option>
-						</select>
-					 	<div id= "search-box" >
-						 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." onkeyup="enterKey(e);">
-						 	<button class="btn"><img src="../../file/img/x.png" id="x-sch"></button>
-						</div>
-					 </div>
-				 </div>
-			 </form>
-			 
-			 <br>
-			 <a href="mschd_detail.jsp">내 일정 디테일로</a><br><br>
-			 <a href="ischd_list.jsp">관심일정 리스트로</a>
-			 <br>
-		</div>
-		<div id="list">
-			<div class="post">
-	   			<div class="post_title">
-	   				여행 일정 제목1<br>#박 #일 <span class="small">(##.##~##.##)</span>
-	   			</div>
-	   			<div class="post_img">
-	   				<img src="#" class="postimg">
-	   			</div>
-	   		</div>
-	   		<div class="post">
-	   			<div class="post_title">
-	   				여행 일정 제목2<br>#박 #일 <span class="small">(##.##~##.##)</span>
-	   			</div>
-	   			<div class="post_img">
-	   				<img src="#" class="postimg">
-	   			</div>
-	   		</div>
-	   		<div class="post">
-	   			<div class="post_title">
-	   				여행 일정 제목3<br>#박 #일 <span class="small">(##.##~##.##)</span>
-	   			</div>
-	   			<div class="post_img">
-	   				<img src="#" class="postimg">
-	   			</div>
-	   		</div>
-	   		<div class="post">
-	   			<div class="post_title">
-	   				여행 일정 제목4<br>#박 #일 <span class="small">(##.##~##.##)</span>
-	   			</div>
-	   			<div class="post_img">
-	   				<img src="#" class="postimg">
-	   			</div>
-	   		</div>
-	   		<div class="post">
-	   			<div class="post_title">
-	   				여행 일정 제목5<br>#박 #일 <span class="small">(##.##~##.##)</span>
-	   			</div>
-	   			<div class="post_img">
-	   				<img src="#" class="postimg">
-	   			</div>
-	   		</div>
-		</div>	
-		</div>
-   </div>
-</div>
+	   		
+	   		<select name="orderBy" >
+				<option value="">전체보기</option>
+<%
+String today = LocalDate.now() + "";
+int maxYear = Integer.parseInt(today.substring(0, 4));
+for (int i = 2020 ; i <= maxYear + 1 ; i++) {
+%>	   		
+				<option value="<%=i %>"><%=i %> 년</option>
+<%		
+}
+%>
+			 </select>		 
+			 <select name="o">
+				<option value="a">등록 최신 순</option>
+				<option value="b">등록 오래된 순</option>
+			 </select>
+				 <span> 총 일정 수 : </span>
+				 <!-- 추후 일정제목/장소명 셀렉트 박스는 삭제하고 검색박스만 남겨놓을 예정 -->
+		 	<form name="frmSch" method="get">
+			 	<div class="schNbtn">
+				 	<div id= "search-box" >
+					 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >
+					</div>
+					<button class="btn" onclick="btnClick()">
+						<img src="/traverSite/file/img/sch.png" id="schBtn"/>
+					</button>
+				</div>
+			 </form>	
+			 	
+		</div> <!-- contents_sch -->
+		<br/><br/><br/><br/>
+		
+		<div class="tableBox">
+		<table width="100%" callpadding="5" >
+<%
+	if (scheduleList.size() > 0) { 	// 일정 목록이 있으면
+		int i = 0;
+		for (i = 0 ; i < scheduleList.size() ; i++) {
+			ScheduleInfo si = scheduleList.get(i);
+			
+			String title = si.getSi_name();
+			if (title.length() > 12)	title = title.substring(0, 10) + " ...";
+			
+			String dnum1 = (si.getSi_dnum() - 1) + "박";
+			String dnum2 = si.getSi_dnum() + "일";
+			
+			if (i % 5 == 0) 	out.println("<tr>");
+%>
+
+		<td width="20%" align="center" >
+			<div class="mouseEventBox">
+				<a href="#"><!-- mschdDetail?siid=스크립틀릿~ + 검색조건 등 쿼리스트링으로 들고가기  %> -->
+					<div class="upBox" >
+						<span id="schdName"><%=title %></span><br />
+						<span><%=dnum1%>&nbsp;<%=dnum2%></span><br />
+						<span><%=si.getSi_sdate() %>~<%=si.getSi_edate() %></span><br />
+					</div>	
+					<img src="/traverSite/file/img/<%=si.getSi_img() %>" width="180" height="180"/>
+				</a>	
+			</div>
+		</td>
+<%		
+			if (i % 5 == 4) 	out.println("</tr>");
+		}
+		
+		if (i % 5 > 0) {	// 일정이 5개 단위로 맞아 떨어지지 않았을 경우
+			for (int j = 0; j < (5 - 1) ; j++) out.println("<td width='20%'></td>");
+			out.println("</tr>");
+		} // 빈 칸으로 5개를 채워준 후 </tr>을 닫아줌
+		
+	} else {	// 일정 목록이 없으면
+		out.println("검색된 일정이 없습니다.");
+	}
+out.println("</table>");
+%>		
+	</div>	<!-- tableBox -->
+		</div> <!-- contents_con -->
+		
+   </div> <!-- container-default_box -->
+</div> <!-- container -->
 <%@ include file="../../cni/footer.jsp" %>
 </body>
 </html>

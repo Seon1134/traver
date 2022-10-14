@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +29,9 @@
 </head>
 <body>
 <%@ include file="../../cni/header.jsp" %>
+<%
+// "siid" 처리 
+%>
 <div class="container">
    <div class="container-default_box">
    		<br><br><br><br>
