@@ -19,7 +19,7 @@ public class AdminPlaceFormUpCtrl extends HttpServlet {
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         String piid = request.getParameter("piid");
-        
+        System.out.println(piid);
         AdminPlaceFormUpSvc adminPlaceFormUpSvc = new AdminPlaceFormUpSvc();
         PlaceInfo placeInfo = adminPlaceFormUpSvc.getAdminPlaceInfo(piid);
         request.setAttribute("placeInfo", placeInfo);

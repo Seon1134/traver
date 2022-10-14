@@ -105,6 +105,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 				<div class="place_table">
+				<form action="adminPlaceFormUp" name="frm_place_table" method="post">
 					<table>
 						<thead>
 							<tr>
@@ -124,30 +125,28 @@ $(document).ready(function() {
 								for (int i = 0; i < placeInfo.size(); i++) {
 									PlaceInfo pi = placeInfo.get(i);
 							%> 
-							<form action="adminPlaceFormUp" name="frm_place_test" method="post">
-								<tr align="center">
-									<td>
-										<input type="checkbox" name="chk" value="<%=pi.getPi_id() %>">
-										<input type="hidden" name="piid" value="<%=pi.getPi_id() %>">
-									</td>
-									<td><%=pi.getPi_name() %></td>
-									<td><%=pi.getPi_phone() %></td>
-									<td><% if (pi.getPi_ctgr().equals("1")){ %>호텔<% } else if (pi.getPi_ctgr().equals("2")) { %>음식점<% } else {%>관광지<% } %></td>
-									<td><%=pi.getPi_date() %></td>
-									<td><% if (pi.getPi_isview().equals("y")) { %>게시 중<% } else if (pi.getPi_isview().equals("n")) { %>게시 중단<% } %></td>
-									<td><%=pi.getPi_addr1() %></td>
-									<td><input type="submit" value="수정" class="place_btn_type" style="cursor: pointer;"></td><!-- adminPlaceFormUp -->
-								</tr>
-							</form>
+							<tr align="center">
+								<td>
+									<input type="checkbox" name="chk" value="<%=pi.getPi_id() %>">
+								</td>
+								<td><%=pi.getPi_name() %></td>
+								<td><%=pi.getPi_phone() %></td>
+								<td><% if (pi.getPi_ctgr().equals("1")){ %>호텔<% } else if (pi.getPi_ctgr().equals("2")) { %>음식점<% } else {%>관광지<% } %></td>
+								<td><%=pi.getPi_date() %></td>
+								<td><% if (pi.getPi_isview().equals("y")) { %>게시 중<% } else if (pi.getPi_isview().equals("n")) { %>게시 중단<% } %></td>
+								<td><%=pi.getPi_addr1() %></td>
+								<td><input type="button" value="수정<%=pi.getPi_id() %>" name="piid" class="place_btn_type" onclick="location.href='adminPlaceFormUp';"></td><!-- adminPlaceFormUp -->
+							</tr>
 							<%
 							}
-						} else {	// 글목록이 없으면
+						} else { // 글목록이 없으면
 							out.println("<tr><td colspan='8' align='center'>");
 							out.println("검색결과가 없습니다.</td></tr>");
 						}
 						%>
 						</tbody>
 					</table>
+					</form>
 					<div class="num_list">
 						<tr>
 						<td>

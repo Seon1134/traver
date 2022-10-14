@@ -48,7 +48,7 @@ public class AdminPlaceProcUpCtrl extends HttpServlet {
         placeInfo.setPi_zip(zip);
         placeInfo.setPi_coords(coords);
         placeInfo.setPi_addr1(addr1);
-        placeInfo.setPi_addr1(addr2);
+        placeInfo.setPi_addr2(addr2);
         placeInfo.setPi_isview(isview);
         placeInfo.setPi_desc(desc);
         placeInfo.setPi_img1(img1);

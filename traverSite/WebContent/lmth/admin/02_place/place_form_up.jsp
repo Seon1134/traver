@@ -200,7 +200,7 @@ function checkSize(input) {
                      <th scope="row">이미지(썸네일)</th>
                      <td colspan="3">
                         <div class="filebox">
-                           <input class="upload-name" value="<%=placeInfo.getPi_img1() %>" disabled="disabled">
+                           <input class="upload-name" value="<% if (placeInfo.getPi_img1() == null ) { %><%=placeInfo.getPi_img1() %><% } else { %>파일 선택<% } %>" disabled="disabled">
                            <label for="filename">업로드</label> 
                            <input type="file" id="filename" name="file_path_ssum" class="upload-hidden" accept="image/png, image/jpeg" onchange="checkSize(this)" value="<%=placeInfo.getPi_img1() %>">
                            <span class="imgSel">＊이미지 크기는 2MB이하로 해주세요. (등록 가능한 이미지 JPG, PNG, JPEG)</span>
