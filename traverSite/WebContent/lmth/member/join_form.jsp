@@ -2,6 +2,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.time.*" %>
 <%
+
 request.setCharacterEncoding("utf-8"); // traverSite
 
 
@@ -71,6 +72,11 @@ $(document).ready(function() { // 이메일 도메인 선택 시 우측 input에
         } else {
             $("#e3").val($(this).val());
         }
+    });
+    
+    $(".chkinput").change(function() {
+    	if ($("#idChk").val() == "y" && $("#nicknameChk").val() == "y" && $("#pwChk").val() == "y" && $("#pwChk2").val() == "y")
+    		$("#btnJoin").removeAttr("disabled")
     });
 });
 
@@ -158,10 +164,20 @@ function chkEqualPw (pw, chkPw) {
 	}
 	$("#pwMsg2").html(msg);
 }
+
+
+
+
 </script>
 </head>
 <body>
 <%@ include file="../../cni/header.jsp" %>
+<%
+if (isLogin) {
+	out.println("<script> alert('잘못된 경로로 들어오셨습니다.'); history.back(); </script>");
+	out.close();
+}
+%>
 <!-- 컨테이너 시작 -->
 <div class="container">
    <div class="container-default_box">
@@ -176,17 +192,17 @@ function chkEqualPw (pw, chkPw) {
 		<input type="hidden" name="pwChk2" id="pwChk2" value="n" /> 
 		    <div class="idbox">
 		    	<span class="asterik">*</span><span class="title">아이디</span>
-			    <input type="text" name="mi_id" required="required" id="mi_id" class="box" maxlength="20" 
+			    <input type="text" name="mi_id" required="required" id="mi_id" class="box chkinput" maxlength="20" 
 			    size="25" placeholder="아이디를 입력해 주세요." onkeyup="chkDup('i',this.value);" />
 			    <p id="idMsg" class="box2">※ 6 ~ 20자 이내로 영문과 숫자를 조합해주세요.</p>
 		    </div><br />
 		    
 		    <div class="pwbox">
 		    	<span class="asterik">*</span><span class="title">비밀번호</span>
-			    <input type="password" name="mi_pw" required="required" id="mi_pw" class="box" maxlength="20" 
+			    <input type="password" name="mi_pw" required="required" id="mi_pw" class="box chkinput" maxlength="20" 
 			    size="25" placeholder="비밀번호를 입력해 주세요." onkeyup="chkPw(this.value);" />
 			    <p id="pwMsg" class="box2">※ 6 ~ 20자 이내로 영문과 숫자를 조합해주세요.</p>
-			    <input type="password" name="mi_pw2" required id="mi_pw2" class="box" maxlength="20" 
+			    <input type="password" name="mi_pw2" required id="mi_pw2" class="box chkinput" maxlength="20" 
 			    size="25" placeholder="비밀번호를 다시 입력해 주세요." onkeyup="chkEqualPw(this.form.mi_pw.value, this.value);" />
                 <p id="pwMsg2" class="box2">비밀번호가 동일하지 않습니다.</p>
 		    </div><br />
@@ -199,7 +215,7 @@ function chkEqualPw (pw, chkPw) {
 		    
 		    <div class="nicknamebox">
 		    	<span class="asterik">*</span><span class="title">닉네임</span>
-	            <input type="text" name="mi_nickname" required="required" id="mi_nickname" class="box" maxlength="20" 
+	            <input type="text" name="mi_nickname" required="required" id="mi_nickname" class="box chkinput" maxlength="20" 
 	            size="25" placeholder="닉네임을 입력해 주세요." onkeyup="chkDup('n',this.value);" />
 	            <p id="nickNameMsg" class="box2">※ 20자 이내로 입력해주세요.</p>
             </div><br />
@@ -229,11 +245,11 @@ function chkEqualPw (pw, chkPw) {
 					<input type="text" name="verifyNum" style="height:30px; margin-top:10px;" placeholder="이메일 본인 확인 번호" maxlength="6"
 					required="required" />
 					<span class="blind">5:00</span>
-					<input type="submit" value="확인" style="height:35px; width:60px;"/>
+					<input type="button" value="확인" style="height:35px; width:60px;"/>
 			</div><br />
 		    <input type="button" id="btnCancel" value="취소" onclick="history.back(-1);" />
 		    &nbsp;&nbsp;&nbsp;
-		    <input type="submit" id="btnJoin" value="회원가입" />
+		    <input type="submit" id="btnJoin" value="회원가입" disabled/>
 		</form>
     </div>
     

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("utf-8");
+GoodPost goodPost = (GoodPost)request.getAttribute("goodPost");
+int result = (int)request.getAttribute("isGood");
 %>
 <!DOCTYPE html>
 <html>
@@ -18,7 +20,7 @@ request.setCharacterEncoding("utf-8");
 #section1 { width: 1000px; margin: 50px auto; padding-bottom: 50px; position: relative; }
 #title { font-size: 25px; font-weight: bold; }
 #goodicon { width: 30px; vertical-align: middle; margin-right: 5px;}
-.ctt_font { font-size: 16px; line-height: 1.5; }
+.ctt_font { font-size: 18px; line-height: 1.5; }
 #lastup { font-size: 13px; }
 hr { margin: 15px 0;}
 #schname, #placename { font-size: 20px; font-weight: bold; }
@@ -37,8 +39,8 @@ hr { margin: 15px 0;}
 	z-index: 3;
 }
 #x { float: right; width: 20px; }
-#placeimg1 { width: 300px; height: 300px; margin-bottom: 5px; }
-.descimg { width:65px; height:65px; margin-right:8px; padding-bottom:0px; }
+#placeimg1 { width: 300px; height: 300px; margin-bottom: 5px; object-fit: cover; }
+.descimg { width:65px; height:65px; margin-right:8px; padding-bottom:0px; object-fit: cover;}
 #placedesc { float: right; }
 #placedetail { width: 270px; }
 #placename { margin-bottom: 10px; }
@@ -46,17 +48,12 @@ hr { margin: 15px 0;}
 
 .display_none { display: none; }
 </style>
+<script src="file/jq/jquery-3.6.1.js"></script>
 <script>
 window.onload = function(){
-	const goodbtn = document.querySelector('#goodbtn');
-	const goodicon = document.querySelector('#goodicon');
 	const pin = document.querySelector('#pin');
 	const section2 = document.querySelector('#section2');
 	const x = document.querySelector('#x');
-	
-	goodbtn.addEventListener('click', function() {
-		goodicon.src = "../../file/img/good2.png";
-	});
 	
 	pin.addEventListener('click', function() {
 		section2.classList.remove('display_none');
@@ -68,18 +65,38 @@ window.onload = function(){
 }
 </script>
 <script>
-function postDel() {
-	confirm("게시물을 삭제하시겠습니까?")
-}
-</script>
-<script>
+var clickCnt = 0;
+
+	function postDel() {
+		confirm("게시물을 삭제하시겠습니까?")
+	}
 	function swapImg(img) {
 		var big = document.getElementById("placeimg1");
-		big.src = "../../file/img/" + img;
+		big.src = "file/img/" + img;
 	}
 	function bigImg() {
 		var big = document.getElementById("placeimg1");
-		big.src = "../../file/img/silla1.jpg";
+		big.src = "file/img/silla1.jpg";
+	}
+	function gcntUpdate(gpid, miid) {
+		if ( clickCnt == 0 ) {
+			$.ajax({
+				type : "POST",
+				url : "/traverSite/postView",
+				data : {
+					"gpid" : gpid, 
+					"miid" : miid
+				},
+				success : function(result) {
+					
+					if (result == 0) {
+						alert("좋아요에 실패했습니다.\n다시 시도하세요.");
+					}
+					clickCnt++;
+					location.reload();
+				}
+			});
+		}
 	}
 </script>
 </head>
@@ -88,12 +105,17 @@ function postDel() {
 <div class="container">
    <div class="container-default_box">
    		<div id="section1">
-			<p id="title">글 제목</p><br> <!-- post_proc_up? -->
-			<button type="button" class="btn"><img src="../../file/img/" id="report" alt="신고"></button>
-			<button type="button" class="btn"><img src="../../file/img/" id="interest" alt="관심등록"></button>
-			<button type="button" class="btn" id="goodbtn"><img src="../../file/img/good1.png" id="goodicon" alt="좋아요"><span id="goodcnt"> 50</span></button>
-			<span class="ctt_font" id="writer">작성자명(ENTP)</span><br>
-			<span class="ctt_font" id="lastup">마지막 수정 : <% %></span>
+   		<form name="mbtiViewFrm" method="post">
+			<p id="title"><%=goodPost.getGp_title() %></p><br>
+			<% if ( isLogin ) { %>
+			<button type="button" class="btn"><img src="file/img/" id="report" alt="신고"></button>
+			<button type="button" class="btn"><img src="file/img/" id="interest" alt="관심등록"></button>
+			<button type="button" class="btn" id="goodbtn" onclick="gcntUpdate('<%=goodPost.getGp_id() %>', '<%=loginInfo.getMi_id() %>');">
+			<img src=<% if ( result > 0 ) { %>"file/img/good2.png" <% } else { %> "file/img/good1.png" <% } %>
+			id="goodicon" alt="좋아요"><span id="goodcnt"><%=goodPost.getGp_gcnt() %></span></button>
+			<% } %>
+			<span class="ctt_font" id="writer"><%=goodPost.getMi_id() %>(<%=goodPost.getGp_mbti() %>)</span><br>
+			<span class="ctt_font" id="lastup">마지막 수정 : <%=goodPost.getGp_last() %></span>
 			<hr>
 			<p id="schname">일정이름<% %></p><br>
 			<span class="ctt_font" id="schdetail">상세일정<% %></span>
@@ -117,17 +139,20 @@ function postDel() {
 			</script>
 			<br>
 			<div id="contentbox">
-   				<span class="ctt_font" id="content">일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)일정 소개가 입력되는 곳 (Content)</span>
+   				<span class="ctt_font" id="content"><%=goodPost.getGp_content() %></span>
    			</div>
    			<hr>
+   			<% if ( isLogin ) { %>
    			<a href="mbti_form_up.jsp"><button type="button" class="btn" id="update"><img src="../../file/img/" id="update" alt="수정"></button></a>
    			<button type="button" class="btn" id="delete" onclick="postDel();"><img src="../../file/img/" id="delete" alt="삭제"></button>
+   			<% } %>
    			<a href="mbti_list.jsp"><button type="button" class="btn" id="list"><img src="../../file/img/" id="list" alt="목록"></button></a>
+   		</form>
    		</div>
    		<div class="display_none" id="section2">
-   			<img src="../../file/img/silla1.jpg" id="placeimg1">
+   			<img src="file/img/silla1.jpg" id="placeimg1">
 			<div id="placedesc">
-			<img src="../../file/img/x.png" id="x"><br>
+			<img src="file/img/x.png" id="x"><br>
 				<br>
 				<div id="placedetail">
 				<span id="placename">신라 호텔</span><br><br>
@@ -142,10 +167,10 @@ function postDel() {
 				</div>
 				</div>
 			</div>
-			<img src="../../file/img/silla2.jpg" id="placeimg2" class="descimg" onmouseover="swapImg('silla2.jpg');" onmouseout="bigImg();">
-			<img src="../../file/img/silla3.jpg" id="placeimg3" class="descimg" onmouseover="swapImg('silla3.jpg');" onmouseout="bigImg();">
-			<img src="../../file/img/silla4.jpg" id="placeimg4" class="descimg" onmouseover="swapImg('silla4.jpg');" onmouseout="bigImg();">
-			<img src="../../file/img/silla5.jpg" id="placeimg5" class="descimg" onmouseover="swapImg('silla5.jpg');" onmouseout="bigImg();">
+			<img src="file/img/silla2.jpg" id="placeimg2" class="descimg" onmouseover="swapImg('silla2.jpg');" onmouseout="bigImg();">
+			<img src="file/img/silla3.jpg" id="placeimg3" class="descimg" onmouseover="swapImg('silla3.jpg');" onmouseout="bigImg();">
+			<img src="file/img/silla4.jpg" id="placeimg4" class="descimg" onmouseover="swapImg('silla4.jpg');" onmouseout="bigImg();">
+			<img src="file/img/silla5.jpg" id="placeimg5" class="descimg" onmouseover="swapImg('silla5.jpg');" onmouseout="bigImg();">
 		</div>
    </div>
 </div>

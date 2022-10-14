@@ -64,11 +64,11 @@ if (isLogin) {
 					<input type="hidden" name="url" value="<%=url %>" />
 					<div class="idBox" id="idmargin">
 						<label for="uid"><img src="../../file/img/id_logo.png" /></label>
-						<input type="text" name="uid" id="uid" value="test1" maxlength="20" required="required" /><br />
+						<input type="text" name="uid" id="uid" value="test11" maxlength="20" required="required" /><br />
 					</div>
 					<div class="pwBox">
 						<label for="pwd"><img src="../../file/img/pw_logo.png" /></label>
-						<input type="password" name="pwd" id="pwd" value="1111" maxlength="20" required="required"/><br />
+						<input type="password" name="pwd" id="pwd" value="111111" maxlength="20" required="required"/><br />
 					</div><br/>
 					<a href="find_form_id.jsp">아이디 </a>/ <a href="find_form_pw.jsp">비밀번호</a>&nbsp;찾기<br/><br/>
 					<input type="submit" value="로그인" id="mi_id" />				

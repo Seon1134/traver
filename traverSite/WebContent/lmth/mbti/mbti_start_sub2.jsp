@@ -48,13 +48,13 @@ request.setCharacterEncoding("utf-8");
 <div class="container">
    <div class="container-default_box">
    <div id ="content">
-	   <span class="bold mbti">ISTJ</span><span class="bold">로 정상 등록 되었습니다.</span><br><br>
+	   <span class="bold mbti"><%=loginInfo.getMi_mbti() %></span><span class="bold">로 정상 등록 되었습니다.</span><br><br>
 	   		<div id="welcomebox">
 		       	<img src="../../file/img/mbti_welcome.png" id="wel_img">
 		       	<div id="welcome">
 			   		<span class="bold">환영합니다!</span><br><br>
 			   		<span id="wel_desc">이제부터 MBTI 여행을 이용 할 수 있습니다!</span><br>
-			   		<a href="mbti_main.jsp"><button class="btn"><image class="btn_img" id="gobestbtn" src="../../file/img/gobestbtn.png" alt="MBTI여행으로 이동"></button></a>&nbsp;&nbsp;&nbsp;
+			   		<a href="/traverSite/MBTIMain"><button class="btn"><image class="btn_img" id="gobestbtn" src="../../file/img/gobestbtn.png" alt="MBTI여행으로 이동"></button></a>&nbsp;&nbsp;&nbsp;
 			   	</div>
 		   	</div>
 	   </div>

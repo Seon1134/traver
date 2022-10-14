@@ -16,16 +16,15 @@ public class MBTIMainCtrl extends HttpServlet {
     public MBTIMainCtrl() { super(); }
     
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
 	    HttpSession session = request.getSession();
-	    
 	    if(session.getAttribute("loginInfo")!=null) {  // 로그인 되어 있으면
-    	    MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+	        MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
     	    String mimbti = loginInfo.getMi_mbti();
-    	    System.out.println(mimbti);
-    	    if ( mimbti != null && !mimbti.equals("") ) { // mbti값이 있으면
+    	    if ( !mimbti.equals("") ) { // mbti값이 있으면
+    	        request.setAttribute("mbti", mimbti);
+    	        
     	        RequestDispatcher dispatcher = 
-                        request.getRequestDispatcher("lmth/mbti/mbti_main.jsp");
+                        request.getRequestDispatcher("/postMain");
                     dispatcher.forward(request, response);
     	    } else {
     	        RequestDispatcher dispatcher = 
@@ -34,8 +33,8 @@ public class MBTIMainCtrl extends HttpServlet {
     	    }
 	    } else { // 로그인 되어 있지 않으면
 	        RequestDispatcher dispatcher = 
-                    request.getRequestDispatcher("lmth/mbti/mbti_start_main.jsp");
-            dispatcher.forward(request, response);
+                    request.getRequestDispatcher("/postMain");
+                dispatcher.forward(request, response);
 	    }
                 
 	}

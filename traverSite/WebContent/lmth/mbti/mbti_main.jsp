@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("utf-8");
+String mbti = (String)request.getAttribute("mbti");
+
+ArrayList<GoodPost> mbtiPostList = (ArrayList<GoodPost>)request.getAttribute("mbtiPostList");
+ArrayList<GoodPost> popPostList = (ArrayList<GoodPost>)request.getAttribute("popPostList");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -35,10 +40,10 @@ request.setCharacterEncoding("utf-8");
 	width: 100px; height: 30px;
 	display: inline; float: right; margin-top: 4px;   
 	font-size: 18px; vertical-align: middle; text-align: center;
-	position: relative; right: 80px;
+	position: relative; 
 	cursor: pointer;
 }
-#retestbtn { margin-top: 10px; }
+#retestbtn { margin-top: 10px; right: 120px; position: relative; }
 .btn {
 	background: inherit ; border: none; box-shadow: none; border-radius: 0; 
 	padding: 0; overflow: visible; cursor: pointer;
@@ -92,6 +97,9 @@ hr { margin: 20px 0;}
 <script src="file/jq/jquery-3.6.1.js"></script>
 <script>
 $(document).ready(function() {
+	
+	
+	// 버튼 클릭시 게시물 리스트 변경
 	var mbticlix = 0, popclix = 0;
 	
 	$("#t-l-btn").click(function() {
@@ -145,134 +153,60 @@ $(document).ready(function() {
    		<br><br>
    		<div id="top">
 	       	<a href="mbti_main.jsp" id="title"><h2 id="title_font">Best 여행</h2></a>
-	       	<select id="mbti_select" onchange="">
-	   			<option value="ISTJ">ISTJ</option>
-	   			<option value="ISTP">ISTP</option>
-	   			<option value="ISFJ">ISFJ</option>
-	   			<option value="ISFP">ISFP</option>
-	   			<option value="INTJ">INTJ</option>
-	   			<option value="INTP">INTP</option>
-	   			<option value="INFJ">INFJ</option>
-	   			<option value="INFP">INFP</option>
-	   			<option value="ESTJ">ESTJ</option>
-	   			<option value="ESTP">ESTP</option>
-	   			<option value="ESFJ">ESFJ</option>
-	   			<option value="ESFP">ESFP</option>
-	   			<option value="ENTJ">ENTJ</option>
-	   			<option value="ENTP">ENTP</option>
-	   			<option value="ENFJ">ENFJ</option>
-	   			<option value="ENFP">ENFP</option>
+	       	<select id="mbti_select" onchage="" >
+	   			<option value="ISTJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ISTJ")) {%> selected <%}%>>ISTJ</option>
+	   			<option value="ISTP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ISTP")) {%> selected <%}%>>ISTP</option>
+	   			<option value="ISFJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ISFJ")) {%> selected <%}%>>ISFJ</option>
+	   			<option value="ISFP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ISFP")) {%> selected <%}%>>ISFP</option>
+	   			<option value="INTJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("INTJ")) {%> selected <%}%>>INTJ</option>
+	   			<option value="INTP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("INTP")) {%> selected <%}%>>INTP</option>
+	   			<option value="INFJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("INFJ")) {%> selected <%}%>>INFJ</option>
+	   			<option value="INFP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("INFP")) {%> selected <%}%>>INFP</option>
+	   			<option value="ESTJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ESTJ")) {%> selected <%}%>>ESTJ</option>
+	   			<option value="ESTP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ESTP")) {%> selected <%}%>>ESTP</option>
+	   			<option value="ESFJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ESFJ")) {%> selected <%}%>>ESFJ</option>
+	   			<option value="ESFP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ESFP")) {%> selected <%}%>>ESFP</option>
+	   			<option value="ENTJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ENTJ")) {%> selected <%}%>>ENTJ</option>
+	   			<option value="ENTP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ENTP")) {%> selected <%}%>>ENTP</option>
+	   			<option value="ENFJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ENFJ")) {%> selected <%}%>>ENFJ</option>
+	   			<option value="ENFP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ENFP")) {%> selected <%}%>>ENFP</option>
 	   		</select>
-	   		<a href="mbti_test.jsp"><button class="btn"><image id="retestbtn" src="file/img/" alt="재검사"></button></a>
+	   		<% if ( isLogin ) { %>
+	   		<a href="lmth/mbti/mbti_test.jsp"><button class="btn"><image id="retestbtn" src="file/img/" alt="재검사"></button></a>
+	   		<% } %>
 	   	</div><br><br>
 	   	<hr>
 	   	<div id="mbti-rcmd">
-		   	<span class="sub_font">ISTJ 추천 일정</span>
-		   	<a href="mbti_list.jsp"><button class="btn"><image class="golistbtn" src="file/img/" alt="전체 일정표 보기"></button></a>
+		   	<span class="sub_font"><span><%=mbtiPostList.get(0).getGp_mbti() %></span> 추천 일정</span>
+		   	<a href="/traverSite/postList"><button class="btn"><image class="golistbtn" src="file/img/" alt="전체 일정표 보기"></button></a>
 		   	<br>
 		   	<div class="arrowbox">
 			   	<button class="arrowbtn left hide" id="t-l-btn"><img class="arrow" src="file/img/left.png"></button>
+			   	<% if ( mbtiPostList.size() > 6 ) { %>
 				<button class="arrowbtn" id="t-r-btn"><img class="arrow" src="file/img/right.png"></button>
+				<% } %>
 			</div>
 		   	<div id="mbti-post">
 		   		<div class="hiddenbox">
 				   	<div class="postbox" id="mbti_postbox">
+				   	<% for (int i = 0; i < mbtiPostList.size(); i++) {
+				   			GoodPost mp = mbtiPostList.get(i);
+				   	%>
+				   	<% if ( isLogin ) { %>
+					<a href="postView?gpid=<%=mp.getGp_id() %>&miid=<%=loginInfo.getMi_id() %>">
+					<% } else { %>
+					<a href="postView?gpid=<%=mp.getGp_id() %>">
+					<% } %>
 				   		<div class="post">
 				   			<div class="post_title">
-				   				글 제목1<br>#박 #일 <span class="small">(##.##~##.##)</span>
+				   				<%=mp.getGp_title() %><br>#박 #일 <span class="small">(##.##~##.##)</span>
 				   			</div>
 				   			<div class="post_img">
 				   				<img src="#" class="postimg">
 				   			</div>
 				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목2<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목3<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목4<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목5<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목6<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목7<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목8<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목9<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목10<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목11<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목12<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
+				   	</a>
+				   	<% } %>
 					</div>
 				</div>
 			</div>
@@ -280,7 +214,7 @@ $(document).ready(function() {
 	   	<br><hr>
 	   	<div id="pop-rcmd">
 		   	<span class="sub_font">인기 일정</span>
-		   	<a href="mbti_list.jsp"><button class="btn"><image class="golistbtn" src="file/img/" alt="전체 일정표 보기"></button></a>
+		   	<a href="/traverSite/postList"><button class="btn"><image class="golistbtn" src="file/img/" alt="전체 일정표 보기"></button></a>
 		   	<br>
 		   	<div class="arrowbox">
 			   	<button class="arrowbtn left hide" id="b-l-btn"><img class="arrow" src="file/img/left.png"></button>
@@ -289,102 +223,20 @@ $(document).ready(function() {
 		   	<div id="pop-post">
 		   		<div class="hiddenbox">
 				   	<div class="postbox" id="pop_postbox">
-					   	<div class="post">
-				   			<div class="post_title">
-				   				글 제목1<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
+					   	<% for (int i = 0; i < popPostList.size(); i++) {
+				   			GoodPost pp = popPostList.get(i);
+				   		%>
+				   		<a href="postView?gpid=<%=pp.getGp_id() %>">
 				   		<div class="post">
 				   			<div class="post_title">
-				   				글 제목2<br>#박 #일 <span class="small">(##.##~##.##)</span>
+				   				<%=pp.getGp_title() %><br>#박 #일 <span class="small">(##.##~##.##)</span>
 				   			</div>
 				   			<div class="post_img">
 				   				<img src="#" class="postimg">
 				   			</div>
 				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목3<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목4<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목5<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목6<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목7<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목8<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목9<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목10<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목11<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		<div class="post">
-				   			<div class="post_title">
-				   				글 제목12<br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
+				   		</a>
+				   	<% } %>
 					</div>
 				</div>
 			</div>

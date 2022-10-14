@@ -60,90 +60,75 @@ input[type="radio"] {
 	overflow: visible; cursor: pointer;
 }
 .btn_img { height: 40px; }
-.display_none { display: none; }
 </style>
+<script src="/traverSite/file/jq/jquery-3.6.1.js"></script>
 <script>
-window.onload = function(){
-	const testResult = document.querySelector('#test-result');
-	const yes = document.querySelector('#submitbtn');
+$(document).ready(function() { 
 	
-	submitbtn.addEventListener('click', function() {
-		testResult.classList.remove('display_none');
-	});
-}
+    $(".chk").change(function() {
+		
+		var value1 = $("input[type=radio][name=quest1]:checked").val();
+		var value2 = $("input[type=radio][name=quest2]:checked").val();
+		var value3 = $("input[type=radio][name=quest3]:checked").val();
+		var value4 = $("input[type=radio][name=quest4]:checked").val();
+    	if (value1 != null && value2 != null && value3 != null && value4 != null)
+    		$("#sbmbtn").removeAttr("disabled")
+    });
+});
 </script>
 </head>
 <body>
 <%@ include file="../../cni/header.jsp" %>
 <div class="container">
    <div class="container-default_box">
-   <div class="rangebox">
-   <span class="b_m_font">MBTI 테스트</span>
-   <img src="../../file/img/test_icon1.png" class="range_icon">
-   <img src="../../file/img/test_range1.png" class="range_line">
-   <img src="../../file/img/test_icon2.png" class="range_icon">
-   <span class="b_m_font">MBTI 결과</span><br><br><br><br><br><br><br>
-   </div>
-   <div class="test">
-   <form name="frm_test" action="" method="get">
-   <span class="quest_font">혼자 떠나는 여행을 즐기는 편이다</span><br><br>
-   <span class="b_m_font">동의</span>
-   <input type="radio" name="quest1" class="icon">
-   <input type="radio" name="quest1" class="icon">
-   <input type="radio" name="quest1" class="icon">
-   <input type="radio" name="quest1" class="icon">
-   <input type="radio" name="quest1" class="icon">
-   <input type="radio" name="quest1" class="icon last">
-   <span class="b_m_font">비동의</span><br><br><br>
-   <span class="quest_font">여행 중 길을 잃으면 왔던 길로 되돌아 간다</span><br><br>
-   <span class="b_m_font">동의</span>
-   <input type="radio" name="quest2" class="icon">
-   <input type="radio" name="quest2" class="icon">
-   <input type="radio" name="quest2" class="icon">
-   <input type="radio" name="quest2" class="icon">
-   <input type="radio" name="quest2" class="icon">
-   <input type="radio" name="quest2" class="icon last">
-   <span class="b_m_font">비동의</span><br><br><br>
-   <span class="quest_font">필요하지 않지만 예쁜 기념품을 산다</span><br><br>
-   <span class="b_m_font">동의</span>
-   <input type="radio" name="quest3" class="icon">
-   <input type="radio" name="quest3" class="icon">
-   <input type="radio" name="quest3" class="icon">
-   <input type="radio" name="quest3" class="icon">
-   <input type="radio" name="quest3" class="icon">
-   <input type="radio" name="quest3" class="icon last">
-   <span class="b_m_font">비동의</span><br><br><br>
-   <span class="quest_font">여행을 떠나기 전 일정을 꼼꼼하게 계획한다</span><br><br>
-   <span class="b_m_font">동의</span>
-   <input type="radio" name="quest4" class="icon">
-   <input type="radio" name="quest4" class="icon">
-   <input type="radio" name="quest4" class="icon">
-   <input type="radio" name="quest4" class="icon">
-   <input type="radio" name="quest4" class="icon">
-   <input type="radio" name="quest4" class="icon last">
-   <span class="b_m_font">비동의</span><br><br><br><br>
-   <button type="button" class="btn"><image class="btn_img" id="submitbtn" src="../../file/img/submitbtn.png" alt="제출하기"></button>
- <!--  나중에 mbti_proc_up 으로 링크 변경해야 함 -->
-   </form>
-   </div>
-   <div class="display_none" id="test-result">
 	   <div class="rangebox">
 	   <span class="b_m_font">MBTI 테스트</span>
 	   <img src="../../file/img/test_icon1.png" class="range_icon">
-	   <img src="../../file/img/test_range2.png" class="range_line">
-	   <img src="../../file/img/test_icon1.png" class="range_icon">
-	   <span class="b_m_font">MBTI 결과</span><br><br><br><br><br><br><br><br><br><br>
+	   <img src="../../file/img/test_range1.png" class="range_line">
+	   <img src="../../file/img/test_icon2.png" class="range_icon">
+	   <span class="b_m_font">MBTI 결과</span><br><br><br><br><br><br><br>
 	   </div>
-	   <span class="bold">회원님의 MBTI는 </span><span class="bold mbti">ISTJ</span><span class="bold"> 입니다.</span><br><br>
-	   		<div id="welcomebox">
-		       	<img src="../../file/img/mbti_welcome.png" id="wel_img">
-		       	<div id="welcome">
-			   		<span class="bold">환영합니다!</span><br><br>
-			   		<span id="wel_desc">이제부터 MBTI 여행을 이용 할 수 있습니다!</span><br>
-			   		<a href="mbti_main.jsp"><button class="btn"><image class="btn_img" id="gobestbtn" src="../../file/img/gobestbtn.png" alt="MBTI여행으로 이동"></button></a>&nbsp;&nbsp;&nbsp;
-			   	</div>
-		   	</div>
-   		</div>
+   		<div class="test">
+		   <form name="frm_test" action="/traverSite/testProc" method="post">
+		   <span class="quest_font">혼자 떠나는 여행을 즐기는 편이다</span><br><br>
+		   <span class="b_m_font">동의</span>
+		   <input type="radio" name="quest1" class="icon chk" value="I">
+		   <input type="radio" name="quest1" class="icon chk" value="I">
+		   <input type="radio" name="quest1" class="icon chk" value="I">
+		   <input type="radio" name="quest1" class="icon chk" value="E">
+		   <input type="radio" name="quest1" class="icon chk" value="E">
+		   <input type="radio" name="quest1" class="icon last chk" value="E">
+		   <span class="b_m_font">비동의</span><br><br><br>
+		   <span class="quest_font">여행 중 길을 잃으면 왔던 길로 되돌아 간다</span><br><br>
+		   <span class="b_m_font">동의</span>
+		   <input type="radio" name="quest2" class="icon chk" value="S">
+		   <input type="radio" name="quest2" class="icon chk" value="S">
+		   <input type="radio" name="quest2" class="icon chk" value="S">
+		   <input type="radio" name="quest2" class="icon chk" value="N">
+		   <input type="radio" name="quest2" class="icon chk" value="N">
+		   <input type="radio" name="quest2" class="icon last chk" value="N"> 
+		   <span class="b_m_font">비동의</span><br><br><br>
+		   <span class="quest_font">필요하지 않지만 예쁜 기념품을 산다</span><br><br>
+		   <span class="b_m_font">동의</span>
+		   <input type="radio" name="quest3" class="icon chk" value="F">
+		   <input type="radio" name="quest3" class="icon chk" value="F">
+		   <input type="radio" name="quest3" class="icon chk" value="F">
+		   <input type="radio" name="quest3" class="icon chk" value="T">
+		   <input type="radio" name="quest3" class="icon chk" value="T">
+		   <input type="radio" name="quest3" class="icon last chk" value="T">
+		   <span class="b_m_font">비동의</span><br><br><br>
+		   <span class="quest_font">여행을 떠나기 전 일정을 꼼꼼하게 계획한다</span><br><br>
+		   <span class="b_m_font">동의</span>
+		   <input type="radio" name="quest4" class="icon chk" value="J">
+		   <input type="radio" name="quest4" class="icon chk" value="J">
+		   <input type="radio" name="quest4" class="icon chk" value="J">
+		   <input type="radio" name="quest4" class="icon chk" value="P">
+		   <input type="radio" name="quest4" class="icon chk" value="P">
+		   <input type="radio" name="quest4" class="icon last chk" value="P">
+		   <span class="b_m_font">비동의</span><br><br><br><br>
+		   <button type="submit" class="btn" id="sbmbtn" disabled><image class="btn_img" id="submitbtn" src="../../file/img/submitbtn.png" alt="제출하기"></button>
+		   </form>
+	   </div>
    </div>
 </div>
 <%@ include file="../../cni/footer.jsp" %>

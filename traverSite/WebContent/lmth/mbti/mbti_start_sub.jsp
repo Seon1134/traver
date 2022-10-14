@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("utf-8");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -37,6 +38,7 @@ request.setCharacterEncoding("utf-8");
 	border: 3px solid #B5E8F6;
 	color: #888; font-size: 20px; text-align: center; cursor: pointer;
 }
+#nombti {display:inline;}
 .btn {
 	background: inherit ; border: none; box-shadow: none; border-radius: 0; 
 	padding: 0; overflow: visible; cursor: pointer;
@@ -53,6 +55,14 @@ request.setCharacterEncoding("utf-8");
 
 .display_none { display: none; }
 </style>
+<script src="/traverSite/file/jq/jquery-3.6.1.js"></script>
+<script>
+$(document).ready(function() {
+	$("#mbtiselect").change(function() {
+		$("#sbmbtn").removeAttr("disabled");
+    });
+});
+</script>
 <script>
 window.onload = function(){
 	const mbtibox = document.querySelector('#mbtibox');
@@ -86,10 +96,10 @@ window.onload = function(){
 	   	</div>
 	   	<br><br>
 	   	<div id="mbtibox" class="display_none" >
-	   	 <!--  나중에 mbti_proc_up 으로 action 변경해야 함 -->
-	   		<form name="mbtifrm" action="mbti_start_sub2.jsp" method="get">
+	   		<form name="mbtifrm" action="member_proc.mem" method="post">
+	   		<input type="hidden" name="kind" value="mbti1" />
 		   		<span class="bold inline">나의 MBTI는 </span>
-		   		<select id="mbtiselect" class="inline">
+		   		<select id="mbtiselect" name="mi_mbti" class="inline">
 		   			<option value="" selected>&nbsp;&nbsp;MBTI를 선택해주세요</option>
 		   			<option value="ISTJ">ISTJ</option>
 		   			<option value="ISTP">ISTP</option>
@@ -109,13 +119,17 @@ window.onload = function(){
 		   			<option value="ENFP">ENFP</option>
 		   		</select>
 		   		<span class="bold inline">입니다</span><br><br>
-		   		<button type="submit" class="btn"><image class="btn_img" id="submitbtn" src="../../file/img/submitbtn.png" alt="제출하기"></button>
+		   		<button type="submit" class="btn" id="sbmbtn" disabled ><image class="btn_img" id="submitbtn" src="../../file/img/submitbtn.png" alt="제출하기" ></button>
 	   		</form>
 	   	</div>
 	   	<div id="testbox" class="display_none">
 	   		<span id="testdesc">30초내로 진행 가능한 짧은 MBTI 테스트를 진행하면<br> 자신에게 맞는 여행지를 추천 받을 수 있습니다!</span><br>
 	   		<span class="bold">MBTI 진단 테스트를 진행할까요?</span><br><br>
-	   		<a href="mbti_main.jsp"><button class="btn"><image class="btn_img" id="gobestbtn" src="../../file/img/gobestbtn.png" alt="추천 둘러보기"></button></a>&nbsp;&nbsp;&nbsp;
+	   		<form name="nombti" id="nombti" action="member_proc.mem" method="post">
+	   		<input type="hidden" name="kind" value="mbti1">
+	   		<input type="hidden" name="mi_mbti" value="0000">
+	   		<button class="btn"><image class="btn_img" id="gobestbtn" src="../../file/img/gobestbtn.png" alt="추천 둘러보기"></button>&nbsp;&nbsp;&nbsp;
+	   		</form>
 	   		<a href="mbti_test.jsp"><button class="btn"><image class="btn_img" id="gotestbtn" src="../../file/img/gotestbtn.png" alt="진행하기"></button></a>
 	   		
 	   	</div>

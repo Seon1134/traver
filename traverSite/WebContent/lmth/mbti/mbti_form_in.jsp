@@ -29,8 +29,8 @@ textarea { border: 1px solid #888; width:100%;}
 #subbtn { margin: 16px 450px 40px 0; right: }
 
 #section2 { 
-	width: 100%; height: 100%; 
-	padding: 40px 0 40px 0; 
+	width: 100%; 
+	padding: 80px 0 101px 0; 
 	background-color: rgb(88,88,88,0.8); 
 	position: absolute; top: 0; left: 0; 
 }
@@ -51,7 +51,7 @@ padding: 30px 30px 30px 50px; background-color: #fff }
 #x-sch { width:10px; margin-top: 8px; border: none; }
 #x { float:right; width:20px; }
 #sch { font-size:16px; }
-#list { width:100%; height:500px; overflow:auto; font-size:16px; }
+#list { width:100%; height:600px; overflow:auto; font-size:16px; }
 .post { float: left; margin: 0 5px 10px 5px;}
 .post_title { 
 	width: 180px; height: 52px; 
@@ -134,7 +134,6 @@ $(document).ready(function() {
    			</form>  
    		</div>
    		<div class="display_none" id="section2">
-   		<div id="header_area"></div>
    			<div id="section3">
    				<button class="btn"><img src="../../file/img/x.png" id="x"></button><br>
    				<select id="schselect">

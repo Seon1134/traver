@@ -19,6 +19,8 @@ public class MemberProcSvc { // traverSite
 			result = memberProcDao.memberUpdate(memberInfo);
 		} else if (kind.equals("del")) {
 //			result = memberProcDao.memberDelete(memberInfo);
+		} else if (kind.equals("mbti1") || kind.equals("mbti2") ) {
+		    result = memberProcDao.mbtiUpdate(memberInfo);
 		}
 		
 		if (result == 1)	commit(conn);
