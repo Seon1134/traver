@@ -19,13 +19,16 @@ public class MschdListCtrl extends HttpServlet {
 		ArrayList<ScheduleInfo> scheduleList = new ArrayList<ScheduleInfo>();
 		// 내일정 목록을 저장하기 위한 ArrayList로 안에 저장될 데이터는 ScheduleInfo형 인스턴스만 허용
 		
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		
 		String keyword = request.getParameter("keyword");	// 일정명 검색어 keyword
-		String where = "";		// 검색어가 있을 경우 where절을 저장할 변수 
+		String where = " where mi_id ='" + loginInfo.getMi_id() + "' ";		// 검색어가 있을 경우 where절을 저장할 변수 
 		if (keyword == null) { // 키워드검색어가 없으면
 			keyword = "";
 		} else if (!keyword.equals("")) {	// 검색어가 있을 경우
 			URLEncoder.encode(keyword, "UTF-8"); // 쿼리스트링으로 주고 받는 검색어가 한글일 경우 IE에서 간혹 문제가 발생할 수 있으므로 유니코드로 변환시킴	
-			where = " where si_name like '%" + keyword + "%' ";
+			where += " and si_name like '%" + keyword + "%' ";
 		}
 		
 		/*

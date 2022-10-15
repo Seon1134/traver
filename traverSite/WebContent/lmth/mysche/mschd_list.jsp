@@ -103,7 +103,8 @@ if (o != null && !o.equals(""))		oargs += "?o=" + o;
 	   		</div>
 	   		
 	   		
-	   		<select name="orderBy" >
+		 	<form name="frmSch" method="get">
+	   		<select name="schYear" >
 				<option value="">전체보기</option>
 <%
 String today = LocalDate.now() + "";
@@ -121,7 +122,6 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 			 </select>
 				 <span> 총 일정 수 : </span>
 				 <!-- 추후 일정제목/장소명 셀렉트 박스는 삭제하고 검색박스만 남겨놓을 예정 -->
-		 	<form name="frmSch" method="get">
 			 	<div class="schNbtn">
 				 	<div id= "search-box" >
 					 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >
