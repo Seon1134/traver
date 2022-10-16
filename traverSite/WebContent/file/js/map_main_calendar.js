@@ -34,16 +34,7 @@
 		for (var i = target.options.length - 1; i > 0; i--) {
 			target.options[i] = null;
 		} // 기존 day 삭제
-	
-		if (sdate != "" && edate != "") {
-			for (var i = 1; i < diffDay + 2; i++) {
-				target.options[i] = new Option("day" + i, i);
-				// 상단 [Day]옵션창 만들기 
-			}
-			target.options[0].selected = true;
-		}
 		
-
 		scheduleInfo(strDate1, strDate2, diffDay);
 		// 세션에 저장하기위해 필드값들에 현재 구해온 값들을 Ctrl로 넘기는 함수 실행
 	}

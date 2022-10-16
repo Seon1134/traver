@@ -20,7 +20,7 @@ public class ScheduleInfoCtrl extends HttpServlet {
         String siedate = request.getParameter("siedate");       // 종료일
         System.out.println(siedate);
         int sidnum =  Integer.parseInt(request.getParameter("sidnum"));        // 총 일차수
-        System.out.println(sidnum);
+        System.out.println(sidnum); 
         
         /*
          * 만약 날짜를 수정하게되면?

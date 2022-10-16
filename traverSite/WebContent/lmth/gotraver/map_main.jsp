@@ -94,14 +94,21 @@ if (isLogin) {
 			<input type="date" id="edate" name="edate" disabled onchange="setDay(this.form.sdate.value, this.value, this.form.schedule_day);">
 		<% } else {  %>
 			<input type="date" class="" id="sdate" name="sdate" value="<%=si.getSi_sdate()%>"onchange="limitDate(); setDay(this.value, this.form.edate.value, this.form.schedule_day);">~
-			<input type="date" id="edate" name="edate" value="<%=si.getSi_edate()%>"disabled onchange="setDay(this.form.sdate.value, this.value, this.form.schedule_day);">
+			<input type="date" id="edate" name="edate" value="<%=si.getSi_edate()%>" <% if (si.getSi_edate() == null) { %> disabled <% } %> onchange="setDay(this.form.sdate.value, this.value, this.form.schedule_day);">
 		<% }  %>
 		</div>
 		<div class="">
 			<select id="schedule_day" name="schedule_day" class="schedule_day" onchange="getDate(this.value, this.form.sdate.value);">
-				<% //if () %>
 				<option value="" class="schedule_day1">일차 선택</option>
-				
+				<% 
+				if (si.getSi_dnum() != 0) { 
+					for(int j = 0; j < si.getSi_dnum(); j++) {
+				%>
+				<option value="<%=j + 1 %>">Day<%=j + 1 %></option>
+				<%
+					}
+				}
+				%>
 			</select>
 			<select name="schedule_group" class="schedule_group" id="">
 				<option value="1">전체보기</option>
