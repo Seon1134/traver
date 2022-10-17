@@ -147,11 +147,11 @@ input[type="radio"] {
 
 .post_title {
 	width: 180px;
-	height: 52px;
+	height: 28px;
 	display: inline-block;
 	padding: 10px;
 	background-color: #efefef;
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: bold;
 	line-height: 1.5;
 }
@@ -209,6 +209,17 @@ $(document).ready(function() {
 	$(".view").change(function() {
 		$("form").submit();
 	});
+	
+
+	var order = $("input[type=radio][name=order]:checked").val();
+   	if (order == "gp_date") {
+   		$("#desclb").text(" 최신 순");
+   		$("#asclb").text(" 오래된 순");
+   	}
+   	if (order == "gp_gcnt") {
+   		$("#desclb").text(" 많은 순");
+   		$("#asclb").text(" 적은 순");
+   	}
 });
 </script>
 </head>
@@ -258,9 +269,9 @@ $(document).ready(function() {
 						<hr id="orders">
 						<div class="dora">
 							<input type="radio" class="view" name="dora" id="desc" value="desc"
-							<% if (dora.equals("desc")) {%> checked <% } %>><label for="desc"> 내림차순</label><br> 
+							<% if (dora.equals("desc")) {%> checked <% } %>><label for="desc" id="desclb"> 내림차순</label><br> 
 							<input type="radio" class="view" name="dora" id="asc" value="asc"
-							<% if (dora.equals("asc")) {%> checked <% } %>><label for="asc"> 오름차순</label>
+							<% if (dora.equals("asc")) {%> checked <% } %>><label for="asc" id="asclb"> 오름차순</label>
 						</div>
 					</div>
 					<hr>
@@ -331,6 +342,9 @@ $(document).ready(function() {
 					<%
 						for (int i = 0; i < postList.size(); i++) {
 							GoodPost gp = postList.get(i);
+							
+							String title = gp.getGp_title();
+							if (title.length() > 10)	title = title.substring(0, 9) + "...";
 					%>
 					<% if ( isLogin ) { %>
 					<a href="postView?gpid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
@@ -338,9 +352,7 @@ $(document).ready(function() {
 					<a href="postView?gpid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>">
 					<% } %>
 					<div class="post">
-						<div class="post_title">
-							<%=gp.getGp_title()%><br>#박 #일 <span class="small">(##.##~##.##)</span>
-						</div>
+						<div class="post_title"><%=title %></div>
 						<div class="post_img">
 							<img src="#" class="postimg">
 						</div>

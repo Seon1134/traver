@@ -18,6 +18,7 @@ public class PostMainCtrl extends HttpServlet {
         HttpSession session = request.getSession();
         
         String mbti = "";
+        String miid = "";
         if ( session.getAttribute("loginInfo") != null ) { // 로그인 상태면
             MemberInfo mi = (MemberInfo)session.getAttribute("loginInfo");
             mbti = mi.getMi_mbti();

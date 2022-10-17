@@ -23,7 +23,7 @@ boolean isInterest = (boolean)request.getAttribute("isInterest");
 #goodicon, #interest, #report { width: 30px; vertical-align: middle; margin-right: 3px;}
 .ctt_font { font-size: 18px; line-height: 1.5; }
 #writer { position: relative; top: 4px; }
-#lastup { font-size: 13px; float: right; margin-right: 10px; margin-top: 13px;}
+#lastup, #date { font-size: 13px; float: right; margin-right: 10px; margin-top: 13px;}
 hr { margin: 15px 0;}
 #schname, #placename { font-size: 20px; font-weight: bold; }
 #schdetail { font-size: 15px; }
@@ -50,7 +50,7 @@ hr { margin: 15px 0;}
 
 
 #section3 {
-	border: 1px solid black; 
+	border: 1px solid black;  width: 480px;
 	padding: 20px; background-color: #fff;
 	position: absolute; top: 100px; left: 280px;   
 	z-index: 3; line-height: 2;
@@ -169,7 +169,10 @@ var clickCnt = 0;
 			<% } %>
 			<br>
 			<span class="ctt_font" id="writer"><%=goodPost.getMi_id() %>(<%=goodPost.getGp_mbti() %>)</span>
-			<span class="ctt_font" id="lastup">마지막 수정 : <%=goodPost.getGp_last() %></span>
+			<% if ( goodPost.getGp_last() != null ) { %>
+			<span id="lastup">마지막 수정 : <%=goodPost.getGp_last() %></span>
+			<% } %>
+			<span id="date">등록일 : <%=goodPost.getGp_date() %></span>
 			<hr>
 			<p id="schname">일정이름<% %></p><br>
 			<span class="ctt_font" id="schdetail">상세일정<% %></span>
@@ -232,20 +235,22 @@ var clickCnt = 0;
 			<img src="file/img/silla5.jpg" id="placeimg5" class="descimg" onmouseover="swapImg('silla5.jpg');" onmouseout="bigImg();">
 		</div>
 		<div class="display_none" id="section3">
-			<form name="reportFrm" action="#">
+			<form name="reportFrm" action="/traverSite/report">
+			<input type="hidden" name="gp_id" value="<%=goodPost.getGp_id() %>">
 			<span id="report-title">신고하기</span>
 			<hr id="report-hr">
-			<span class="red">* 허위 신고일 경우, 신고자의 서비스 활동이 제한될 수 있으니 신중하게 신고해주세요.</span><br>
+			<span class="red">* 반복된 허위신고시 서비스 활동이 제한될 수 있습니다.</span><br>
+			<span class="red">* 신고한 게시글은 회원님의 게시글 목록에서 사라집니다.</span>
 			<div id="report1">&nbsp;&nbsp;신고사유</div>
 			<div id="report2">
-			<input type="radio" name="report" value="음란성 리뷰" id="lewd"><label for="lewd"> 음란성 리뷰</label><br>
-			<input type="radio" name="report" value="광고성 리뷰" id="advert"><label for="advert"> 광고성 리뷰</label><br>
-			<input type="radio" name="report" value="욕설/부적절한 언어" id="insult"><label for="insult"> 욕설/부적절한 언어</label><br>
-			<input type="radio" name="report" value="회원 분란 유도" id="disturb"><label for="disturb"> 회원 분란 유도</label><br>
-			<input type="radio" name="report" value="회원 비방" id="slander"><label for="slander"> 회원 비방</label><br>
-			<input type="radio" name="report" value="명예훼손/저작권 침해" id="defamation"><label for="defamation"> 명예훼손/저작권 침해</label><br>
-			<input type="radio" name="report" value="초상권 침해/도촬" id="portrait_rights"><label for="portrait_rights"> 초상권 침해/도촬</label><br>
-			<input type="radio" name="report" value="도배성 리뷰" id="plaster"><label for="plaster"> 도배성 리뷰</label><br>
+			<input type="radio" name="report" value="lewd" id="lewd"><label for="lewd"> 음란성 리뷰</label><br>
+			<input type="radio" name="report" value="advert" id="advert"><label for="advert"> 광고성 리뷰</label><br>
+			<input type="radio" name="report" value="insult" id="insult"><label for="insult"> 욕설/부적절한 언어</label><br>
+			<input type="radio" name="report" value="disturb" id="disturb"><label for="disturb"> 회원 분란 유도</label><br>
+			<input type="radio" name="report" value="slander" id="slander"><label for="slander"> 회원 비방</label><br>
+			<input type="radio" name="report" value="defamation" id="defamation"><label for="defamation"> 명예훼손/저작권 침해</label><br>
+			<input type="radio" name="report" value="portrait_rights" id="portrait_rights"><label for="portrait_rights"> 초상권 침해/도촬</label><br>
+			<input type="radio" name="report" value="plaster" id="plaster"><label for="plaster"> 도배성 리뷰</label><br>
 			</div>
 			<br>
 			<div id="button">

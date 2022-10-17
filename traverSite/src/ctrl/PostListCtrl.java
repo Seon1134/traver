@@ -23,7 +23,8 @@ public class PostListCtrl extends HttpServlet {
         String orderby = "";
         String schselect = "";
         String schkeyword = "";
- 
+        String miid = "";
+        HttpSession session = request.getSession();
 
         if ( request.getParameter("mbti") != null ) {
             if ( !request.getParameter("mbti").equals("total")) {
@@ -42,6 +43,11 @@ public class PostListCtrl extends HttpServlet {
                 where += " and mi_id like '%" + schkeyword + "%' ";
         } 
         
+        if ( session.getAttribute("loginInfo") != null ) {
+            MemberInfo mi = (MemberInfo)session.getAttribute("loginInfo");
+            miid = mi.getMi_id();
+            where += " and gp_id not in (select gp_id from t_report where mi_id = '" + miid + "') ";
+        }
        
         if ( request.getParameter("order") != null && request.getParameter("dora") != null) {
             order = request.getParameter("order");

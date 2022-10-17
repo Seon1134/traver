@@ -85,10 +85,10 @@ hr { margin: 20px 0;}
 }
 .post { float: left; margin-right: 20px; }
 .post_title { 
-	width: 180px; height: 52px; 
+	width: 180px; height: 28px; 
 	display: inline-block; padding: 10px;
 	background-color: #efefef;
-	font-size: 20px; font-weight: bold; line-height: 1.5;
+	font-size: 18px; font-weight: bold; line-height: 1.5;
 }
 .small { font-size: 14px; }
 .postimg { width: 200px; height: 200px; }
@@ -202,6 +202,9 @@ $(document).ready(function() {
 				   	if ( mbtiPostList.size() > 0) {
 				   		for (int i = 0; i < mbtiPostList.size(); i++) {
 				   			GoodPost mp = mbtiPostList.get(i);
+				   			
+				   			String title = mp.getGp_title();
+							if (title.length() > 10)	title = title.substring(0, 9) + " ...";
 				   	%>
 				   	<% if ( isLogin ) { %>
 					<a href="postView?gpid=<%=mp.getGp_id() %>&giid=<%=mp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
@@ -209,9 +212,7 @@ $(document).ready(function() {
 					<a href="postView?gpid=<%=mp.getGp_id() %>&giid=<%=mp.getGi_id() %>">
 					<% } %>
 				   		<div class="post">
-				   			<div class="post_title">
-				   				<%=mp.getGp_title() %><br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
+				   			<div class="post_title"><%=title %></div>
 				   			<div class="post_img">
 				   				<img src="#" class="postimg">
 				   			</div>
@@ -240,6 +241,9 @@ $(document).ready(function() {
 					if ( mbtiPostList.size() > 0) {
 				   		for (int i = 0; i < popPostList.size(); i++) {
 			   			GoodPost pp = popPostList.get(i);
+			   			
+			   			String title = pp.getGp_title();
+						if (title.length() > 10)	title = title.substring(0, 9) + " ...";
 			   		%>
 			   		<% if ( isLogin ) { %>
 					<a href="postView?gpid=<%=pp.getGp_id() %>&giid=<%=pp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
@@ -247,9 +251,7 @@ $(document).ready(function() {
 					<a href="postView?gpid=<%=pp.getGp_id() %>&giid=<%=pp.getGi_id() %>">
 					<% } %>
 			   		<div class="post">
-			   			<div class="post_title">
-			   				<%=pp.getGp_title() %><br>#박 #일 <span class="small">(##.##~##.##)</span>
-			   			</div>
+			   			<div class="post_title"><%=title %></div>
 			   			<div class="post_img">
 			   				<img src="#" class="postimg">
 			   			</div>

@@ -29,7 +29,7 @@ public class PostMainDao {
         try {
              stmt = conn.createStatement();
              String sql = "select * from t_good_post where gp_mbti = '" + mbti + 
-                     "' order by gp_gcnt desc limit 10;";
+                     "' order by gp_gcnt desc limit 10";
              rs = stmt.executeQuery(sql);
              while (rs.next()) {
                  gp = new GoodPost();

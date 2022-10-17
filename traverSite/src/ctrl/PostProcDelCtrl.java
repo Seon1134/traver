@@ -14,7 +14,6 @@ public class PostProcDelCtrl extends HttpServlet {
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		System.out.println("delctrl");
 		String gpid = request.getParameter("gp_id");
 		String kind = request.getParameter("kind");
 		HttpSession session = request.getSession();

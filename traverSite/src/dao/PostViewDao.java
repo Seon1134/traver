@@ -61,7 +61,6 @@ public class PostViewDao {
              result = stmt.executeUpdate(sql);
              if (result > 0) {
                  sql = "update t_good_post set gp_gcnt = gp_gcnt + 1 where gp_id = '" + gpid + "'";
-                 System.out.println(sql);
                  result = stmt.executeUpdate(sql);
              }
         } catch (Exception e) {
@@ -82,7 +81,6 @@ public class PostViewDao {
         try {
              stmt = conn.createStatement();
              String sql = "select count(*) from t_review_good where mi_id = '" + miid + "' and gp_id='" + gpid + "'";
-             System.out.println("isGood");
              rs = stmt.executeQuery(sql);
              
              rs.next();
@@ -126,7 +124,6 @@ public class PostViewDao {
         try {
              stmt = conn.createStatement();
              String sql = "select count(*) from t_schedule_zzim where mi_id = '" + miid + "' and gi_id='" + giid + "'";
-             System.out.println(sql);
              rs = stmt.executeQuery(sql);
              
              rs.next();

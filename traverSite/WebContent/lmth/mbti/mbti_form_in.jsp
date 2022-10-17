@@ -253,23 +253,18 @@ textarea {
 					<img src="file/img/x.png" id="x">
 				</button>
 				<br>
-				<div id="search-box">
-					<input type="text" placeholder=" 제목으로 검색하세요." size="17"
-						maxlength="30" id="sch">
-					<button class="btn">
-						<img src="file/img/x.png" id="x-sch">
-					</button>
-				</div>
-				<br>
 				<div id="list">
 					<%
 					if ( scheduleList.size() > 0 ) {
 						for (int i = 0; i < scheduleList.size(); i++) {
 							ScheduleInfo si = scheduleList.get(i);
+							
+							String title = si.getSi_name();
+							if (title.length() > 12)	title = title.substring(0, 10) + " ...";
 					%>
 							<div class="post">
 								<div class="post_title">
-									<%=si.getSi_name() %><br><%=(si.getSi_dnum() - 1)%>박&nbsp;<%=si.getSi_dnum()%>일
+									<%=title %><br><%=(si.getSi_dnum() - 1)%>박&nbsp;<%=si.getSi_dnum()%>일
 									<span class="small">(<%=(si.getSi_sdate()).substring(5)%>~<%=(si.getSi_edate()).substring(5)%>)
 									</span>
 								</div>
