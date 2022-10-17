@@ -47,7 +47,7 @@ for (int i = 0; i < placeList.size(); i++ ) { // 장소들을 가져온다.
 <body>
 <%@ include file="../../cni/header.jsp" %>
 <!-- 좌측 사이드박스 -->
-<form action="#">
+<form action="/traverSite/scheduleIn">
 <% 
 if (isLogin) { 
 	ArrayList<ScheduleDay> scheduleDayList = (ArrayList<ScheduleDay>)session.getAttribute("scheduleDayList");
@@ -139,10 +139,10 @@ if (isLogin) {
 			</div>
 			<div class="schedule_item">
 				<div class="go_schedule_top">
-					<input type="text" class="schedule_title" placeholder="일정명을 입력하세요" />
+					<input type="text" name="schedule_name"class="schedule_title" placeholder="일정명을 입력하세요" />
 					<div class="chedule_button_box">
 						<input type="button" class="chedule_button go_map" value="지도로 돌아가기"/>
-						<input type="button" class="chedule_button save_schdule" value="내 일정 등록"/>
+						<input type="submit" class="chedule_button save_schdule" value="내 일정 등록"/>
 					</div>
 				</div>
 				<div class="go_schedule_contnt-area">
