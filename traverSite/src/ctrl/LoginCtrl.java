@@ -32,7 +32,7 @@ public class LoginCtrl extends HttpServlet {
 	        ScheduleInfo scheduleInfo = new ScheduleInfo(); // 일정정보
 	        session.setAttribute("scheduleDayList", scheduleDayList); //세션에 담기
             session.setAttribute("scheduleInfo", scheduleInfo); //세션에 담기
-            session.setAttribute("selectDay", " ");
+            session.setAttribute("selectDay", 0);
             session.setAttribute("selectDate", " ");
 			
 		} else {	// 로그인 실패시

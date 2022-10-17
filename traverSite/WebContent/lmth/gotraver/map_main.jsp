@@ -40,9 +40,9 @@ for (int i = 0; i < placeList.size(); i++ ) { // 장소들을 가져온다.
 <script type="text/javascript" src="/traverSite/file/jq/map_main_move.js" ></script>
 <script type="text/javascript" src="/traverSite/file/jq/map_main_view.js" ></script>
 <script type="text/javascript" src="/traverSite/file/jq/map_main_schedule_day.js" ></script>
-<script type="text/javascript" src="/traverSite/file/jq/map_main_schedule_info.js" ></script>
 <script type="text/javascript" src="/traverSite/file/js/map_main_move.js" ></script>
 <script type="text/javascript" src="/traverSite/file/js/map_main_calendar.js" ></script>
+<script type="text/javascript" src="/traverSite/file/jq/map_main_schedule_info.js" ></script>
 </head>
 <body>
 <%@ include file="../../cni/header.jsp" %>
@@ -52,14 +52,15 @@ for (int i = 0; i < placeList.size(); i++ ) { // 장소들을 가져온다.
 if (isLogin) { 
 	ArrayList<ScheduleDay> scheduleDayList = (ArrayList<ScheduleDay>)session.getAttribute("scheduleDayList");
 	ScheduleInfo si = (ScheduleInfo)session.getAttribute("scheduleInfo");
-	String selectDate = (String)session.getAttribute("selectDate");
-	String selectDay = (String)session.getAttribute("selectDay");
+	int selectDay = (int)session.getAttribute("selectDay");	// 선택 일차
+	String selectDate = (String)session.getAttribute("selectDate");	// 선택 일차에 해당하는 날짜
+	String[] dateList = (String[])session.getAttribute("dateList");
 	
-	if (!selectDay.equals(" ")) {
+	if (selectDay != 0) {
 %>
 <div class="left-side open">
 	<div class="schedule-info">
-		<span class="schedule_day_num"><%=selectDay%></span>
+		<span class="schedule_day_num"><% if (selectDay != 0) { %>Day <% } %><%=selectDay%></span>
 		<span class="schedule_day_date"><%=selectDate%></span>
 	</div>
 	<div class="schedule-area">
@@ -67,12 +68,16 @@ if (isLogin) {
 		<%
 		for (int i = 0; i < scheduleDayList.size(); i ++) {	
 			ScheduleDay sd = scheduleDayList.get(i);
+			if (sd.getSd_dnum() == selectDay) {
 		%>
 			<li class="schedule ui-state-default"><%= sd.getPi_name() %>
 				<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
 				<input type="hidden" data-id="<%= sd.getPi_id() %>"/>
 			</li>
-		<% } %>
+		<%
+			}
+		} 
+		%>
 		</ul>
 	</div>
 	<div class="schedule-del_box">
@@ -99,12 +104,12 @@ if (isLogin) {
 		</div>
 		<div class="">
 			<select id="schedule_day" name="schedule_day" class="schedule_day" onchange="getDate(this.value, this.form.sdate.value);">
-				<option value="" class="schedule_day1">일차 선택</option>
+				<option value="" class="schedule_day1" <%if (selectDay == 0){%>selected="selected"<% } %> >일차 선택</option>
 				<% 
 				if (si.getSi_dnum() != 0) { 
-					for(int j = 0; j < si.getSi_dnum(); j++) {
+					for(int j = 1; j < si.getSi_dnum() + 1; j++) {
 				%>
-				<option value="<%=j + 1 %>">Day<%=j + 1 %></option>
+				<option value="<%= j %>" <%if (selectDay == j) {%>selected="selected"<% } %>>Day<%=j %></option>
 				<%
 					}
 				}
@@ -118,14 +123,15 @@ if (isLogin) {
 			</select>
 		</div>
 	</div>
+	
+	<% if (selectDay != 0) {  %>
+	<!-- 일정 보러가기 -->
 	<div class="main-bottom-area">
 		<div class="schedule_all_view_box">
 			<input type="button" class="schedule_all_view_button go_schedule" value="일정 보러가기" />
 		</div>
 	</div>
 	
-	<% if (!selectDay.equals(" ")) {  %>
-	<!-- 일정 보러가기 -->
 	<div class="go_schedule_area_box display_none">
 		<div class="go_schedule_area">
 			<div class="go_schedule_left">
@@ -141,48 +147,40 @@ if (isLogin) {
 				</div>
 				<div class="go_schedule_contnt-area">
 					<div class="go_schedule_contnt">
+					<% 
+					if (si.getSi_dnum() != 0) { 
+						for(int i = 1; i < si.getSi_dnum() + 1; i++) {
+					%>
 						<div class="go_scheduel_day_box">
 							<div class="schedule-info">
-								<span class="schedule_day_num">Day 1</span>
-								<span class="schedule_day_date">2022-09-18</span>
+								<span class="schedule_day_num">Day <%=i %></span>
+								<span class="schedule_day_date"><%=dateList[i]%></span>
 							</div>
 							<div class="schedule-area">
 								<ul class="schedule-list sortable">
-									<li class="schedule ui-state-default">제주호텔
+								<%
+								for (int j = 0; j < scheduleDayList.size(); j ++) {
+									ScheduleDay sd = scheduleDayList.get(j);
+									if (sd.getSd_dnum() == i) {
+								%>
+									<li class="schedule ui-state-default"><%= sd.getPi_name() %>
 										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
-										<input type="hidden" />
+										<input type="hidden" data-id="<%= sd.getPi_id() %>"/>
 									</li>
-									<li class="schedule ui-state-default">제주음식점
-										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
-										<input type="hidden" />
-									</li>
+								<% 
+									}
+								}
+								%>
 								</ul>
 							<div class="schedule-del_box">
 								<input type="button" class="schedule__all_del" value="전체 삭제" onclick="scheAllDel()"/>
 							</div>
 							</div>
 						</div>
-						<div class="go_scheduel_day_box">
-							<div class="schedule-info">
-								<span class="schedule_day_num">Day 2</span>
-								<span class="schedule_day_date">2022-09-19</span>
-							</div>
-							<div class="schedule-area">
-								<ul class="schedule-list sortable">
-									<li class="schedule ui-state-default">호텔신라
-										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
-										<input type="hidden" />
-									</li>
-									<li class="schedule ui-state-default">음식점신라
-										<button type="button" class="schedule__del float_r" value="X" onclick="scheDel()">X</button>
-										<input type="hidden" />
-									</li>
-								</ul>
-							<div class="schedule-del_box">
-								<input type="button" class="schedule__all_del" value="전체 삭제" onclick="scheAllDel()"/>
-							</div>
-							</div>
-						</div>
+					<%
+						}
+					}
+					%>
 					</div>
 				</div>
 			</div>

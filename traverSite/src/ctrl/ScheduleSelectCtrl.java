@@ -14,13 +14,16 @@ public class ScheduleSelectCtrl extends HttpServlet {
     public ScheduleSelectCtrl() {  super(); }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String selectDay = request.getParameter("day");       // 선택한 날
-        String selectDate = request.getParameter("sdate");   // 선택한 날의 날짜
+        int selectDay = Integer.parseInt(request.getParameter("selectDay"));       // 선택한 날
+        String selectDate = request.getParameter("selectDate");   // 선택한 날의 날짜
+        String datelist = request.getParameter("dateList");   // 선택한 날의 날짜
         
+        String[] dateList = datelist.split(",");    // 모든 일차 날짜들 목록
 
         HttpSession session = request.getSession();
         session.setAttribute("selectDay", selectDay);
         session.setAttribute("selectDate", selectDate);
+        session.setAttribute("dateList", dateList);
         
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();

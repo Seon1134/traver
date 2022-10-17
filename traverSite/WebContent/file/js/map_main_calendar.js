@@ -41,17 +41,34 @@
 	
 	function getDate(day, sdate) { // 선택한 날짜랑 선택한 '일정 시작일'을 받아온다
 		var arr1 = sdate.split('-');
-		var dat1 = new Date(arr1[0], arr1[1] - 1, arr1[2]);
-		var dat2 = new Date(dat1.setDate((dat1.getDate()) + (day - 1)));
-	
+		var dat1 = new Date(arr1[0], arr1[1] - 1, arr1[2]); // 시작날짜 년,월,일
+		var dat2 = new Date(dat1.setDate((dat1.getDate()) + (day - 1))); // 시작날짜의 일 값만 뽑아온다
+		// 현재날짜에 '선택한날짜'값을 더하는 것. (당일이라면 0일, 다음날이면 1일 이런식으로.)
+		
 		var fullEDate = dat2.toLocaleString().substring(0, 12)
-				.replaceAll(". ", "-").replace(".", "");
-		var date = fullEDate.substring(8);
-		if (date < 10) { date = "0" + date; }
+				.replaceAll(". ", "-").replace(".", ""); // 선택날짜의 형식을 변환하고, '년,월,일'을 가져온다
+		var date = fullEDate.substring(8); // 년,월을 짤라버린 '날짜'
+		if (date < 10) { date = "0" + date; } // 만약 날짜가 10일보다 작다면 0을붙인다
 		
-		let sddate = fullEDate.substring(0, 8) + date;
+		var sddate = fullEDate.substring(0, 8) + date; // 최종 '해당날짜'는 잘라버린  '년,월' + '일'
+
 		
-		scheduleSelect (day, sddate);
+		
+		let dateList = ""; // 모든 일차의 date값을 저장할 string 변수
+		for (let i = 0 ; i < 10 ; i++) { // 최대일차인 10일까지 돌린다 (값 받아오기 귀찮.)
+			var dat3 = new Date(arr1[0], arr1[1] - 1, arr1[2]); // 시작날짜 년,월,일
+			var dat4 = new Date(dat3.setDate(dat3.getDate() + i)); 
+			var fullDate =  dat4.toLocaleString().substring(0, 12).replaceAll(". ", "-").replace(".", "");
+			// 시작날짜 '년,월,일'
+			var date2 = fullDate.substring(8); // 년,월을 짤라버린 '날짜'
+			if (date2 < 10) { date2 = "0" + date2; } // 만약 날짜가 10일보다 작다면 0을붙인다
+			
+			var dayDate = fullDate.substring(0, 8) + date2; // 최종 '해당날짜'는 잘라버린  '년,월' + '일'
+			dateList += "," + dayDate;	// 처음엔 공백으로 dateList[1]부터 Day1씩 저장된다.
+		}
+		
+		
+		scheduleSelect(day, sddate, dateList);
 		
 		return fullEDate.substring(0, 8) + date;
 		// Day에 해당하는 날짜

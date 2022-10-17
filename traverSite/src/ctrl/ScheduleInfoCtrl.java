@@ -16,11 +16,8 @@ public class ScheduleInfoCtrl extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         
         String sisdate = request.getParameter("sisdate");       // 시작일
-        System.out.println(sisdate);
         String siedate = request.getParameter("siedate");       // 종료일
-        System.out.println(siedate);
         int sidnum =  Integer.parseInt(request.getParameter("sidnum"));        // 총 일차수
-        System.out.println(sidnum); 
         
         /*
          * 만약 날짜를 수정하게되면?
@@ -33,8 +30,6 @@ public class ScheduleInfoCtrl extends HttpServlet {
         
         HttpSession session = request.getSession();
         ScheduleInfo scheduleInfo = (ScheduleInfo)session.getAttribute("scheduleInfo");
-
-        System.out.println(scheduleInfo.getSi_sdate() == null);
         
         scheduleInfo.setSi_sdate(sisdate);
         scheduleInfo.setSi_edate(siedate);
@@ -42,8 +37,6 @@ public class ScheduleInfoCtrl extends HttpServlet {
         
         session.setAttribute("scheduleInfo", scheduleInfo);
         int result = scheduleInfo.getSi_dnum();
-
-        System.out.println(scheduleInfo.getSi_sdate());
         
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
