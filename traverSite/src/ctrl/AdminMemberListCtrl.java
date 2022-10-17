@@ -25,7 +25,6 @@ public class AdminMemberListCtrl extends HttpServlet {
         
         if (request.getParameter("cpage") != null)
             cpage = Integer.parseInt(request.getParameter("cpage"));
-        // cpage 값이 있으면 받아서 int형으로 형변환 시킴(보안상의 이유와 산술연산을 해야 하기 때문)
         
         String schtype = request.getParameter("schtype"); // 검색조건(아이디, 닉네임, 이름, 이메일, 상태, 가입일)
         String keyword = request.getParameter("keyword");   // 검색어 
@@ -35,7 +34,7 @@ public class AdminMemberListCtrl extends HttpServlet {
         } else if (!schtype.equals("") && !keyword.equals("")) {    // 검색조건과 검색어가 있을 경우
             URLEncoder.encode(keyword, "UTF-8");
             // 쿼리스트링으로 주고 받는 검색어가 한글일 경우 IE에서 간혹 문제가 발생할 수 있으므로 유니코드로 변환시킴
-            where = " where pi_" + schtype + " like '%" + keyword + "%' ";
+            where = " where mi_" + schtype + " like '%" + keyword + "%' ";
         }
         
         AdminMemberListSvc adminMemberListSvc = new AdminMemberListSvc();

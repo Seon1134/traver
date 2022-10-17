@@ -3,6 +3,7 @@ package vo;
 public class AdminMemberInfo {
     private int cpage, psize, bsize, rcnt, pcnt, spage;
     private String schtype, keyword, pcb, pcs, sch;
+    
     public int getCpage() {
         return cpage;
     }

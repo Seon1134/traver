@@ -30,7 +30,7 @@ public class AdminMemberListDao {
         try {
             stmt = conn.createStatement();
             String sql = "select mi_id, mi_nickname, mi_name, mi_mail, mi_status, mi_join " + 
-                    " from t_member_info " + where + " order by mi_id desc " + 
+                    " from t_member_info " + where + " order by mi_join desc " + 
                     " limit " + ((cpage -1) * psize) + ", " + psize;
             rs = stmt.executeQuery(sql);
             while (rs.next()) {

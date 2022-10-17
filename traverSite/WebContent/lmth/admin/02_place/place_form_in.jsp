@@ -226,7 +226,7 @@ function checkSize(input) {
                </table>
             </div>
             <div class="confirm">
-               <input type="button" value="취소" class="place_02_btn1" onclick="location.href='./place_list.jsp'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <input type="button" value="취소" class="place_02_btn1" onclick="location.href='/traverSite/adminPlaceList';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                <input type="submit" value="확인" class="place_02_btn2" style="cursor: pointer;">
             </div>
          </form>

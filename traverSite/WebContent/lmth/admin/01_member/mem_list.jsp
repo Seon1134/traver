@@ -29,21 +29,20 @@ args = "&cpage=" + cpage + schargs;
 <script src="/traverSite/lmth/admin/file/js/jquery-3.6.1.js"></script>
 <script>
 function adminMemberDel(miid) {
-	// 장바구니 내의 특정 상품을 삭제하는 함수
-		if (confirm("정말 삭제하시겠습니까?")) {
-			$.ajax({
-				type : "POST", 
-				url : "/traverSite/adminMemberProcDel", 
-				data : {"miid" : miid}, 
-				success : function(chkRs) {
-					if (chkRs == 0) {
-						alert("장소 삭제에 실패했습니다.\n다시 시도하세요.");
-					}
-					location.reload();
+	if (confirm("정말 삭제하시겠습니까?")) {
+		$.ajax({
+			type : "POST", 
+			url : "/traverSite/adminMemberProcDel", 
+			data : {"miid" : miid}, 
+			success : function(chkRs) {
+				if (chkRs == 0) {
+					alert("회원 삭제에 실패했습니다.\n다시 시도하세요.");
 				}
-			});
-		}
+				location.reload();
+			}
+		});
 	}
+}
 	
 function getSelectedValues() {
 // 체크박스들 중 선택된 체크박스들의 값들을 쉼표로 구분하여 문자열로 리턴하는 함수
@@ -83,7 +82,7 @@ $(document).ready(function() {
 				<div class="subM">
 					<!-- 찾기 영역 -->
 					<form action="" name="frm_mem">
-						<select name="memSel">
+						<select name="schtype">
 							<option value="id" <% if (schtype.equals("id")) { %> selected="selected" <% } %>>아이디</option>
 							<option value="nickname" <% if (schtype.equals("nickname")) { %> selected="selected" <% } %>>닉네임</option>
 							<option value="name" <% if (schtype.equals("name")) { %> selected="selected" <% } %>>이름</option>
@@ -98,7 +97,7 @@ $(document).ready(function() {
 						<ul>
 							<li><span class="count">총 회원수 : <span class="mem_num"><%=rcnt %></span></span></li>
 							<li><input type="button" value="회원 삭제" id="memDel"  onclick="getSelectedValues()"></li>
-							<li><input type="button" value="회원 추가" id="memIn" onclick="location.href='#'"></li>
+							<li><input type="button" value="회원 추가" id="memIn" onclick="location.href='/traverSite/lmth/admin/01_member/mem_form_in.jsp';"></li>
 						</ul>
 					</form>
 				</div>
