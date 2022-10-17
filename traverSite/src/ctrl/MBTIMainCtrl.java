@@ -20,20 +20,20 @@ public class MBTIMainCtrl extends HttpServlet {
 	    if(session.getAttribute("loginInfo")!=null) {  // 로그인 되어 있으면
 	        MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
     	    String mimbti = loginInfo.getMi_mbti();
-    	    if ( !mimbti.equals("") ) { // mbti값이 있으면
+    	    if ( !mimbti.equals("")) { // mbti값이 있으면
     	        request.setAttribute("mbti", mimbti);
     	        
     	        RequestDispatcher dispatcher = 
-                        request.getRequestDispatcher("/postMain");
+                        request.getRequestDispatcher("/postMain"); // Best여행으로 이동
                     dispatcher.forward(request, response);
-    	    } else {
+    	    } else { //mbti값이 없으면
     	        RequestDispatcher dispatcher = 
-                        request.getRequestDispatcher("lmth/mbti/mbti_start_main.jsp");
-                dispatcher.forward(request, response);
+                        request.getRequestDispatcher("lmth/mbti/mbti_start_main.jsp"); // mbti 첫 방문 페이지로 이동
+                dispatcher.forward(request, response); 
     	    }
 	    } else { // 로그인 되어 있지 않으면
 	        RequestDispatcher dispatcher = 
-                    request.getRequestDispatcher("/postMain");
+                    request.getRequestDispatcher("/postMain"); // Best여행으로 이동
                 dispatcher.forward(request, response);
 	    }
                 

@@ -15,14 +15,18 @@ public class PostMainCtrl extends HttpServlet {
 
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        
         HttpSession session = request.getSession();
         
         String mbti = "";
-        if ( session.getAttribute("loginInfo") != null ) {
+        if ( session.getAttribute("loginInfo") != null ) { // 로그인 상태면
             MemberInfo mi = (MemberInfo)session.getAttribute("loginInfo");
             mbti = mi.getMi_mbti();
-        } else mbti = "ISTJ";
+            if ( mbti.equals("0000") ) mbti = "ISTJ"; // '테스트 안함' 선택 시 
+        } else mbti = "ISTJ"; // 로그인 x 상태면
+        
+        if ( request.getParameter("mbti") != null ) {
+            mbti = request.getParameter("mbti");
+        }
         
         PostMainSvc postMainSvc = new PostMainSvc();
         

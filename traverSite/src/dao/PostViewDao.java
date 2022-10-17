@@ -58,7 +58,6 @@ public class PostViewDao {
         try {
              stmt = conn.createStatement();
              String sql = "insert into t_review_good (gp_id, mi_id, rg_date) values ('" + gpid + "', '" + miid + "', now())";
-             System.out.println(sql);
              result = stmt.executeUpdate(sql);
              if (result > 0) {
                  sql = "update t_good_post set gp_gcnt = gp_gcnt + 1 where gp_id = '" + gpid + "'";
@@ -83,14 +82,14 @@ public class PostViewDao {
         try {
              stmt = conn.createStatement();
              String sql = "select count(*) from t_review_good where mi_id = '" + miid + "' and gp_id='" + gpid + "'";
-             System.out.println(sql);
+             System.out.println("isGood");
              rs = stmt.executeQuery(sql);
              
              rs.next();
              isGood = rs.getInt(1);
              
         } catch (Exception e) {
-             System.out.println("PostViewDao 클래스의 gcntUpdate() 메소드 오류");
+             System.out.println("PostViewDao 클래스의 isGood() 메소드 오류");
              e.printStackTrace();
           } finally {
              close(rs);
@@ -99,4 +98,49 @@ public class PostViewDao {
         
         return isGood;
     }
+    
+    public int goodUpdate(String giid, String miid) {
+        Statement stmt = null;
+        int result = 0;
+        
+        try {
+             stmt = conn.createStatement();
+             String sql = "insert into t_schedule_zzim (gi_id, mi_id) values ('" + giid + "', '" + miid + "')";
+             result = stmt.executeUpdate(sql);
+        } catch (Exception e) {
+             System.out.println("PostViewDao 클래스의 gcntUpdate() 메소드 오류");
+             e.printStackTrace();
+          } finally {
+             close(stmt);
+          }
+        
+        return result;
+    }
+    
+
+    public int isInterest(String giid, String miid) {
+        Statement stmt = null;
+        int isInterest = 0;
+        ResultSet rs = null;
+        
+        try {
+             stmt = conn.createStatement();
+             String sql = "select count(*) from t_schedule_zzim where mi_id = '" + miid + "' and gi_id='" + giid + "'";
+             System.out.println(sql);
+             rs = stmt.executeQuery(sql);
+             
+             rs.next();
+             isInterest = rs.getInt(1);
+             
+        } catch (Exception e) {
+             System.out.println("PostViewDao 클래스의 isInterest() 메소드 오류");
+             e.printStackTrace();
+          } finally {
+             close(rs);
+             close(stmt);
+          }
+        
+        return isInterest;
+    }
+
 }

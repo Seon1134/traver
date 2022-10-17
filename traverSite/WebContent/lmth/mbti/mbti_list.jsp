@@ -63,8 +63,9 @@ input[type="text"] {
 
 #x-sch {
 	width: 10px;
-	margin-left: 5px;
 	border: none;
+	position: relative;
+    right: 5px;
 }
 
 .btn {
@@ -206,12 +207,7 @@ window.onload = function() {
 <script>
 $(document).ready(function() { 
 	$(".view").change(function() {
-
-		var order = $("input[type=radio][name=order]:checked").val();
-		var dora = $("input[type=radio][name=dora]:checked").val();
-		var mbti = $("input[type=radio][name=mbti]:checked").val();
 		$("form").submit();
-		
 	});
 });
 </script>
@@ -233,10 +229,12 @@ $(document).ready(function() {
 						<img src="file/img/x.png" id="x-sch">
 					</button>
 				</div>
-				<a href="lmth/mbti/mbti_form_in.jsp">
+				<% if ( isLogin ) { %>
+				<a href="/traverSite/postFormIn">
 				<button type="button" class="btn" id="gorecbtn">
 				<image src="file/img/" alt="일정 추천하기">
 				</button></a> 
+				<% } %>
 				<br><br><br>
 			</div>
 			<div id="bottom">
@@ -334,10 +332,10 @@ $(document).ready(function() {
 						for (int i = 0; i < postList.size(); i++) {
 							GoodPost gp = postList.get(i);
 					%>
-					<% if ( isLogin ) {  System.out.println("로그인함 "); %>
-					<a href="postView?gpid=<%=gp.getGp_id() %>&miid=<%=loginInfo.getMi_id() %>">
-					<% } else { System.out.println("로그인안함 ");%>
-					<a href="postView?gpid=<%=gp.getGp_id() %>">
+					<% if ( isLogin ) { %>
+					<a href="postView?gpid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
+					<% } else { %>
+					<a href="postView?gpid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>">
 					<% } %>
 					<div class="post">
 						<div class="post_title">

@@ -2,7 +2,8 @@
 <%
 request.setCharacterEncoding("utf-8");
 GoodPost goodPost = (GoodPost)request.getAttribute("goodPost");
-int result = (int)request.getAttribute("isGood");
+boolean isGood = (boolean)request.getAttribute("isGood");
+boolean isInterest = (boolean)request.getAttribute("isInterest");
 %>
 <!DOCTYPE html>
 <html>
@@ -19,9 +20,10 @@ int result = (int)request.getAttribute("isGood");
 }
 #section1 { width: 1000px; margin: 50px auto; padding-bottom: 50px; position: relative; }
 #title { font-size: 25px; font-weight: bold; }
-#goodicon { width: 30px; vertical-align: middle; margin-right: 5px;}
+#goodicon, #interest, #report { width: 30px; vertical-align: middle; margin-right: 3px;}
 .ctt_font { font-size: 18px; line-height: 1.5; }
-#lastup { font-size: 13px; }
+#writer { position: relative; top: 4px; }
+#lastup { font-size: 13px; float: right; margin-right: 10px; margin-top: 13px;}
 hr { margin: 15px 0;}
 #schname, #placename { font-size: 20px; font-weight: bold; }
 #schdetail { font-size: 15px; }
@@ -34,7 +36,7 @@ hr { margin: 15px 0;}
 
 #section2 { 
 	width: 600px; margin: auto; border: 1px solid black; 
-	padding: 20px 20px 20px 20px; background-color: #fff;
+	padding: 20px; background-color: #fff;
 	position: absolute; top: 225px; left: 280px;   
 	z-index: 3;
 }
@@ -45,6 +47,21 @@ hr { margin: 15px 0;}
 #placedetail { width: 270px; }
 #placename { margin-bottom: 10px; }
 #placeinfo { margin-top: 20px; line-height:1.7; }
+
+
+#section3 {
+	border: 1px solid black; 
+	padding: 20px; background-color: #fff;
+	position: absolute; top: 100px; left: 280px;   
+	z-index: 3; line-height: 2;
+}
+#report-title { font-size: 22px; font-weight: bold; }
+#report-hr { margin-bottom: 5px; }
+.red { color: red; }
+#report1 { height: 35px; background-color:#DEEBF7; font-weight: bold; font-size: 16px; margin-top: 10px; padding-top: 4px;}
+#report2 { padding: 10px; border: 1px solid #DEEBF7; }
+.btn2{ float: none; display :inline-block; }
+#button { text-align: center; }
 
 .display_none { display: none; }
 </style>
@@ -62,13 +79,28 @@ window.onload = function(){
 	x.addEventListener('click', function() {
 		section2.classList.add('display_none');
 	});
+	
+	const cancel = document.querySelector('#cancel');
+	const report = document.querySelector('#report');
+	const section3 = document.querySelector('#section3');
+
+	report.addEventListener('click', function() {
+		section3.classList.remove('display_none');
+	});
+	
+	cancel.addEventListener('click', function() {
+		section3.classList.add('display_none');
+	});
 }
 </script>
 <script>
 var clickCnt = 0;
 
 	function postDel() {
-		confirm("게시물을 삭제하시겠습니까?")
+		if (confirm("게시물을 삭제하시겠습니까?")) {
+			var Delfrm = document.Delfrm;
+			Delfrm.submit();
+		}
 	}
 	function swapImg(img) {
 		var big = document.getElementById("placeimg1");
@@ -78,17 +110,18 @@ var clickCnt = 0;
 		var big = document.getElementById("placeimg1");
 		big.src = "file/img/silla1.jpg";
 	}
-	function gcntUpdate(gpid, miid) {
+	function gcntUpdate(gpid, giid, miid) {
 		if ( clickCnt == 0 ) {
 			$.ajax({
 				type : "POST",
 				url : "/traverSite/postView",
 				data : {
 					"gpid" : gpid, 
-					"miid" : miid
+					"giid" : giid,
+					"miid" : miid,
+					"kind" : "good"
 				},
 				success : function(result) {
-					
 					if (result == 0) {
 						alert("좋아요에 실패했습니다.\n다시 시도하세요.");
 					}
@@ -98,6 +131,24 @@ var clickCnt = 0;
 			});
 		}
 	}
+	function goodUpdate(gpid, giid, miid) {
+		$.ajax({
+			type : "POST",
+			url : "/traverSite/postView",
+			data : {
+				"gpid" : gpid, 
+				"giid" : giid,
+				"miid" : miid,
+				"kind" : "interest"
+			},
+			success : function(result) {
+				if (result == 0) {
+					alert("관심등록에 실패했습니다.\n다시 시도하세요.");
+				}
+				location.reload();
+			}
+		});
+	}
 </script>
 </head>
 <body>
@@ -106,15 +157,18 @@ var clickCnt = 0;
    <div class="container-default_box">
    		<div id="section1">
    		<form name="mbtiViewFrm" method="post">
-			<p id="title"><%=goodPost.getGp_title() %></p><br>
+			<span id="title"><%=goodPost.getGp_title() %></span>
 			<% if ( isLogin ) { %>
-			<button type="button" class="btn"><img src="file/img/" id="report" alt="신고"></button>
-			<button type="button" class="btn"><img src="file/img/" id="interest" alt="관심등록"></button>
-			<button type="button" class="btn" id="goodbtn" onclick="gcntUpdate('<%=goodPost.getGp_id() %>', '<%=loginInfo.getMi_id() %>');">
-			<img src=<% if ( result > 0 ) { %>"file/img/good2.png" <% } else { %> "file/img/good1.png" <% } %>
-			id="goodicon" alt="좋아요"><span id="goodcnt"><%=goodPost.getGp_gcnt() %></span></button>
+			<button type="button" class="btn"><img src="file/img/report.png" id="report" alt="신고"></button>
+			<button type="button" class="btn" id="interestbtn" onclick="goodUpdate('<%=goodPost.getGp_id() %>', '<%=goodPost.getGi_id() %>','<%=loginInfo.getMi_id() %>');">
+			<img src=<% if ( isInterest ) { %>"file/img/bookmark2.png" <% } else { %> "file/img/bookmark1.png" <% } %> 
+			id="interest" alt="관심등록"></button>
+			<button type="button" class="btn" id="goodbtn" onclick="gcntUpdate('<%=goodPost.getGp_id() %>', '<%=goodPost.getGi_id() %>','<%=loginInfo.getMi_id() %>');">
+			<img src=<% if ( isGood ) { %>"file/img/goood2.png" <% } else { %> "file/img/goood1.png" <% } %>
+			id="goodicon" alt="좋아요"><span id="goodcnt"> 추천 : <%=goodPost.getGp_gcnt() %></span></button>
 			<% } %>
-			<span class="ctt_font" id="writer"><%=goodPost.getMi_id() %>(<%=goodPost.getGp_mbti() %>)</span><br>
+			<br>
+			<span class="ctt_font" id="writer"><%=goodPost.getMi_id() %>(<%=goodPost.getGp_mbti() %>)</span>
 			<span class="ctt_font" id="lastup">마지막 수정 : <%=goodPost.getGp_last() %></span>
 			<hr>
 			<p id="schname">일정이름<% %></p><br>
@@ -141,13 +195,18 @@ var clickCnt = 0;
 			<div id="contentbox">
    				<span class="ctt_font" id="content"><%=goodPost.getGp_content() %></span>
    			</div>
+   			</form>
    			<hr>
-   			<% if ( isLogin ) { %>
+   			<% if ( isLogin && loginInfo.getMi_id().equals(goodPost.getMi_id()) ) { %>
    			<a href="mbti_form_up.jsp"><button type="button" class="btn" id="update"><img src="../../file/img/" id="update" alt="수정"></button></a>
+ 			<form name="Delfrm" action="/traverSite/postProcDel" method="post">
    			<button type="button" class="btn" id="delete" onclick="postDel();"><img src="../../file/img/" id="delete" alt="삭제"></button>
+   			<input type="hidden" name="kind" value="list">
+   			<input type="hidden" name="gp_id" value="<%=goodPost.getGp_id() %>">
+   			</form>
    			<% } %>
-   			<a href="mbti_list.jsp"><button type="button" class="btn" id="list"><img src="../../file/img/" id="list" alt="목록"></button></a>
-   		</form>
+   			<a href="/traverSite/postList"><button type="button" class="btn" id="list"><img src="../../file/img/" id="list" alt="목록"></button></a>
+   		
    		</div>
    		<div class="display_none" id="section2">
    			<img src="file/img/silla1.jpg" id="placeimg1">
@@ -171,6 +230,29 @@ var clickCnt = 0;
 			<img src="file/img/silla3.jpg" id="placeimg3" class="descimg" onmouseover="swapImg('silla3.jpg');" onmouseout="bigImg();">
 			<img src="file/img/silla4.jpg" id="placeimg4" class="descimg" onmouseover="swapImg('silla4.jpg');" onmouseout="bigImg();">
 			<img src="file/img/silla5.jpg" id="placeimg5" class="descimg" onmouseover="swapImg('silla5.jpg');" onmouseout="bigImg();">
+		</div>
+		<div class="display_none" id="section3">
+			<form name="reportFrm" action="#">
+			<span id="report-title">신고하기</span>
+			<hr id="report-hr">
+			<span class="red">* 허위 신고일 경우, 신고자의 서비스 활동이 제한될 수 있으니 신중하게 신고해주세요.</span><br>
+			<div id="report1">&nbsp;&nbsp;신고사유</div>
+			<div id="report2">
+			<input type="radio" name="report" value="음란성 리뷰" id="lewd"><label for="lewd"> 음란성 리뷰</label><br>
+			<input type="radio" name="report" value="광고성 리뷰" id="advert"><label for="advert"> 광고성 리뷰</label><br>
+			<input type="radio" name="report" value="욕설/부적절한 언어" id="insult"><label for="insult"> 욕설/부적절한 언어</label><br>
+			<input type="radio" name="report" value="회원 분란 유도" id="disturb"><label for="disturb"> 회원 분란 유도</label><br>
+			<input type="radio" name="report" value="회원 비방" id="slander"><label for="slander"> 회원 비방</label><br>
+			<input type="radio" name="report" value="명예훼손/저작권 침해" id="defamation"><label for="defamation"> 명예훼손/저작권 침해</label><br>
+			<input type="radio" name="report" value="초상권 침해/도촬" id="portrait_rights"><label for="portrait_rights"> 초상권 침해/도촬</label><br>
+			<input type="radio" name="report" value="도배성 리뷰" id="plaster"><label for="plaster"> 도배성 리뷰</label><br>
+			</div>
+			<br>
+			<div id="button">
+			<button type="submit" class="btn btn2"><img src="file/img/" id="reportsubmit" alt="확인"></button>&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn btn2" id="cancel"><img src="file/img/" id="reportcancel" alt="취소"></button>
+			</div>
+			</form>
 		</div>
    </div>
 </div>

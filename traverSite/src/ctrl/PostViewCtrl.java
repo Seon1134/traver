@@ -17,22 +17,29 @@ public class PostViewCtrl extends HttpServlet {
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         String gpid = request.getParameter("gpid");
+        String giid = request.getParameter("giid");
         String miid = "";
-        int result = 0;
-        int isGood = 0;
+        boolean isGood = false;
+        boolean isInterest = false;
         
         PostViewSvc postViewSvc = new PostViewSvc();
-        if ( request.getParameter("miid") != null ) {
+        if ( request.getParameter("miid") != null ) { 
             miid = request.getParameter("miid");
-            result = postViewSvc.gcntUpdate(gpid, miid);
-            isGood = postViewSvc.isGood(gpid,miid);
+            isGood = postViewSvc.isGood(gpid,miid); // 좋아요 눌렀는지 여부 확인
+            isInterest = postViewSvc.isInterest(giid,miid); // 관심등록 했는지 여부 확인
+            if (  request.getParameter("kind") != null ) {
+                if ( request.getParameter("kind").equals("good") ) { // 메인이나 리스트에서  호출한 것이 아니라 좋아요 버튼을 눌러서 리로드 하는 경우
+                    postViewSvc.gcntUpdate(gpid, miid); // 좋아요 수 증가
+                } else if ( request.getParameter("kind").equals("interest") ) { // 메인이나 리스트에서  호출한 것이 아니라 관심등록 버튼을 눌러서 리로드 하는 경우
+                    postViewSvc.goodUpdate(giid, miid); // 관심일정에 추가
+                }
+            }
         }
         
-        System.out.println("컨트롤러 isGood : " + isGood);
         GoodPost goodPost = postViewSvc.getGoodPost(gpid);
         request.setAttribute("goodPost", goodPost);
-        request.setAttribute("result", result);
         request.setAttribute("isGood", isGood);
+        request.setAttribute("isInterest", isInterest);
         
         RequestDispatcher dispatcher = 
                 request.getRequestDispatcher("lmth/mbti/mbti_view.jsp");

@@ -28,7 +28,6 @@ ArrayList<GoodPost> popPostList = (ArrayList<GoodPost>)request.getAttribute("pop
 	top: 150%;
 	display: inline;
 	margin-left: 150px;
-	z-index: 0;
 }
 .container-default_box {
 	padding: 20px 15px 20px 15px;
@@ -44,7 +43,8 @@ ArrayList<GoodPost> popPostList = (ArrayList<GoodPost>)request.getAttribute("pop
 	position: relative; 
 	cursor: pointer;
 }
-#retestbtn { margin-top: 10px; right: 120px; position: relative; }
+#retestbtn { right: 25px; position: relative; }
+#retestimg { margin-top: 10px; }
 .btn {
 	background: inherit ; border: none; box-shadow: none; border-radius: 0; 
 	padding: 0; overflow: visible; cursor: pointer;
@@ -99,7 +99,6 @@ hr { margin: 20px 0;}
 <script>
 $(document).ready(function() {
 	
-	
 	// 버튼 클릭시 게시물 리스트 변경
 	var mbticlix = 0, popclix = 0;
 	
@@ -139,6 +138,12 @@ $(document).ready(function() {
 			$("#b-l-btn").removeClass('hide');
 		} 
 	});
+	
+	$("#mbti_select").change(function() {
+		var mbti = $("#mbti_select option:selected").val();
+		$("#mbti").val(mbti);
+		$("form").submit();
+	});
 });
 </script>
 </head>
@@ -153,8 +158,10 @@ $(document).ready(function() {
    <div class="container-default_box">
    		<br><br>
    		<div id="top">
-	       	<a href="mbti_main.jsp" id="title"><h2 id="title_font">Best 여행</h2></a>
-	       	<select id="mbti_select" onchage="" >
+	       	<a href="/traverSite/postMain" id="title"><h2 id="title_font">Best 여행</h2></a>
+	       	<form name="mbtiFrm" action="/traverSite/postMain" method="post">
+	       	<input type="hidden" name="mbti" id="mbti">
+	       	<select id="mbti_select">
 	   			<option value="ISTJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ISTJ")) {%> selected <%}%>>ISTJ</option>
 	   			<option value="ISTP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ISTP")) {%> selected <%}%>>ISTP</option>
 	   			<option value="ISFJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ISFJ")) {%> selected <%}%>>ISFJ</option>
@@ -172,8 +179,9 @@ $(document).ready(function() {
 	   			<option value="ENFJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ENFJ")) {%> selected <%}%>>ENFJ</option>
 	   			<option value="ENFP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ENFP")) {%> selected <%}%>>ENFP</option>
 	   		</select>
+	   		</form>
 	   		<% if ( isLogin ) { %>
-	   		<a href="lmth/mbti/mbti_test.jsp"><button class="btn"><image id="retestbtn" src="file/img/" alt="재검사"></button></a>
+	   		<a href="lmth/mbti/mbti_test.jsp"><button class="btn" id="retestbtn"><image id="retestimg" src="file/img/" alt="재검사"></button></a>
 	   		<% } %>
 	   	</div><br><br>
 	   	<hr>
@@ -190,13 +198,15 @@ $(document).ready(function() {
 		   	<div id="mbti-post">
 		   		<div class="hiddenbox">
 				   	<div class="postbox" id="mbti_postbox">
-				   	<% for (int i = 0; i < mbtiPostList.size(); i++) {
+				   	<% 
+				   	if ( mbtiPostList.size() > 0) {
+				   		for (int i = 0; i < mbtiPostList.size(); i++) {
 				   			GoodPost mp = mbtiPostList.get(i);
 				   	%>
 				   	<% if ( isLogin ) { %>
-					<a href="postView?gpid=<%=mp.getGp_id() %>&miid=<%=loginInfo.getMi_id() %>">
+					<a href="postView?gpid=<%=mp.getGp_id() %>&giid=<%=mp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
 					<% } else { %>
-					<a href="postView?gpid=<%=mp.getGp_id() %>">
+					<a href="postView?gpid=<%=mp.getGp_id() %>&giid=<%=mp.getGi_id() %>">
 					<% } %>
 				   		<div class="post">
 				   			<div class="post_title">
@@ -207,7 +217,9 @@ $(document).ready(function() {
 				   			</div>
 				   		</div>
 				   	</a>
-				   	<% } %>
+				   	<% } 
+				   	}
+				   	%>
 					</div>
 				</div>
 			</div>
@@ -224,20 +236,28 @@ $(document).ready(function() {
 		   	<div id="pop-post">
 		   		<div class="hiddenbox">
 				   	<div class="postbox" id="pop_postbox">
-					   	<% for (int i = 0; i < popPostList.size(); i++) {
-				   			GoodPost pp = popPostList.get(i);
-				   		%>
-				   		<a href="postView?gpid=<%=pp.getGp_id() %>">
-				   		<div class="post">
-				   			<div class="post_title">
-				   				<%=pp.getGp_title() %><br>#박 #일 <span class="small">(##.##~##.##)</span>
-				   			</div>
-				   			<div class="post_img">
-				   				<img src="#" class="postimg">
-				   			</div>
-				   		</div>
-				   		</a>
-				   	<% } %>
+				   	<% 
+					if ( mbtiPostList.size() > 0) {
+				   		for (int i = 0; i < popPostList.size(); i++) {
+			   			GoodPost pp = popPostList.get(i);
+			   		%>
+			   		<% if ( isLogin ) { %>
+					<a href="postView?gpid=<%=pp.getGp_id() %>&giid=<%=pp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
+					<% } else { %>
+					<a href="postView?gpid=<%=pp.getGp_id() %>&giid=<%=pp.getGi_id() %>">
+					<% } %>
+			   		<div class="post">
+			   			<div class="post_title">
+			   				<%=pp.getGp_title() %><br>#박 #일 <span class="small">(##.##~##.##)</span>
+			   			</div>
+			   			<div class="post_img">
+			   				<img src="#" class="postimg">
+			   			</div>
+			   		</div>
+			   		</a>
+			   		<% } 
+				   	}
+				   	%>
 					</div>
 				</div>
 			</div>
