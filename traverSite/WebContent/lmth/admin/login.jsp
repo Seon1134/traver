@@ -27,10 +27,10 @@ if (url == null) {
 .container .inner label{display : inline-block; width : 90px; font-size : 16px;}
 .container .inner label:nth-of-type(1){margin-bottom : 20px;}
 .container .inner input{height : 25px; padding : 0 10px;}
-.container .inner #id{margin-right: 25px; width: 150px; }
-.container .inner #pw{margin-right: 25px; width: 150px; }
+.container .inner #id{margin-right: 25px; width: 180px; }
+.container .inner #pw{margin-right: 25px; width: 180px; }
 .container .inner input{height : 25px; padding : 0 10px;}
-.container .inner form div:nth-of-type(2) input{height : 72px; background-color : #fff; border: 1px solid #999; cursor : pointer;}
+.container .inner form div:nth-of-type(2) input{height : 72px; background-color : #fff; border: 1px solid #999; cursor : pointer; padding: 20px;}
 .container .inner p{text-align : center; font-size : 13px; margin : 14px 0 0;}
 </style>
 </head>

@@ -19,7 +19,7 @@ header nav ul{display : flex;}
 header nav ul li a{display : inline-block; font-size : 18px; font-weight : 500; padding : 25px 35px; color : #333;}
 header nav ul li a:hover{color : #1ebbab;}
 header .nav2{display : flex; align-items: center;}
-header .nav2 ul li a{display : inline-block; padding : 25px 10px; color : #333;}
+header .nav2 ul li a{display : inline-block; padding : 25px 20px; color : #333;}
 
 /* 헤더 종료 */
 
@@ -39,8 +39,10 @@ header .nav2 ul li a{display : inline-block; padding : 25px 10px; color : #333;}
 .main .mem_table{width : 100%; padding : 0 0px; box-sizing : border-box;}
 .main .mem_table table{width: 100%;}
 .main .mem_table table th:nth-of-type(1n+1) {background: #e6e6e6; height: 30px;}
-.main .mem_table table th, .main .mem_table table td{border : 1px solid #ccc; padding : 10px;}
+.main .mem_table table th, .main .mem_table table td{border : 1px solid #ccc; padding : 10px; vertical-align: middle;}
 .main .mem_table .mem_btn_type { vertical-align: middle; height: 30px; width: 50px; box-sizing: border-box; background: inherit; border: 1px solid #ccc; }
+.main .mem_table .num_list { display: flex; justify-content: center; margin: 50px 0 100px;}
+.main .mem_table .mem_btn_type:hover { color : #fff; background-color : #666; }
 /* mem_01 끝 */
 
 
