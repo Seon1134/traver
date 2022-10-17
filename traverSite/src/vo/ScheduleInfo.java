@@ -3,19 +3,20 @@ package vo;
 public class ScheduleInfo {
 // '내 일정'에서 하나의 일정 정보를 저장할 클래스 
     private int si_dnum; 
-    private String si_id, mi_id, si_sdate, si_edate, si_date, si_last, si_name, si_isTake, si_img; // 연도별엔       / 등록 최신순엔 si_date desc
+    private String si_id, mi_id, si_sdate, si_edate, si_date, si_last, si_name, si_isTake, si_img;
+    private String schYear;
     
-    public String getSi_id() {
-        return si_id;
-    }
-    public void setSi_id(String si_id) {
-        this.si_id = si_id;
-    }
     public int getSi_dnum() {
         return si_dnum;
     }
     public void setSi_dnum(int si_dnum) {
         this.si_dnum = si_dnum;
+    }
+    public String getSi_id() {
+        return si_id;
+    }
+    public void setSi_id(String si_id) {
+        this.si_id = si_id;
     }
     public String getMi_id() {
         return mi_id;
@@ -64,6 +65,12 @@ public class ScheduleInfo {
     }
     public void setSi_img(String si_img) {
         this.si_img = si_img;
+    }
+    public String getSchYear() {
+        return schYear;
+    }
+    public void setSchYear(String schYear) {
+        this.schYear = schYear;
     }
 
 }

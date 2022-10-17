@@ -76,21 +76,20 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 <%
 request.setCharacterEncoding("utf-8");
 ArrayList<ScheduleInfo> scheduleList = (ArrayList<ScheduleInfo>)request.getAttribute("scheduleList");
-// 자유게시판 글목록이 들어있는 ArrayList<ScheduleInfo>를 형변환하여 받아옴
+// 일정 목록이 들어있는 ArrayList<ScheduleInfo>를 형변환하여 받아옴
 
-String keyword = (String)request.getParameter("keyword");
-String schargs = "";
-if (keyword != null && !keyword.equals("")) {// 검색어가 있으면
-	schargs = "&keyword=" + keyword; // ex) '제주'로 검색했을 때 쿼리스트링 ?&keyword=제주
-} else { // 검색어가 없으면
-	keyword = "";
-}
+String sy = request.getParameter("sy");
+String o = request.getParameter("o");
+String keyword = request.getParameter("keyword");
 
-/*
-String oargs = "";
-String o = (String)request.getParameter("o");
-if (o != null && !o.equals(""))		oargs += "?o=" + o;
-*/
+String args = "", yargs = "", oargs = "", schargs = "";
+if (sy != null && !sy.equals("")) 				yargs += "&sy=" + sy;
+if (o != null && !o.equals("")) 				oargs += "&o=" + o;
+else 	o = "";
+if (keyword != null && !keyword.equals("")) 	schargs += "&keyword=" + keyword; 
+else 	keyword = "";
+
+args = "&yargs=" + oargs + schargs; // 일정 디테일 보기용 쿼리
 
 %>
 <div class="container">
@@ -102,25 +101,29 @@ if (o != null && !o.equals(""))		oargs += "?o=" + o;
 	   			<a href="/traverSite/mschdList" id="title"><span id="subtitle">내 일정</span></a>
 	   		</div>
 	   		
-	   		
 		 	<form name="frmSch" method="get">
-	   		<select name="schYear" >
+		 	<input type="hidden" name="o" value="<%=o%>"/>
+		 	<input type="hidden" name="sy" value="<%=sy %>"/>
+
+	   		<select name="sy" onchange="location.href='/traverSite/mschdList?<%=schargs + oargs%>&sy=' + this.value;">
 				<option value="">전체보기</option>
 <%
 String today = LocalDate.now() + "";
 int maxYear = Integer.parseInt(today.substring(0, 4));
 for (int i = 2020 ; i <= maxYear + 1 ; i++) {
+	
 %>	   		
-				<option value="<%=i %>"><%=i %> 년</option>
+				<option value="<%=i %>" ><%=i %> 년</option>
 <%		
 }
 %>
+
 			 </select>		 
-			 <select name="o">
-				<option value="a">등록 최신 순</option>
-				<option value="b">등록 오래된 순</option>
+			 <select name="o" onchange="location.href='/traverSite/mschdList?<%=schargs + yargs%>&o=' + this.value;">
+				<option value="a" <% if (o.equals("a")) { %>selected="selected"<% } %>>등록 최신 순</option>
+				<option value="b" <% if (o.equals("b")) { %>selected="selected"<% } %>>등록 오래된 순</option>
 			 </select>
-				 <span> 총 일정 수 : </span>
+			 <span> 총 일정 수 : </span>
 				 <!-- 추후 일정제목/장소명 셀렉트 박스는 삭제하고 검색박스만 남겨놓을 예정 -->
 			 	<div class="schNbtn">
 				 	<div id= "search-box" >
@@ -154,7 +157,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 
 		<td width="20%" align="center" >
 			<div class="mouseEventBox">
-				<a href="#"><!-- mschdDetail?siid=스크립틀릿~ + 검색조건 등 쿼리스트링으로 들고가기  %> -->
+				<a href="mschdDetail?siid=<%=si.getSi_id() + args %>">
 					<div class="upBox" >
 						<span id="schdName"><%=title %></span><br />
 						<span><%=dnum1%>&nbsp;<%=dnum2%></span><br />
@@ -162,7 +165,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 					</div>	
 					<img src="/traverSite/file/img/<%=si.getSi_img() %>" width="180" height="180"/>
 				</a>	
-			</div>
+			</div><br/>
 		</td>
 <%		
 			if (i % 5 == 4) 	out.println("</tr>");
