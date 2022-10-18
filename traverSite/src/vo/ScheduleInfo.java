@@ -1,10 +1,13 @@
 package vo;
 
+import java.util.ArrayList;
+
 public class ScheduleInfo {
 // '내 일정'에서 하나의 일정 정보를 저장할 클래스 
     private int si_dnum; 
     private String si_id, mi_id, si_sdate, si_edate, si_date, si_last, si_name, si_isTake, si_img;
     private String schYear;
+    private ArrayList<ScheduleDay> schdDayList;
     
     public int getSi_dnum() {
         return si_dnum;
@@ -71,6 +74,12 @@ public class ScheduleInfo {
     }
     public void setSchYear(String schYear) {
         this.schYear = schYear;
+    }
+    public ArrayList<ScheduleDay> getSchdDayList() {
+        return schdDayList;
+    }
+    public void setSchdDayList(ArrayList<ScheduleDay> schdDayList) {
+        this.schdDayList = schdDayList;
     }
 
 }

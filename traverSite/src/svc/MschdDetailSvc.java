@@ -6,18 +6,17 @@ import java.sql.*;
 import dao.*;
 import vo.*;
 
-public class MschdListSvc {
-   public ArrayList<ScheduleInfo> getMschdList(String where, String orderBy) {
-        ArrayList<ScheduleInfo> scheduleList = new ArrayList<ScheduleInfo>();
+public class MschdDetailSvc {
+    public ScheduleInfo getMschdDetail(String miid, String siid) {
+        ScheduleInfo si = null;
         Connection conn = getConnection();
         MschdDao mschdDao = MschdDao.getInstance();
         mschdDao.setConnection(conn);
         
-        scheduleList = mschdDao.getMschdList(where, orderBy);
+        si = mschdDao.getMschdDetail(miid, siid);
         close(conn);
         
-        return scheduleList;
-        
+        return si;
     }
-   
+
 }

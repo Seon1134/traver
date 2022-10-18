@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,15 +31,25 @@
 <body>
 <%@ include file="../../cni/header.jsp" %>
 <%
-// "siid" 처리 
+request.setCharacterEncoding("utf-8");
+ScheduleInfo si = (ScheduleInfo)request.getAttribute("si");
+ArrayList<ScheduleDay> schdDayList = si.getSchdDayList();
 %>
 <div class="container">
    <div class="container-default_box">
    		<br><br><br><br>
-   		<a href="mschd_detail.jsp" id="title"><span id="subtitle">내 일정</span></a><br><br><br><br>
-   		<select id="dayselect">
-			<option value="day1">1일차</option>
-			<option value="day1">여기두 나중에 수정</option>
+   		<a href="/traverSite/mschdDetail" id="title"><span id="subtitle">내 일정</span></a><br><br><br><br>
+   		<select name="dayselect" id="">
+   			<option value="">일차 선택</option>
+<%
+for (int i = 0; i < schdDayList.size() ; i++) {
+	ScheduleDay sd = schdDayList.get(i);
+	String tmp = sd.getSd_dnum() + "일차";	
+%>
+			<option value="<%=sd.getSd_id() %>"><%=tmp %></option>
+<% 
+} 
+%>
 		</select><br><br>
 		<div id="map" style="width:100%;height:350px;"></div>
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b05cef42f58551f118588eb3f26ff67&libraries=services"></script>
@@ -56,7 +67,7 @@
 		<table id="myschd" cellspacing="0">
 		<tr bgColor="#BDD7EE" height="50">
 		<td colspan="5" id="title_td">
-		<span id="schd_name">여행 일정 제목</span>
+		<span id="schd_name">일정 제목 : <%=si.getSi_name() %></span>
 		<a href="../mbti/mbti_form_in.jsp"><button type="button" class="btn" id="recbtn">MBTI 일정 추천</button></a>
 		<span id="rec">회원님과 같은 MBTI에게 일정을 추천해보세요</span>
 		</td></tr>

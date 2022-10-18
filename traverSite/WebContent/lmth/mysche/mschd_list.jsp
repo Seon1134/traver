@@ -117,7 +117,6 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 <%		
 }
 %>
-
 			 </select>		 
 			 <select name="o" onchange="location.href='/traverSite/mschdList?<%=schargs + yargs%>&o=' + this.value;">
 				<option value="a" <% if (o.equals("a")) { %>selected="selected"<% } %>>등록 최신 순</option>
@@ -177,7 +176,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 		} // 빈 칸으로 5개를 채워준 후 </tr>을 닫아줌
 		
 	} else {	// 일정 목록이 없으면
-		out.println("검색된 일정이 없습니다.");
+		out.println("등록된 일정이 없습니다.");
 	}
 out.println("</table>");
 %>		

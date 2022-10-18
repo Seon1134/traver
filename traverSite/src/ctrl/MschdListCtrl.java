@@ -23,12 +23,14 @@ public class MschdListCtrl extends HttpServlet {
 		HttpSession session = request.getSession();
 		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
 		
-		String sy = request.getParameter("sy"); // 검색년도
+		String sy = "";
+		if (request.getParameter("sy") != null)  sy = request.getParameter("sy");
+		
 		String keyword = request.getParameter("keyword"); // 일정명 검색어 keyword
 		
 		String where = " where mi_id ='" + loginInfo.getMi_id() + "' ";	 // 검색어가 있을 경우 where절을 저장할 변수 
-		if (keyword == null) {                   // 검색어가 없으면
-		    keyword = "";
+		if (keyword == null ) {                   // 검색어가 없으면
+		    keyword = ""; 
         } else if (!keyword.equals("")) {    // 검색어가 있을 경우
             URLEncoder.encode(keyword, "UTF-8");
             // 쿼리스트링으로 주고 받는 검색어가 한글일 경우 IE에서 간혹 문제가 발생할 수 있으므로 유니코드로 변환시킴
