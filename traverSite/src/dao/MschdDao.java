@@ -33,7 +33,7 @@ public class MschdDao {
             String sql = "select mi_id, si_id, left(si_sdate, 4) schYear, " 
             + "si_sdate, si_edate, si_dnum, si_date, si_name, si_img from t_schedule_info "
             + where + orderBy;
-            // System.out.println(sql);
+            //System.out.println(sql);
             rs = stmt.executeQuery(sql);
             
             while (rs.next()) {
@@ -71,13 +71,14 @@ public class MschdDao {
             String sql = "select * from t_schedule_info where mi_id = '" + miid + "' and si_id = '" + siid + "' ";
             
             stmt = conn.createStatement();
-            System.out.println(sql);
+            //System.out.println(sql);
             rs = stmt.executeQuery(sql);
             if (rs.next()) { 
                 si = new ScheduleInfo();
                 si.setMi_id(miid);
                 si.setSi_id(siid);
                 si.setSi_name(rs.getString("si_name"));
+                si.setSi_dnum(rs.getInt("si_dnum"));
                 si.setSchdDayList(getSchdDayList(siid)); // 현 일정의 일차 관련 목록을 ArrayList로 받아와 si에 저장
             }
             
@@ -92,7 +93,7 @@ public class MschdDao {
     }
     
     public ArrayList<ScheduleDay> getSchdDayList(String siid) {
-    // 받아온(지정한) 일정아이디에 해당하는 일정 정보들을 ArrayList<ScheduleDay>형 인스턴스로 저장하여 리턴하는 메소드
+    // 받아온(지정한) 일정아이디에 해당하는 일차 정보들을 ArrayList<ScheduleDay>형 인스턴스로 저장하여 리턴하는 메소드
         Statement stmt = null;
         ResultSet rs = null;
         ArrayList<ScheduleDay> schdDayList = new ArrayList<ScheduleDay>();
@@ -100,13 +101,17 @@ public class MschdDao {
         
         try {
             String sql = "select * from t_schedule_day where si_id = '" + siid + "' ";
-            
             stmt = conn.createStatement();
+            
+            //System.out.println(sql);
+            
             rs = stmt.executeQuery(sql);
-            while (rs.next()) {   
+            while (rs.next()) {   // 하나의 일정에 해당하는 일차정보가 들어있는 rs
                 sd = new ScheduleDay();
+                sd.setSi_id(siid);
                 sd.setSd_id(rs.getString("sd_id"));
                 sd.setPi_name(rs.getString("pi_name"));
+                sd.setPi_id(rs.getString("pi_id"));
                 sd.setSd_dnum(rs.getInt("sd_dnum"));
                 schdDayList.add(sd);
             }

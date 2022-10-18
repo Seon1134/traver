@@ -26,6 +26,7 @@
 #myschd .daytd { padding: 0px; border: 1px solid #BDD7EE; cursor: pointer; }
 #placebox { padding: 15px; }
 .place { padding-bottom: 10px; }
+.tableBox { overflow:auto;}
 </style>
 </head>
 <body>
@@ -34,20 +35,28 @@
 request.setCharacterEncoding("utf-8");
 ScheduleInfo si = (ScheduleInfo)request.getAttribute("si");
 ArrayList<ScheduleDay> schdDayList = si.getSchdDayList();
+
+for (int i = 0; i < schdDayList.size(); i ++) {	
+	ScheduleDay sd = schdDayList.get(i);
+	//out.println(sd.getSd_id());
+}
+
+// out.println(si.getSi_dnum()); //출력확인용
+
 %>
 <div class="container">
    <div class="container-default_box">
    		<br><br><br><br>
-   		<a href="/traverSite/mschdDetail" id="title"><span id="subtitle">내 일정</span></a><br><br><br><br>
+   		<a href="/traverSite/mschdDetail" id="title"><span id="subtitle">내 일정 상세보기</span></a><br><br><br><br>
    		<select name="dayselect" id="">
    			<option value="">일차 선택</option>
 <%
-for (int i = 0; i < schdDayList.size() ; i++) {
-	ScheduleDay sd = schdDayList.get(i);
-	String tmp = sd.getSd_dnum() + "일차";	
+if ( si != null ) {
+	for ( int i = 1; i <= si.getSi_dnum(); i++ ) {	
 %>
-			<option value="<%=sd.getSd_id() %>"><%=tmp %></option>
-<% 
+			<option value="<%=i %>"><%=i %>일차 </option>
+<%  
+	}
 } 
 %>
 		</select><br><br>
@@ -64,75 +73,57 @@ for (int i = 0; i < schdDayList.size() ; i++) {
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 		</script>
 		<br>
-		<table id="myschd" cellspacing="0">
-		<tr bgColor="#BDD7EE" height="50">
-		<td colspan="5" id="title_td">
-		<span id="schd_name">일정 제목 : <%=si.getSi_name() %></span>
-		<a href="../mbti/mbti_form_in.jsp"><button type="button" class="btn" id="recbtn">MBTI 일정 추천</button></a>
-		<span id="rec">회원님과 같은 MBTI에게 일정을 추천해보세요</span>
-		</td></tr>
-		<tr>
-		<td class="daytd" width="20%">
-			<div id="daybox">
-			<span class="day"> 1일차 </span>
-			</div>
-			<div id="placebox">
-			<p class="place"> 장소 </p><br>
-			<p class="place"> 장소 </p><br>
-			<p class="place"> 장소 </p><br>
-			<p class="place"> 장소 </p><br>
-			<p class="place"> 장소 </p><br>
-			<p class="place"> 장소 </p><br>
-			</div>
-		</td>
-		<td class="daytd" width="20%">
-			<div id="daybox">
-			<span class="day"> 2일차 </span>
-			</div>
-			<div id="placebox">
-			<p class="place"> 장소 </p>
-			</div>
-		</td>
-		<td class="daytd" width="20%">
-			<div id="daybox">
-			<span class="day"> 3일차 </span>
-			</div>
-			<div id="placebox">
-			<p class="place"> 장소 </p><br>
-			<p class="place"> 장소 </p><br>
-			<p class="place"> 장소 </p><br>
-			<p class="place"> 장소 </p><br>
-			<p class="place"> 장소 </p><br>
-			</div>
-		</td>
-		<td class="daytd" width="20%">
-			<div id="daybox">
-			<span class="day"> 4일차 </span>
-			</div>
-			<div id="placebox">
-			<p class="place"> 장소 </p>
-			</div>
-		</td>
-		<td class="daytd" width="20%">
-			<div id="daybox">
-			<span class="day"> 5일차 </span>
-			</div>
-			<div id="placebox">
-			<p class="place"> 장소 </p>
-			</div>
-		</td>
-		</tr>
-		<tr>
-		<td class="daytd" width="20%">
-			<div id="daybox">
-			<span class="day"> 6일차 </span>
-			</div>
-			<div id="placebox">
-			<p class="place"> 장소 </p>
-			</div>
-		</td>
-		</tr>
-		</table>
+		<div class="tableBox">
+		<table id="myschd" cellspacing="0" width="100%" >
+			<tr bgColor="#BDD7EE" height="50" width='100%'>
+				<td colspan="5" id="title_td">
+					<span id="schd_name">제목 : <%=si.getSi_name() %></span>
+					<a href="../mbti/mbti_form_in.jsp"><button type="button" class="btn" id="recbtn">MBTI 일정 추천</button></a>
+					<span id="rec">회원님과 같은 MBTI에게 일정을 추천해보세요</span>
+				</td>
+			</tr>
+
+<%
+if (si.getSi_dnum() != 0) { 	// DAY가 있으면
+	int i = 0;
+	for (i = 1; i < si.getSi_dnum() + 1 ; i ++) {	
+		if (i % 6 == 0) 	out.println("<tr width='100%'>");
+%>			
+				<td class="daytd" width="20%">
+					<div id="daybox">
+					<span class="day"> <%=i %>일차 </span>
+					</div>
+		<%
+		for (int j = 0; j < schdDayList.size(); j ++) {
+			ScheduleDay sd = schdDayList.get(j);
+			if (sd.getSd_dnum() == i) { // 일차번호(1일차, 2일차,,)가 일차수와 같다면
+		%>
+					<div id="placebox">
+						<p class="place"><%= sd.getPi_name() %> </p>
+					</div>
+		<% 
+			}
+		}
+%>
+				</td>
+				
+<%		
+		if (i % 6 == 5) 	out.println("</tr>");
+	}
+		
+		if (i % 6 > 0) {	// 일정이 5개 단위로 맞아 떨어지지 않았을 경우
+			for (int k = 0; k < (6 - 1) ; k++) out.println("<td width='20%'></td>");
+			out.println("</tr>");
+		} // 빈 칸으로 5개를 채워준 후 </tr>을 닫아줌
+		
+} else {	// 일차 목록이 없으면
+		out.println("등록된 일차가 없습니다.");
+	}
+out.println("</table>");
+%>
+		
+		</div> <!-- tableBox -->
+		
    </div>
 </div>
 <%@ include file="../../cni/footer.jsp" %>
