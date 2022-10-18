@@ -41,39 +41,42 @@ public class ScheduleInCtrl extends HttpServlet {
 
         MemberInfo mi = (MemberInfo)session.getAttribute("loginInfo");
         String miid = mi.getMi_id(); // scheduleInfo insert용 miid
-        String imgPiid = scheduleDayList.get(1).getPi_id(); // 이미지 추출용 임의의 piid 하나
+        String imgPiid = scheduleDayList.get(0).getPi_id(); // 이미지 추출용 임의의 piid 하나
         // scheduleDayList = 추가한 일정(장소)리스트 불러오기 (일정ID, 장소ID, 장소명, 일차번호, 해당날짜, 순서)
         ScheduleInSvc scheduleInSvc = new ScheduleInSvc();
-        String result = scheduleInSvc.scheduleInfoInsert(miid, scheduleName, imgPiid, scheduleInfo);
+        String result = scheduleInSvc.scheduleInsert(miid, scheduleName, imgPiid, scheduleInfo, scheduleDayList);
        
         String[] arr = result.split(":");
         String siid = arr[0]; // 일정 ID
-        int success = Integer.parseInt(arr[1]);  // 성공한 insert 수
-        if (success > 0) { // ScheduleInfo insert 성공했으면
-            // 일정등록 추가 실행
-            String result2 = scheduleInSvc.scheduleDayInsert(siid, scheduleDayList);
-            String[] arr2 = result2.split(":");
-            int success2 = Integer.parseInt(arr2[0]);  // 실제 적용된 레코드 개수
-            int target2 = Integer.parseInt(arr2[1]);  // 적용되었어야 할 레코드 개수
+        int infoSuccess = Integer.parseInt(arr[1]); //저장된 info 개수
+        int daySuccess = Integer.parseInt(arr[2]); // 저장된 day개수
+        int dayTarget = Integer.parseInt(arr[3]); // 저장됐어야할 day개수
+        
+        if (infoSuccess > 0 && daySuccess == dayTarget) { // 일정등록 성공했으면
+            // 세션에 저장된 값들 날려버리기
+            session.removeAttribute("scheduleDayList");
+            session.removeAttribute("scheduleInfo");
+            session.removeAttribute("selectDay");
+            session.removeAttribute("selectDate");
+            session.removeAttribute("dateList");
             
-            if (success2 == target2)   {    // scheduleDay insert에 성공했으면
-                response.sendRedirect("mschdDetail?siid=" + siid);
-            } else { // ScheduleDay insert에 실패했으면 알림
-                response.setContentType("text/html; charset=utf-8");
-                PrintWriter out = response.getWriter();
-                out.println("<script> alert('일정 등록에 실패했습니다.'); history.back(); </script>");
-                out.close();
-            }
+            // 세션에 내용값들 다시 만들기
+            ArrayList<ScheduleDay> scheduleDayLst = new ArrayList<ScheduleDay>();
+            ScheduleInfo scheduleIfo = new ScheduleInfo();
+            session.setAttribute("scheduleDayList", scheduleDayLst);
+            session.setAttribute("scheduleInfo", scheduleIfo);
+            session.setAttribute("selectDay", 0);
+            session.setAttribute("selectDate", " ");
             
-        } else { // ScheduleInfo insert에 실패했으면
+            
+            request.setAttribute("siid", siid);
+            response.sendRedirect("/traverSite/lmth/gotraver/remove_session.jsp?siid=" + siid); // 디테일페이지로 siid를 가지고 이동
+        } else { // 일정 등록에 실패했으면
             response.setContentType("text/html; charset=utf-8");
             PrintWriter out = response.getWriter();
             out.println("<script> alert('일정 등록에 실패했습니다.'); history.back(); </script>");
             out.close();
         }
-
-
-        
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doProcess(request, response);

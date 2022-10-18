@@ -16,6 +16,6 @@ session.setAttribute("scheduleDayList", asdf); //어레이리스트 세션에 �
 <title>Insert title here</title>
 </head>
 <body>
-<script>location.replace('sj_test.jsp');</script>
+<script>/* location.replace('sj_test.jsp'); */</script>
 </body>
 </html>

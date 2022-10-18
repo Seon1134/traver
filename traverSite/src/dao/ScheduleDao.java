@@ -81,7 +81,6 @@ public class ScheduleDao {
                     " values ('" + siid + "', '"+ miid +"', '"+ scheduleInfo.getSi_sdate() + "', '"+
                     scheduleInfo.getSi_edate() + "', '" + scheduleName + "', '" + scheduleInfo.getSi_dnum()  + "', '"+ img + "')";
             success = stmt.executeUpdate(sql);
-            
         } catch (Exception e) {
             System.out.println("ScheduleDao 클래스의 scheduleInfoInsert() 메소드 오류");
             e.printStackTrace();
@@ -95,7 +94,6 @@ public class ScheduleDao {
     public String scheduleDayInsert(String siid, ArrayList<ScheduleDay> scheduleDayList) {
         Statement stmt = null;
         ResultSet rs = null;
-        String result = "";
         int success = 0, target = 0;
         
         try {
@@ -106,7 +104,6 @@ public class ScheduleDao {
                         " values ('" + siid + "', '" + sd.getPi_id() + "', '" +  sd.getPi_name() +"', '" +
                         sd.getSd_dnum()+ "', '"+ sd.getSd_date() +"', '" + i +"') ";
                 success += stmt.executeUpdate(sql); target++;
-                
             }
         } catch (Exception e) {
             System.out.println("ScheduleDao 클래스의 scheduleDayInsert() 메소드 오류");
@@ -114,7 +111,7 @@ public class ScheduleDao {
         } finally {
             close(stmt);
         }
-        return result + success + ":" + target;
+        return success + ":" + target;
     }
 
 }

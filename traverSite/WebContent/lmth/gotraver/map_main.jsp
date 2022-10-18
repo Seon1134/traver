@@ -237,8 +237,10 @@ if (isLogin) {
 						<div class="place__option-box">
 							<button type="button" class="place__option place__info">정보</button>
 							<button type="button" class="place__option place__review">리뷰</button>
+						<% if (isLogin) { %>
 							<button type="button" class="place__option place__add" value="<%=pi.getPi_id()%>">추가</button>
 							<button type="button" class="place__option place__love">찜</button>
+						<% } %>
 						</div>
 					</div>
 				</div>

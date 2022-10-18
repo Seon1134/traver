@@ -39,7 +39,7 @@
 		// 세션에 저장하기위해 필드값들에 현재 구해온 값들을 Ctrl로 넘기는 함수 실행
 	}
 	
-	function getDate(day, sdate) { // 선택한 날짜랑 선택한 '일정 시작일'을 받아온다
+	function getDate(day, sdate) { // '선택한 Day일차', '일정 시작일'
 		var arr1 = sdate.split('-');
 		var dat1 = new Date(arr1[0], arr1[1] - 1, arr1[2]); // 시작날짜 년,월,일
 		var dat2 = new Date(dat1.setDate((dat1.getDate()) + (day - 1))); // 시작날짜의 일 값만 뽑아온다
@@ -47,29 +47,50 @@
 		
 		var fullEDate = dat2.toLocaleString().substring(0, 12)
 				.replaceAll(". ", "-").replace(".", ""); // 선택날짜의 형식을 변환하고, '년,월,일'을 가져온다
-		var date = fullEDate.substring(8); // 년,월을 짤라버린 '날짜'
-		if (date < 10) { date = "0" + date; } // 만약 날짜가 10일보다 작다면 0을붙인다
 		
-		var sddate = fullEDate.substring(0, 8) + date; // 최종 '해당날짜'는 잘라버린  '년,월' + '일'
-
+		let fullEDateArr = fullEDate.split("-"); //0:년도, 1:월, 2:일 배열생성
+		var sddate = fullEDateArr[0] + "-"; // retrun 값에 년도 저장 
 		
-		
-		let dateList = ""; // 모든 일차의 date값을 저장할 string 변수
-		for (let i = 0 ; i < 10 ; i++) { // 최대일차인 10일까지 돌린다 (값 받아오기 귀찮.)
-			var dat3 = new Date(arr1[0], arr1[1] - 1, arr1[2]); // 시작날짜 년,월,일
-			var dat4 = new Date(dat3.setDate(dat3.getDate() + i)); 
-			var fullDate =  dat4.toLocaleString().substring(0, 12).replaceAll(". ", "-").replace(".", "");
-			// 시작날짜 '년,월,일'
-			var date2 = fullDate.substring(8); // 년,월을 짤라버린 '날짜'
-			if (date2 < 10) { date2 = "0" + date2; } // 만약 날짜가 10일보다 작다면 0을붙인다
-			
-			var dayDate = fullDate.substring(0, 8) + date2; // 최종 '해당날짜'는 잘라버린  '년,월' + '일'
-			dateList += "," + dayDate;	// 처음엔 공백으로 dateList[1]부터 Day1씩 저장된다.
+		if (fullEDateArr[1] < 10) { // 10월 이상 +0월
+			sddate += "0" + fullEDateArr[1] + "-"
+		} else { // 10월 미만 +월
+			sddate += fullEDateArr[1] + "-"
 		}
 		
+		if (fullEDateArr[2] < 10) { // 10일 이상 +0일
+			sddate += "0" + fullEDateArr[2]
+		} else { // 10일 미만 +일
+			sddate += fullEDateArr[2]
+		}
+
+
+
+		let dateList = ""; // 모든 일차의 date값을 저장할 string 변수
+		for (let i = 0 ; i < 10 ; i++) { // 최대일차인 10일까지 돌린다 (값 받아오기 귀찮.)
+			let dat3 = new Date(arr1[0], arr1[1] - 1, arr1[2]); // 시작날짜 년,월,일 (2)
+			let dat4 = new Date(dat3.setDate(dat3.getDate() + i)); // 시작날짜에 [i]일을 더한 값. (n일차의 날짜)
+			let fullDate =  dat4.toLocaleString().substring(0, 12).replaceAll(". ", "-").replace(".", "");
+			// 시작날짜 '년,월,일'에서 .을 -로 바꾸고 . 삭제
+
+			let dateArr = fullDate.split("-"); // 0:년도, 1:월, 2:일 배열생성
+			dateList += "," + dateArr[0] + "-"; //date값에 쉼표 + 년도 넣기 
+			
+			if (dateArr[1] < 10) { // 10월 이상 +0월
+				dateList += "0" + dateArr[1] + "-"
+			} else { // 10월 미만 +월
+				dateList += dateArr[1] + "-"
+			}
+			
+			if (dateArr[2] < 10) { // 10일 이상 +0일
+				dateList += "0" + dateArr[2]
+			} else { // 10일 미만 +일
+				dateList += dateArr[2]
+			}
+		}
 		
+
 		scheduleSelect(day, sddate, dateList);
 		
-		return fullEDate.substring(0, 8) + date;
+		return sddate;
 		// Day에 해당하는 날짜
 	}
