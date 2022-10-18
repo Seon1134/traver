@@ -72,4 +72,28 @@ public class PostViewSvc {
         
         return result1;
     }
+
+    public GoodInfo getGoodInfo(String gi) {
+        Connection conn = getConnection();
+        GoodInfo goodInfo = null;
+        PostViewDao postViewDao = PostViewDao.getInstance();
+        postViewDao.setConnection(conn);
+        
+        goodInfo = postViewDao.getGoodInfo(gi);
+        close(conn);
+        
+        return goodInfo;
+    }
+
+    public ArrayList<GoodDay> getGoodDayList(String gi) {
+        Connection conn = getConnection();
+        ArrayList<GoodDay> goodDayList = null;
+        PostViewDao postViewDao = PostViewDao.getInstance();
+        postViewDao.setConnection(conn);
+        
+        goodDayList = postViewDao.getGoodDayList(gi);
+        close(conn);
+        
+        return goodDayList;
+    }
 }

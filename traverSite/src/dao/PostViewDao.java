@@ -34,6 +34,7 @@ public class PostViewDao {
                  goodPost.setMi_id(rs.getString("mi_id"));
                  goodPost.setGp_mbti(rs.getString("gp_mbti"));
                  goodPost.setGp_title(rs.getString("gp_title"));
+                 goodPost.setGp_list(rs.getString("gp_list"));
                  goodPost.setGp_content(rs.getString("gp_content"));
                  goodPost.setGp_gcnt(rs.getInt("gp_gcnt"));
                  goodPost.setGp_date(rs.getString("gp_date"));
@@ -138,6 +139,69 @@ public class PostViewDao {
           }
         
         return isInterest;
+    }
+    
+    public GoodInfo getGoodInfo(String gi) {
+        Statement stmt = null; 
+        ResultSet rs = null;
+        GoodInfo goodInfo = new GoodInfo();
+        
+        try {
+             stmt = conn.createStatement();
+             String sql = "select * from t_good_info where gi_id = '" + gi + "'";
+             rs = stmt.executeQuery(sql);
+             
+             while(rs.next()) {
+                 goodInfo.setGi_id(rs.getString("gi_id"));
+                 goodInfo.setMi_id(rs.getString("mi_id"));
+                 goodInfo.setGi_nickname(rs.getString("gi_nickname"));
+                 goodInfo.setGi_dnum(rs.getInt("gi_dnum"));
+                 goodInfo.setGi_date(rs.getString("gi_date"));
+                 goodInfo.setGi_name(rs.getString("gi_name"));
+                 goodInfo.setGi_img (rs.getString("gi_img"));
+             }
+           
+        } catch (Exception e) {
+             System.out.println("PostViewDao 클래스의 getGoodInfo() 메소드 오류");
+             e.printStackTrace();
+          } finally {
+             close(rs); close(stmt);
+          }
+        
+        return goodInfo;
+    }
+
+    public ArrayList<GoodDay> getGoodDayList(String gi) {
+        Statement stmt = null; 
+        ResultSet rs = null;
+        ArrayList<GoodDay> goodDayList = new ArrayList<GoodDay>();
+        GoodDay gd = null;
+        
+        try {
+             stmt = conn.createStatement();
+             String sql = "select * from t_good_day where gi_id = '" + gi + "'";
+             rs = stmt.executeQuery(sql);
+                 
+             while(rs.next()) {
+                 gd = new GoodDay();
+                 gd.setGi_id(rs.getString("gi_id"));
+                 gd.setPi_id(rs.getInt("pi_id"));
+                 gd.setGd_dnum(rs.getInt("gd_dnum"));
+                 gd.setGd_seq(rs.getInt("gd_seq"));
+                 gd.setGd_name(rs.getString("gd_name"));
+                 gd.setGd_coords(rs.getString("gd_coords"));
+                 gd.setGd_date(rs.getString("gd_date"));
+                 goodDayList.add(gd);
+             }
+           
+        } catch (Exception e) {
+             System.out.println("PostViewDao 클래스의 getGoodDayList() 메소드 오류");
+             e.printStackTrace();
+          } finally {
+             close(rs); close(stmt);
+          }
+        
+        return goodDayList;
     }
 
 }

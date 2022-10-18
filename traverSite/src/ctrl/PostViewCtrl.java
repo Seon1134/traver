@@ -36,10 +36,15 @@ public class PostViewCtrl extends HttpServlet {
             }
         }
         
+        GoodInfo goodInfo = postViewSvc.getGoodInfo(giid);
+        ArrayList <GoodDay> goodDayList = postViewSvc.getGoodDayList(giid);
+        
         GoodPost goodPost = postViewSvc.getGoodPost(gpid);
         request.setAttribute("goodPost", goodPost);
         request.setAttribute("isGood", isGood);
         request.setAttribute("isInterest", isInterest);
+        request.setAttribute("goodInfo", goodInfo);
+        request.setAttribute("goodDayList", goodDayList);
         
         RequestDispatcher dispatcher = 
                 request.getRequestDispatcher("lmth/mbti/mbti_view.jsp");

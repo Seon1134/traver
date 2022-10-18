@@ -2,7 +2,7 @@ package vo;
 
 public class GoodInfo {
 
-    private String gi_id, mi_id, gi_nickname, gi_date, gi_name; 
+    private String gi_id, mi_id, gi_nickname, gi_date, gi_name, gi_img; 
     private int gi_dnum;
     
     public String getGi_id() {
@@ -34,6 +34,12 @@ public class GoodInfo {
     }
     public void setGi_name(String gi_name) {
         this.gi_name = gi_name;
+    }
+    public String getGi_img() {
+        return gi_img;
+    }
+    public void setGi_img(String gi_img) {
+        this.gi_img = gi_img;
     }
     public int getGi_dnum() {
         return gi_dnum;
