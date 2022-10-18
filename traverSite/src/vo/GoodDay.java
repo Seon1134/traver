@@ -1,7 +1,7 @@
 package vo;
 
 public class GoodDay {
-    private String gi_id, gd_name, gd_date;
+    private String gi_id, gd_name, gd_coords, gd_date;
     private int gd_id, pi_id, gd_dnum, gd_seq;
     
     public String getGi_id() {
@@ -15,6 +15,12 @@ public class GoodDay {
     }
     public void setGd_name(String gd_name) {
         this.gd_name = gd_name;
+    }
+    public String getGd_coords() {
+        return gd_coords;
+    }
+    public void setGd_coords(String gd_coords) {
+        this.gd_coords = gd_coords;
     }
     public String getGd_date() {
         return gd_date;

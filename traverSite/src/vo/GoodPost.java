@@ -1,7 +1,7 @@
 package vo;
 
 public class GoodPost {
-    private String gp_id, gi_id, mi_id, gp_mbti, gp_title, gp_content, gp_date, gp_last, gp_ip;
+    private String gp_id, gi_id, mi_id, mi_nickname, gp_mbti, gp_title, gp_list, gp_content, gp_date, gp_last, gp_ip;
     private int gp_gcnt;
    
     public String getGp_id() {
@@ -22,6 +22,12 @@ public class GoodPost {
     public void setMi_id(String mi_id) {
         this.mi_id = mi_id;
     }
+    public String getMi_nickname() {
+        return mi_nickname;
+    }
+    public void setMi_nickname(String mi_nickname) {
+        this.mi_nickname = mi_nickname;
+    }
     public String getGp_mbti() {
         return gp_mbti;
     }
@@ -33,6 +39,12 @@ public class GoodPost {
     }
     public void setGp_title(String gp_title) {
         this.gp_title = gp_title;
+    }
+    public String getGp_list() {
+        return gp_list;
+    }
+    public void setGp_list(String gp_list) {
+        this.gp_list = gp_list;
     }
     public String getGp_content() {
         return gp_content;

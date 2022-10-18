@@ -8,14 +8,26 @@ import vo.*;
 
 public class PostFormInSvc {
     public ArrayList<ScheduleInfo> getScheduleList(String miid) {
-        ArrayList<ScheduleInfo> scheduleList = new ArrayList<ScheduleInfo>();
+        ArrayList<ScheduleInfo> scheduleInfoList = new ArrayList<ScheduleInfo>();
         Connection conn = getConnection();
         PostFormInDao postFormInDao = PostFormInDao.getInstance();
         postFormInDao.setConnection(conn);
         
-        scheduleList = postFormInDao.getScheduleList(miid);
+        scheduleInfoList = postFormInDao.getScheduleList(miid);
         close(conn);
         
-        return scheduleList;
+        return scheduleInfoList;
+    }
+
+    public ArrayList<ScheduleDay> getScheduleDayList(String siid) {
+        ArrayList<ScheduleDay> scheduleDayList = new ArrayList<ScheduleDay>();
+        Connection conn = getConnection();
+        PostFormInDao postFormInDao = PostFormInDao.getInstance();
+        postFormInDao.setConnection(conn);
+        
+        scheduleDayList = postFormInDao.getScheduleDayList(siid);
+        close(conn);
+        
+        return scheduleDayList;
     }
 }

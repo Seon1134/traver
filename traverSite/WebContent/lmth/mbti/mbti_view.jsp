@@ -4,6 +4,8 @@ request.setCharacterEncoding("utf-8");
 GoodPost goodPost = (GoodPost)request.getAttribute("goodPost");
 boolean isGood = (boolean)request.getAttribute("isGood");
 boolean isInterest = (boolean)request.getAttribute("isInterest");
+GoodInfo goodInfo = (GoodInfo) request.getAttribute("goodInfo");
+ArrayList<GoodDay> goodDayList = (ArrayList<GoodDay>) request.getAttribute("goodDayList");
 %>
 <!DOCTYPE html>
 <html>
@@ -175,12 +177,18 @@ var clickCnt = 0;
 			<span id="date">등록일 : <%=goodPost.getGp_date() %></span>
 			<hr>
 			<p id="schname">일정이름<% %></p><br>
-			<span class="ctt_font" id="schdetail">상세일정<% %></span>
-			<br>
+			<%=goodPost.getGp_list() %>
    			<hr>
    			<select id="dayselect">
-   				<option value="day1">1일차</option>
-   				<option value="day1">여기두 나중에 수정</option>
+   				<% 
+					if ( goodInfo != null ) {
+						for ( int i = 1; i <= goodInfo.getGi_dnum(); i++ ) { 
+				%>
+								<option value="<%=i %>"><%=i %>일차</option>
+				<%			
+						}
+					}
+				%>
    			</select><button type="button" class="btn" id="pin">지도 핀</button><br><br>
 			<div id="map" style="width:100%;height:350px;"></div>
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b05cef42f58551f118588eb3f26ff67&libraries=services"></script>
@@ -193,6 +201,29 @@ var clickCnt = 0;
 			
 			// 지도를 표시할 div와  지도 옵션으로  지도를 생성
 			var map = new kakao.maps.Map(mapContainer, mapOption); 
+			<%
+			if ( goodDayList != null ) {
+				for (int i = 0; i < goodDayList.size(); i++ ) {
+					GoodDay gd = goodDayList.get(i);
+					%> 
+					
+					var position<%=gd.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
+						 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=gd.getGd_name()%></div>", 
+					     latlng: new kakao.maps.LatLng<%=gd.getGd_coords()%>
+					});
+					
+				    var marker = new kakao.maps.Marker({ // 마커를 생성
+				        map: map, // 마커를 표시할 지도
+				        position: position<%=gd.getPi_id()%>.latlng 
+				    });
+				    
+				    var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
+				        content: position<%=gd.getPi_id()%>.content 
+				    });
+			    <% 
+			    } 
+			}	
+			%>
 			</script>
 			<br>
 			<div id="contentbox">

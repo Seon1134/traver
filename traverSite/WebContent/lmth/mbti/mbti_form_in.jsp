@@ -2,7 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
-	ArrayList<ScheduleInfo> scheduleList = (ArrayList<ScheduleInfo>) request.getAttribute("scheduleList");
+	ArrayList<ScheduleInfo> scheduleInfoList = (ArrayList<ScheduleInfo>) request.getAttribute("scheduleInfoList");
+	ScheduleInfo scheduleInfo = (ScheduleInfo) request.getAttribute("scheduleInfo");
+	ArrayList<ScheduleDay> scheduleDayList = (ArrayList<ScheduleDay>) request.getAttribute("scheduleDayList");
+	String title = (String) request.getAttribute("title");
+	String content = (String) request.getAttribute("content");
 %>
 <!DOCTYPE html>
 <html>
@@ -138,6 +142,7 @@ textarea {
 .post {
 	float: left;
 	margin: 0 5px 10px 5px;
+	cursor: pointer;
 }
 
 .post_title {
@@ -166,17 +171,27 @@ textarea {
 </style>
 <script src="file/jq/jquery-3.6.1.js"></script>
 <script>
-	window.onload = function() {
-		const getoldbtn = document.querySelector('#getoldbtn');
-		const x = document.querySelector('#x');
+window.onload = function() {
+	const getoldbtn = document.querySelector('#getoldbtn');
+	const x = document.querySelector('#x');
 
-		getoldbtn.addEventListener('click', function() {
-			section2.classList.remove('display_none');
-		});
-		x.addEventListener('click', function() {
-			section2.classList.add('display_none');
-		});
-	}
+     getoldbtn.addEventListener('click', function() {
+        section2.classList.remove('display_none');
+     });
+     x.addEventListener('click', function() {
+        section2.classList.add('display_none');
+     });
+}
+
+function submit(i) {
+	var post_frm = document.post_frm;
+	var frm = document.getElementById(i);
+	
+   	frm.title.value = post_frm.title.value;
+    frm.content.value = post_frm.content.value;
+	
+	frm.submit();
+}
 </script>
 <script>
 	$(document).ready(function() {
@@ -207,16 +222,60 @@ textarea {
 				</a> <br>
 				<br>
 				<br>
-				<form name="post_frm" action="" method="post">
-					<label for="title" class="sub_font"> 제목 </label> <input type="text"
-						placeholder="<%%>" size="50" autofocus>
+				<form name="post_frm" action="postProcIn" method="post">
+				<% if ( scheduleDayList != null) {
+					for ( int i = 0; i < scheduleDayList.size(); i++) { 
+						ScheduleDay sd = scheduleDayList.get(i); 		%>
+					<input type="hidden" name="sd" value="<%=sd.getPi_id()%>"> 
+					<input type="hidden" name="sd" value="<%=sd.getSd_dnum()%>"> 
+					<input type="hidden" name="sd" value="<%=sd.getSd_seq()%>"> 
+					<input type="hidden" name="sd" value="<%=sd.getPi_name()%>">
+					<input type="hidden" name="sd" value="<%=sd.getSd_coords()%>"> 
+					<input type="hidden" name="sd" value="<%=sd.getSd_date()%>">
+				<% } 
+				}%>
+					<label for="title" class="sub_font"> 제목 </label><input name="title" type="text" size="50" autofocus required
+					value="<%=title %>">
 					<hr>
-					<label for="schd_name" class="sub_font"> 일정 </label> <input
-						id="schd_name" type="text" placeholder="<%%>" size="20" readonly><br>
-					<br> 여기는 나중에~~<br>
-					<br> <select id="dayselect">
-						<option value="day1">1일차</option>
-						<option value="day1">여기도 나중에 수정</option>
+					<label for="schd_name" class="sub_font"> 일정 </label> <input id="schd_name" type="text" 
+					<% if (scheduleInfo != null ) { %> placeholder="<%=scheduleInfo.getSi_name()%>" <% } %> size="20" readonly required><br>
+					<br>
+				<%  String sdList = "";
+					if ( scheduleInfo != null ) {
+				%>	 
+					<input type="hidden" name="si" value="<%=scheduleInfo.getMi_id()%>">
+					<input type="hidden" name="si" value="<%=loginInfo.getMi_nickname()%>">
+					<input type="hidden" name="si" value="<%=scheduleInfo.getSi_dnum()%>">
+					<input type="hidden" name="si" value="<%=scheduleInfo.getSi_name()%>">
+					<input type="hidden" name="si" value="<%=scheduleInfo.getSi_img()%>">
+				     <% 
+						for ( int j = 1; j <= scheduleInfo.getSi_dnum(); j++) {
+						  sdList += j + "일차 : ";
+							for ( int i = 0; i < scheduleDayList.size(); i++ ) { 
+								ScheduleDay sd = scheduleDayList.get(i);
+								if ( sd.getSd_dnum() == j) { 
+									if ( sd.getSd_seq() == 1 ) 	
+										sdList += sd.getPi_name();
+									else 			
+										sdList += " > " +sd.getPi_name();
+								}
+							}
+							sdList += "<br><br>";
+						} 
+				 %>
+				 	<%=sdList %>
+				 	<input type="hidden" name="sdList" value="<%=sdList %>">
+				 <% } %>
+					<select id="dayselect" onchange="">
+				<% 
+					if ( scheduleInfo != null ) {
+						for ( int i = 1; i <= scheduleInfo.getSi_dnum(); i++ ) { 
+				%>
+								<option value="<%=i %>"><%=i %>일차</option>
+				<%			
+						}
+					}
+				%>
 					</select><br>
 					<br>
 					<div id="map" style="width: 100%; height: 350px;"></div>
@@ -232,18 +291,42 @@ textarea {
 
 						// 지도를 표시할 div와  지도 옵션으로  지도를 생성
 						var map = new kakao.maps.Map(mapContainer, mapOption);
+						
+						<%
+						if ( scheduleDayList != null ) {
+							for (int i = 0; i < scheduleDayList.size(); i++ ) {
+								ScheduleDay sd = scheduleDayList.get(i);
+								%> 
+								
+								var position<%=sd.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
+									 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=sd.getPi_name()%></div>", 
+								     latlng: new kakao.maps.LatLng<%=sd.getSd_coords()%>
+								});
+								
+							    var marker = new kakao.maps.Marker({ // 마커를 생성
+							        map: map, // 마커를 표시할 지도
+							        position: position<%=sd.getPi_id()%>.latlng 
+							    });
+							    
+							    var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
+							        content: position<%=sd.getPi_id()%>.content 
+							    });
+						    <% 
+						    } 
+						}	
+						%>
+					
 					</script>
 					<br>
 					<hr>
 					<label for="content" class="sub_font">일정소개</label><br>
 					<br>
-					<textarea id="content" cols="117" rows="7"></textarea>
+					<textarea id="content" name="content" cols="117" rows="7" required><%=content %></textarea>
 					<span id="ctcnt"><span id="count">0</span> / 1000</span> <br>
-					<br> <a href="mbti_view.jsp"><button type="button"
+					<br> <a href="mbti_view.jsp"><button type="submit"
 							class="btn" id="subbtn">
 							<image src="file/img/" alt="등록하기">
 						</button></a>
-					<!-- 나중에 링크 변경 -->
 				</form>
 			</div>
 		</div>
@@ -255,16 +338,21 @@ textarea {
 				<br>
 				<div id="list">
 					<%
-					if ( scheduleList.size() > 0 ) {
-						for (int i = 0; i < scheduleList.size(); i++) {
-							ScheduleInfo si = scheduleList.get(i);
-							
-							String title = si.getSi_name();
-							if (title.length() > 12)	title = title.substring(0, 10) + " ...";
-					%>
-							<div class="post">
+					if ( scheduleInfoList != null ) {
+						for (int i = 0; i < scheduleInfoList.size(); i++) {
+							ScheduleInfo si = scheduleInfoList.get(i);
+					%>		
+							<form name="<%=i %>" id="<%=i %>" action="/traverSite/postFormIn" method="post">  
+							<input type="hidden" name="siid" value="<%=si.getSi_id() %>">
+          					<input type="hidden" name="title">  
+          					<input type="hidden" name="content">    
+          				<% 
+							String si_name = si.getSi_name();
+							if (si_name.length() > 12)	si_name = si_name.substring(0, 10) + " ...";
+						%>
+							<div class="post" onclick="submit('<%=i %>');">
 								<div class="post_title">
-									<%=title %><br><%=(si.getSi_dnum() - 1)%>박&nbsp;<%=si.getSi_dnum()%>일
+									<%=si_name %><br><%=(si.getSi_dnum() - 1)%>박&nbsp;<%=si.getSi_dnum()%>일
 									<span class="small">(<%=(si.getSi_sdate()).substring(5)%>~<%=(si.getSi_edate()).substring(5)%>)
 									</span>
 								</div>
@@ -272,6 +360,7 @@ textarea {
 									<img src="file/img/<%=si.getSi_img() %>" class="postimg">
 								</div>
 							</div>
+							</form>
 					<%
 						}
 					}

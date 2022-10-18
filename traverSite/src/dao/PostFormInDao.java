@@ -20,7 +20,7 @@ public class PostFormInDao {
     }
 
     public ArrayList<ScheduleInfo> getScheduleList(String miid) {
-        ArrayList<ScheduleInfo> scheduleList = new ArrayList<ScheduleInfo>();
+        ArrayList<ScheduleInfo> scheduleInfoList = new ArrayList<ScheduleInfo>();
         Statement stmt = null;
         ResultSet rs = null;
         ScheduleInfo si = null;   
@@ -41,7 +41,7 @@ public class PostFormInDao {
                  si.setSi_name(rs.getString("si_name"));
                  si.setSi_isTake(rs.getString("si_isTake"));
                  si.setSi_img(rs.getString("si_img"));
-                 scheduleList.add(si);
+                 scheduleInfoList.add(si);
              }
         } catch (Exception e) {
              System.out.println("PostFormInDao 클래스의 getScheduleList() 메소드 오류");
@@ -51,6 +51,39 @@ public class PostFormInDao {
              close(stmt);
           }
         
-        return scheduleList;
+        return scheduleInfoList;
+    }
+
+    public ArrayList<ScheduleDay> getScheduleDayList(String siid) {
+        ArrayList<ScheduleDay> scheduleDayList = new ArrayList<ScheduleDay>();
+        Statement stmt = null;
+        ResultSet rs = null;
+        ScheduleDay sd = null;   
+        
+        try {
+             stmt = conn.createStatement();
+             String sql = "select * from t_schedule_day where si_id = '" + siid + "'";
+             rs = stmt.executeQuery(sql);
+             while (rs.next()) {
+                 sd = new ScheduleDay();
+                 sd.setSd_id(rs.getString("sd_id"));
+                 sd.setSi_id(rs.getString("si_id"));
+                 sd.setPi_id(rs.getString("pi_id"));
+                 sd.setPi_name(rs.getString("pi_name"));
+                 sd.setSd_coords(rs.getString("sd_coords"));
+                 sd.setSd_dnum(rs.getInt("sd_dnum"));
+                 sd.setSd_date(rs.getString("sd_date"));
+                 sd.setSd_seq(rs.getInt("sd_seq"));
+                 scheduleDayList.add(sd);
+             }
+        } catch (Exception e) {
+             System.out.println("PostFormInDao 클래스의 getScheduleDayList() 메소드 오류");
+             e.printStackTrace();
+          } finally {
+             close(rs);
+             close(stmt);
+          }
+        
+        return scheduleDayList;
     }
 }
