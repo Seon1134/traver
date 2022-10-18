@@ -122,8 +122,8 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 				<option value="a" <% if (o.equals("a")) { %>selected="selected"<% } %>>등록 최신 순</option>
 				<option value="b" <% if (o.equals("b")) { %>selected="selected"<% } %>>등록 오래된 순</option>
 			 </select>
-			 <span> 총 일정 수 : </span>
-				 <!-- 추후 일정제목/장소명 셀렉트 박스는 삭제하고 검색박스만 남겨놓을 예정 -->
+			 
+			 <span> 총 일정 수 :         </span>
 			 	<div class="schNbtn">
 				 	<div id= "search-box" >
 					 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >
