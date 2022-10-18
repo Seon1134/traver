@@ -26,7 +26,6 @@ public class AdminMemberFormUpDao {
         try {
             stmt = conn.createStatement();
             String sql = "select * from t_member_info where mi_id = '" + miid +"' ";
-            System.out.println(sql);
             rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 memberInfo = new MemberInfo();
@@ -40,7 +39,6 @@ public class AdminMemberFormUpDao {
                 memberInfo.setMi_status(rs.getString("mi_status"));
                 memberInfo.setMi_id(miid);
             }
-            System.out.println(sql + 1);
             
         } catch(Exception e) {
             System.out.println("AdminMemberFormUpDao 클래스의 getAdminMemberFormUp() 메소드 오류");

@@ -41,8 +41,8 @@ if (url == null) {
 			<form action="/traverSite/adminLogin" name="frmLogin" method="post">
 			<input type="hidden" name="url" value="<%=url %>" />
 			<div>
-				<label for="id">아이디 : </label> <input type="text" name="id" id="id" value="admin"><br>
-				<label for="pw">비밀번호 : </label> <input type="password" name="pw" id="pw" value="1111">
+				<label for="id">아이디</label> <input type="text" name="id" id="id" value="admin"><br>
+				<label for="pw">비밀번호</label> <input type="password" name="pw" id="pw" value="1111">
 			</div>
 			<div>
 				<input type="submit" value="로그인">

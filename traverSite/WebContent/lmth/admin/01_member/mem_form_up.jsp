@@ -32,6 +32,7 @@ if (memberInfo == null) {
 				<h2>회원 등록</h2>
 			</div>
 			<form name="frm_member_up" action="/traverSite/adminMemberProcUp" method="post">
+			<input type="hidden" value="<%=memberInfo.getMi_id() %>" name="miid">
 				<div class="mem_02_tab01" style="width: 100%; padding : 0 80px; margin-bottom: 60px; box-sizing: border-box;">
 					<h3>기본정보</h3>
 					<table>
@@ -46,7 +47,7 @@ if (memberInfo == null) {
 								<th scope="row">닉네임</th>
 								<td><input type="text" name="nickname" value="<%=memberInfo.getMi_nickname() %>"></td>
 								<th scope="row">이메일</th>
-								<td><input type="email" name="email" value="<%=memberInfo.getMi_mail() %>"></td>
+								<td><input type="email" name="mail" value="<%=memberInfo.getMi_mail() %>"></td>
 							</tr>
 							<tr>
 								<th scope="row">비밀번호</th>
@@ -103,7 +104,7 @@ if (memberInfo == null) {
 							</tr>
 							<tr>
 								<th scope="row">회원가입일</th>
-								<td colspan="3"><input type="text" value="<%=memberInfo.getMi_join() %>"></td>
+								<td colspan="3"><input type="text" value="<%=memberInfo.getMi_join() %>" name="join"></td>
 							</tr> 
 						</tbody>
 					</table>
