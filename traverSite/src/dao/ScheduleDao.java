@@ -54,7 +54,7 @@ public class ScheduleDao {
         
         try {
             stmt = conn.createStatement();
-            String sql = "select pi_img1 from t_place_info where pi_id =" + imgPiid;
+            String sql = "select pi_img1 from t_place_info where pi_id = " + imgPiid;
             rs = stmt.executeQuery(sql);
             if (rs.next()) {    // 검색된 장소 이미지가 존재하면
                 img = rs.getString(1);
@@ -95,7 +95,7 @@ public class ScheduleDao {
     public String scheduleDayInsert(String siid, ArrayList<ScheduleDay> scheduleDayList) {
         Statement stmt = null;
         ResultSet rs = null;
-        String result = null;
+        String result = "";
         int success = 0, target = 0;
         
         try {
@@ -106,6 +106,7 @@ public class ScheduleDao {
                         " values ('" + siid + "', '" + sd.getPi_id() + "', '" +  sd.getPi_name() +"', '" +
                         sd.getSd_dnum()+ "', '"+ sd.getSd_date() +"', '" + i +"') ";
                 success += stmt.executeUpdate(sql); target++;
+                
             }
         } catch (Exception e) {
             System.out.println("ScheduleDao 클래스의 scheduleDayInsert() 메소드 오류");

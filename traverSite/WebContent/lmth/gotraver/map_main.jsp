@@ -135,7 +135,7 @@ if (isLogin) {
 	<div class="go_schedule_area_box display_none">
 		<div class="go_schedule_area">
 			<div class="go_schedule_left">
-				<button><img src="" alt="&lt;" /></button>
+				<button type="button"><img src="" alt="&lt;" /></button>
 			</div>
 			<div class="schedule_item">
 				<div class="go_schedule_top">
@@ -185,7 +185,7 @@ if (isLogin) {
 				</div>
 			</div>
 			<div class="go_schedule_right">
-				<button><img src="" alt="&gt;" /></button>
+				<button type="button"><img src="" alt="&gt;" /></button>
 			</div>
 		</div>
 	</div>
@@ -209,10 +209,10 @@ if (isLogin) {
 		<!-- 검색 시, 보여줘야 할 00 개수 여부에따라 버튼 활성화/비활성화 -->
 		<!-- js를 통해 버튼에 선택에 따라 btnSelect클래스 생성/삭제, select 클래스가있으면 배경색상변경 -->
 		<!-- 검색값 여부에  따라 btnNone 클래스 생성/삭제, btnNone 클래스가 있으면 버튼 비활성화 (=onclick 이벤트 삭제) -->
-	<button name="placeCategory" value="0" class="display_none" onclick="placeCategoryChange(this.value)">전체</button>
-	<button name="placeCategory" value="1" class="ctgr" onclick="placeCategoryChange(this.value)">숙소</button>
-	<button name="placeCategory" value="2" class="ctgr" onclick="placeCategoryChange(this.value)">음식점</button>
-	<button name="placeCategory" value="3" class="ctgr" onclick="placeCategoryChange(this.value)">관광지</button>
+	<button type="button" name="placeCategory" value="0" class="display_none" onclick="placeCategoryChange(this.value)">전체</button>
+	<button type="button" name="placeCategory" value="1" class="ctgr" onclick="placeCategoryChange(this.value)">숙소</button>
+	<button type="button" name="placeCategory" value="2" class="ctgr" onclick="placeCategoryChange(this.value)">음식점</button>
+	<button type="button" name="placeCategory" value="3" class="ctgr" onclick="placeCategoryChange(this.value)">관광지</button>
 		</div>
 	</div>
 	<div class="place-area">
@@ -235,10 +235,10 @@ if (isLogin) {
 					<div class="place-info">
 						<div class="place__title"><%=pi.getPi_name() %></div>
 						<div class="place__option-box">
-							<button class="place__option place__info">정보</button>
-							<button class="place__option place__review">리뷰</button>
-							<button class="place__option place__add" value="<%=pi.getPi_id()%>">추가</button>
-							<button class="place__option place__love">찜</button>
+							<button type="button" class="place__option place__info">정보</button>
+							<button type="button" class="place__option place__review">리뷰</button>
+							<button type="button" class="place__option place__add" value="<%=pi.getPi_id()%>">추가</button>
+							<button type="button" class="place__option place__love">찜</button>
 						</div>
 					</div>
 				</div>
@@ -269,11 +269,11 @@ if (isLogin) {
 					<div class="place-info">
 						<div class="place__title"><%=pi.getPi_name() %></div>
 						<div class="place__option-box">
-							<button class="place__option place__info">정보</button>
-							<button class="place__option place__review">리뷰</button>
+							<button type="button" class="place__option place__info">정보</button>
+							<button type="button" class="place__option place__review">리뷰</button>
 						<% if (isLogin) { %>
-							<button class="place__option place__add">추가</button>
-							<button class="place__option place__love">찜</button>
+							<button type="button" class="place__option place__add">추가</button>
+							<button type="button" class="place__option place__love">찜</button>
 						<% } %>
 						</div>
 					</div>
@@ -305,11 +305,11 @@ if (isLogin) {
 					<div class="place-info">
 						<div class="place__title"><%=pi.getPi_name() %></div>
 						<div class="place__option-box">
-							<button class="place__option place__info">정보</button>
-							<button class="place__option place__review">리뷰</button>
+							<button type="button" class="place__option place__info">정보</button>
+							<button type="button" class="place__option place__review">리뷰</button>
 						<% if (isLogin) { %>
-							<button class="place__option place__add">추가</button>
-							<button class="place__option place__love">찜</button>
+							<button type="button" class="place__option place__add">추가</button>
+							<button type="button" class="place__option place__love">찜</button>
 						<% } %>
 						</div>
 					</div>
@@ -323,7 +323,7 @@ if (isLogin) {
 		<!-- //관광지 -->
 	<% } %>
 	</div>
-	<button class="side__open right_open"><img src="../../file/img/open.png" class="side__open_img"></button>
+	<button type="button" class="side__open right_open"><img src="../../file/img/open.png" class="side__open_img"></button>
 </div>
 
 <!-- //우측 사이드 박스 -->

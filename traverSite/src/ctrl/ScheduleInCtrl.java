@@ -49,9 +49,9 @@ public class ScheduleInCtrl extends HttpServlet {
         if (success > 0) { // ScheduleInfo insert 성공했으면
             // 일정등록 추가 실행
             String result2 = scheduleInSvc.scheduleDayInsert(siid, scheduleDayList);
-            String[] arr2 = result.split(":");
-            int success2 = Integer.parseInt(arr[0]);  // 실제 적용된 레코드 개수
-            int target2 = Integer.parseInt(arr[1]);  // 적용되었어야 할 레코드 개수
+            String[] arr2 = result2.split(":");
+            int success2 = Integer.parseInt(arr2[0]);  // 실제 적용된 레코드 개수
+            int target2 = Integer.parseInt(arr2[1]);  // 적용되었어야 할 레코드 개수
             
             if (success2 == target2)   {    // scheduleDay insert에 성공했으면
                 response.sendRedirect("scheduleView?siid=" + siid);
