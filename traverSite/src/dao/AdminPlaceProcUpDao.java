@@ -81,7 +81,7 @@ public class AdminPlaceProcUpDao {
             " pi_img5 = '"      + placeInfo.getPi_img5()    + "' " + 
             " where pi_id = "   + placeInfo.getPi_id(); 
             result = stmt.executeUpdate(sql);
-            System.out.println(sql);
+            
         } catch(Exception e) {
             System.out.println("AdminPlaceProcUpDao 클래스의 AdminPlaceProcUp() 메소드 오류");
             e.printStackTrace();

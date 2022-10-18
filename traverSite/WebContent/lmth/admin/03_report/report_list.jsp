@@ -21,9 +21,7 @@
 						<select name="reportSel">
 							<option value="게시물 링크">게시물 링크</option>
 							<option value="신고자 아이디">신고자 아이디</option>
-							<option value="신고자 이름">신고자 이름</option>
 							<option value="신고대상 아이디">신고대상 아이디</option>
-							<option value="신고대상 이름">신고대상 이름</option>
 							<option value="신고 사유">신고 사유</option>
 							<option value="신고자아이피">신고자아이피</option>
 							<option value="신고 날짜">신고 날짜</option>
@@ -47,9 +45,7 @@
 							<th scope="col">게시글 링크</th>
 							<th scope="col">분류</th>
 							<th scope="col">신고자 아이디</th>
-							<th scope="col">신고자 이름</th>
 							<th scope="col">신고대상 아이디</th>
-							<th scope="col">신고대상 이름</th>
 							<th scope="col">신고 사유</th>
 							<th scope="col">신고자 아이피</th>
 							<th scope="col">신고 날짜</th>
@@ -62,9 +58,7 @@
 							<td><a href="http://naver.com" target="_blank">http://naver.com</a></td>
 							<td>게시글</td>
 							<td>admin</td>
-							<td>홍길동</td>
 							<td>test1</td>
-							<td>원빈</td>
 							<td>도배성 게시물</td>
 							<td>112.128.485.214</td>
 							<td>2022-09-01</td>
