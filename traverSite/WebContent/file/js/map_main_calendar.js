@@ -76,15 +76,15 @@
 			dateList += "," + dateArr[0] + "-"; //date값에 쉼표 + 년도 넣기 
 			
 			if (dateArr[1] < 10) { // 10월 이상 +0월
-				dateList += "0" + dateArr[1] + "-"
+				dateList += "0" + dateArr[1] + "-";
 			} else { // 10월 미만 +월
-				dateList += dateArr[1] + "-"
+				dateList += dateArr[1] + "-";
 			}
 			
 			if (dateArr[2] < 10) { // 10일 이상 +0일
-				dateList += "0" + dateArr[2]
+				dateList += "0" + dateArr[2];
 			} else { // 10일 미만 +일
-				dateList += dateArr[2]
+				dateList += dateArr[2];
 			}
 		}
 		
