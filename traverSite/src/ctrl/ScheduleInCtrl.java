@@ -33,6 +33,9 @@ public class ScheduleInCtrl extends HttpServlet {
 
         //scheduleInfo Insert 모음집
         String scheduleName = (String)session.getAttribute("schedule_name"); // 일정명
+        if (scheduleName == null || scheduleName.equals("null")) {
+            scheduleName = "임시 저장 일정";
+        }
         ScheduleInfo scheduleInfo = (ScheduleInfo)session.getAttribute("scheduleInfo"); 
         // 일정 정보 불러오기 (시작일, 종료일, day개수)
 
@@ -54,7 +57,7 @@ public class ScheduleInCtrl extends HttpServlet {
             int target2 = Integer.parseInt(arr2[1]);  // 적용되었어야 할 레코드 개수
             
             if (success2 == target2)   {    // scheduleDay insert에 성공했으면
-                response.sendRedirect("scheduleView?siid=" + siid);
+                response.sendRedirect("mschdDetail?siid=" + siid);
             } else { // ScheduleDay insert에 실패했으면 알림
                 response.setContentType("text/html; charset=utf-8");
                 PrintWriter out = response.getWriter();
