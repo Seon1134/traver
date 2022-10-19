@@ -50,7 +50,7 @@ ArrayList<GoodPost> popPostList = (ArrayList<GoodPost>)request.getAttribute("pop
 	padding: 0; overflow: visible; cursor: pointer;
 	position: absolute; right: 5px; float: right;
 }
-.golistbtn { width: 140px; position: relative; top: -11px; }
+.golistbtn { width: 140px; position: relative; top: -14px; }
 
 hr { margin: 20px 0;}
 .sub_font { 
