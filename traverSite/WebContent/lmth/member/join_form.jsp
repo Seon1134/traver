@@ -14,13 +14,10 @@ String[] arrDomain = {"naver.com", "nate.com", "gmail.com", "daum.net", "yahoo.c
 <meta charset="UTF-8">
 <title>회원가입</title>
 <style>
-.container-default_box {
-	position: relative;
-}
+.main_box { width: 100%; height: 800px; display: flex; align-items: center; justify-content: center; }
 .joinForm_box {  
-    width:700px; height:800px; 
+    width:700px; height:700px; 
     border:solid 1px black; background-color:#fafcfc;
-    position:absolute; top:130px; left:250px;
     padding-bottom:20px;  
 }
 .main_title { 
@@ -32,12 +29,12 @@ String[] arrDomain = {"naver.com", "nate.com", "gmail.com", "daum.net", "yahoo.c
 .box { height:30px; margin-left:40px; }
 .box2 { margin:10px 0 10px 100px; }
 
-.idbox { margin-top:40px; margin-left:50px; }
-.pwbox { margin-top:10px; margin-left:50px; }
-.namebox { margin-top:10px; margin-left:50px; }
-.nicknamebox { margin-top:40px; margin-left:50px; }
-.birthbox_group { margin-top:10px; margin-left:50px; }
-.emailbox { margin-top:40px; margin-left:50px; }
+.idbox { margin-top:30px; margin-left:50px; }
+.pwbox { margin-top:0px; margin-left:50px; }
+.namebox { margin-top:0px; margin-left:50px; }
+.nicknamebox { margin-top:20px; margin-left:50px; }
+.birthbox_group { margin-top:0px; margin-left:50px; }
+.emailbox { margin-top:20px; margin-left:50px; }
 
 #mi_id { margin-left:35px; }
 #mi_pw { margin-left:20px; }
@@ -182,76 +179,78 @@ if (isLogin) {
 <div class="container">
    <div class="container-default_box">
 
-	<div class=joinForm_box>
-		<h2 class="main_title">회원 가입</h2>
-		<form name="frmJoin" action="member_proc.mem" method="post">
-		<input type="hidden" name="kind" value="in" /> <!-- 회원가입 : kind=in -->
-		<input type="hidden" name="idChk" id="idChk" value="n" /> 
-		<input type="hidden" name="nicknameChk" id="nicknameChk" value="n" />
-		<input type="hidden" name="pwChk" id="pwChk" value="n" /> 
-		<input type="hidden" name="pwChk2" id="pwChk2" value="n" /> 
-		    <div class="idbox">
-		    	<span class="asterik">*</span><span class="title">아이디</span>
-			    <input type="text" name="mi_id" required="required" id="mi_id" class="box chkinput" maxlength="20" 
-			    size="25" placeholder="아이디를 입력해 주세요." onkeyup="chkDup('i',this.value);" />
-			    <p id="idMsg" class="box2">※ 6 ~ 20자 이내로 영문과 숫자를 조합해주세요.</p>
-		    </div><br />
-		    
-		    <div class="pwbox">
-		    	<span class="asterik">*</span><span class="title">비밀번호</span>
-			    <input type="password" name="mi_pw" required="required" id="mi_pw" class="box chkinput" maxlength="20" 
-			    size="25" placeholder="비밀번호를 입력해 주세요." onkeyup="chkPw(this.value);" />
-			    <p id="pwMsg" class="box2">※ 6 ~ 20자 이내로 영문과 숫자를 조합해주세요.</p>
-			    <input type="password" name="mi_pw2" required id="mi_pw2" class="box chkinput" maxlength="20" 
-			    size="25" placeholder="비밀번호를 다시 입력해 주세요." onkeyup="chkEqualPw(this.form.mi_pw.value, this.value);" />
-                <p id="pwMsg2" class="box2">비밀번호가 동일하지 않습니다.</p>
-		    </div><br />
-		    
-		    <div class="namebox">
-		    	<span class="asterik">*</span><span class="title">이름</span>
-			    <input type="text" name="mi_name" required="required" id="mi_name" class="box" maxlength="50" 
-			    size="25" placeholder="이름을 입력해 주세요." />
-		    </div><br />
-		    
-		    <div class="nicknamebox">
-		    	<span class="asterik">*</span><span class="title">닉네임</span>
-	            <input type="text" name="mi_nickname" required="required" id="mi_nickname" class="box chkinput" maxlength="20" 
-	            size="25" placeholder="닉네임을 입력해 주세요." onkeyup="chkDup('n',this.value);" />
-	            <p id="nickNameMsg" class="box2">※ 20자 이내로 입력해주세요.</p>
-            </div><br />
-		    
-		    <div class="birthbox_group">
-		    	<span class="asterik">*</span><span class="title">생년월일</span>
-			    <span id="birthbox_select">
-				    <input type="date" name="mi_birth" required="required" id="mi_birth" >
-			    </span>
-		    </div><br />
-		    
-			<div class="emailbox">
-				<span class="asterik">*</span><span class="title">이메일</span> 
-				<span id="emailbox_select">
-				<input type="text" name="e1" required="required" size="10" style="height:30px;" 
-				placeholder="이메일"/> @
-				<select name="e2" id="e2" style="height:36px;">
-					<option value=""> 선택 </option>
-						<%for (int i =0; i < arrDomain.length; i++ ) { %>   
-				        <option value="<%=arrDomain[i] %>"><%=arrDomain[i] %></option>  
-						<% } %>
-				        <option value="direct"> 직접 입력 </option>
-				</select>
-				    <input type="text" name="e3" id="e3" size="10" style="height:30px;"/>
-				    <button onclick="emailAuthentication()" id="eamilAuthBtn" type="button" class="btnChk">이메일 확인</button><br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="text" name="verifyNum" style="height:30px; margin-top:10px;" placeholder="이메일 본인 확인 번호" maxlength="6"
-					required="required" />
-					<span class="blind">5:00</span>
-					<input type="button" value="확인" style="height:35px; width:60px;"/>
-			</div><br />
-		    <input type="button" id="btnCancel" value="취소" onclick="history.back(-1);" />
-		    &nbsp;&nbsp;&nbsp;
-		    <input type="submit" id="btnJoin" value="회원가입" disabled/>
-		</form>
-    </div>
+	<div class="main_box"> 
+		<div class=joinForm_box>
+			<h2 class="main_title">회원 가입</h2>
+			<form name="frmJoin" action="member_proc.mem" method="post">
+			<input type="hidden" name="kind" value="in" /> <!-- 회원가입 : kind=in -->
+			<input type="hidden" name="idChk" id="idChk" value="n" /> 
+			<input type="hidden" name="nicknameChk" id="nicknameChk" value="n" />
+			<input type="hidden" name="pwChk" id="pwChk" value="n" /> 
+			<input type="hidden" name="pwChk2" id="pwChk2" value="n" /> 
+			    <div class="idbox">
+			    	<span class="asterik">*</span><span class="title">아이디</span>
+				    <input type="text" name="mi_id" required="required" id="mi_id" class="box chkinput" maxlength="20" 
+				    size="25" placeholder="아이디를 입력해 주세요." onkeyup="chkDup('i',this.value);" />
+				    <p id="idMsg" class="box2">※ 6 ~ 20자 이내로 영문과 숫자를 조합해주세요.</p>
+			    </div><br />
+			    
+			    <div class="pwbox">
+			    	<span class="asterik">*</span><span class="title">비밀번호</span>
+				    <input type="password" name="mi_pw" required="required" id="mi_pw" class="box chkinput" maxlength="20" 
+				    size="25" placeholder="비밀번호를 입력해 주세요." onkeyup="chkPw(this.value);" />
+				    <p id="pwMsg" class="box2">※ 6 ~ 20자 이내로 영문과 숫자를 조합해주세요.</p>
+				    <input type="password" name="mi_pw2" required id="mi_pw2" class="box chkinput" maxlength="20" 
+				    size="25" placeholder="비밀번호를 다시 입력해 주세요." onkeyup="chkEqualPw(this.form.mi_pw.value, this.value);" />
+	                <p id="pwMsg2" class="box2">비밀번호가 동일하지 않습니다.</p>
+			    </div><br />
+			    
+			    <div class="namebox">
+			    	<span class="asterik">*</span><span class="title">이름</span>
+				    <input type="text" name="mi_name" required="required" id="mi_name" class="box" maxlength="50" 
+				    size="25" placeholder="이름을 입력해 주세요." />
+			    </div><br />
+			    
+			    <div class="nicknamebox">
+			    	<span class="asterik">*</span><span class="title">닉네임</span>
+		            <input type="text" name="mi_nickname" required="required" id="mi_nickname" class="box chkinput" maxlength="20" 
+		            size="25" placeholder="닉네임을 입력해 주세요." onkeyup="chkDup('n',this.value);" />
+		            <p id="nickNameMsg" class="box2">※ 20자 이내로 입력해주세요.</p>
+	            </div><br />
+			    
+			    <div class="birthbox_group">
+			    	<span class="asterik">*</span><span class="title">생년월일</span>
+				    <span id="birthbox_select">
+					    <input type="date" name="mi_birth" required="required" id="mi_birth" >
+				    </span>
+			    </div><br />
+			    
+				<div class="emailbox">
+					<span class="asterik">*</span><span class="title">이메일</span> 
+					<span id="emailbox_select">
+					<input type="text" name="e1" required="required" size="10" style="height:30px;" 
+					placeholder="이메일"/> @
+					<select name="e2" id="e2" style="height:36px;">
+						<option value=""> 선택 </option>
+							<%for (int i =0; i < arrDomain.length; i++ ) { %>   
+					        <option value="<%=arrDomain[i] %>"><%=arrDomain[i] %></option>  
+							<% } %>
+					        <option value="direct"> 직접 입력 </option>
+					</select>
+					    <input type="text" name="e3" id="e3" size="10" style="height:30px;"/>
+					    <button onclick="emailAuthentication()" id="eamilAuthBtn" type="button" class="btnChk">이메일 확인</button><br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" name="verifyNum" style="height:30px; margin-top:10px;" placeholder="이메일 본인 확인 번호" maxlength="6"
+						required="required" />
+						<span class="blind">5:00</span>
+						<input type="button" value="확인" style="height:35px; width:60px;"/>
+				</div>
+			    <input type="button" id="btnCancel" value="취소" onclick="history.back(-1);" />
+			    &nbsp;&nbsp;&nbsp;
+			    <input type="submit" id="btnJoin" value="회원가입" disabled/>
+			</form>
+	    </div>
+   	</div><!-- main_box -->
     
    </div>
 </div>

@@ -5,13 +5,12 @@
 <meta charset="UTF-8">
 <title>비밀번호 변경</title>
 <style>
-.container-default_box {
-    position: relative;
-}
+.main_box { width: 100%; height: 800px; display: flex; align-items: center; justify-content: center; }
+
 .leftBox {
-	width:200px; height:1000px;
+	width:200px; height:800px;
     border:solid 1px lightgray; border-top:none;
-    position:absolute; right:998px;
+    margin-right:200px;
 }
 .mypage { 
 	color:black; font-weight:bold; font-size:18px;
@@ -24,7 +23,7 @@ a:hover{ color:black; }
 .changePwBox {
    width:600px; height:300px;
     border:solid 1px #39f;
-    position:absolute; top:250px; left:400px;
+    margin-right:150px;
 }
 .pw1 { font-size:20px; font-weight:bold; text-align:center; }
 
@@ -40,6 +39,7 @@ a:hover{ color:black; }
 <div class="container">
    <div class="container-default_box">
    
+   <div class="main_box">
       <div class="leftBox">
   		<br/><br/><br/>
 		<h2 class="mypage">&nbsp;&nbsp;마이페이지</h2><br/><br/>
@@ -89,7 +89,8 @@ a:hover{ color:black; }
 	       </tr>
 	      </table>
 	     </form>
-	</div>
+		</div>
+	</div><!-- main_box -->
    
    </div>
 </div>

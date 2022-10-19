@@ -5,13 +5,10 @@
 <meta charset="UTF-8">
 <title>아이디 확인</title>
 <style>
-.container-default_box {
-    position: relative;
-}
+.main_box { width: 100%; height: 800px; display: flex; align-items: center; justify-content: center; }
 .findIdBox {
     width:600px; height:300px;
     border:solid 1px #39f;
-    position:absolute; top:250px; left:300px;
     text-align:center;
 }
 .findId { 
@@ -38,16 +35,17 @@ a:visited { color:black; text-decoration:none;}
 <div class="container">
    <div class="container-default_box">
    
-	<div class="findIdBox">
-        <br/><br/><br/><br/>
-        <span class="findId">아이디 찾기</span>
-        <br/><br/><br/><br/><br/>
-        <span>회원님의 아이디는 test*입니다.</span>
-        <br/><br/><br/><br/><br/>
-        <a href="login_form.jsp" class="btn_login"><span class="btn_design">로그인하기</span></a>
-        <a href="find_form_pw.jsp" class="btn_findpw"><span class="btn_design">비밀번호 찾기</span></a>
-        
-    </div>
+   <div class="main_box"> 
+		<div class="findIdBox">
+	        <br/><br/><br/><br/>
+	        <span class="findId">아이디 찾기</span>
+	        <br/><br/><br/><br/><br/>
+	        <span>회원님의 아이디는 test*입니다.</span>
+	        <br/><br/><br/><br/><br/>
+	        <a href="login_form.jsp" class="btn_login"><span class="btn_design">로그인하기</span></a>
+	        <a href="find_form_pw.jsp" class="btn_findpw"><span class="btn_design">비밀번호 찾기</span></a>
+	    </div>
+    </div><!-- main_box -->
    
     </div>
 </div>

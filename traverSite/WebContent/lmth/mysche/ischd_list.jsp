@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.time.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,18 +18,24 @@ select { height: 29px; vertical-align: middle; cursor: pointer; }
     align-items: center;
 }
 input[type="text"] { height:23px; border: none; }
-#x-sch { width:10px; margin-left: 5px; border: none; }
+
+.schNbtn { display: flex;  }
 .btn {
-	background: inherit; border: none; box-shadow: none; border-radius: 0; 
-	padding: 0; overflow: visible; cursor: pointer;
+	margin-bottom:60px;
+	background: inherit; border: none; 
+	box-shadow: none; border-radius: 0; 
+	padding: 0;  cursor: pointer;
 }
+#schBtn { 
+	width:70px; height:35px; 
+	margin-left: 5px; 
+	border: none; 
+}
+
 #subtitle { font-size: 25px; font-weight: bold; margin: 0px 70px 50px 10px;}
 #schbox { float: right }
-#sch { 
-	width: 250px; height: 24px; 
-	margin-bottom: 5px; vertical-align: -1px;
-	font-size: 14px; 
-}
+
+
 
 .post { float: left; margin: 10px 20px 10px 20px;}
 .post_title { 
@@ -44,30 +50,57 @@ input[type="text"] { height:23px; border: none; }
 </head>
 <body>
 <%@ include file="../../cni/header.jsp" %>
+<%
+request.setCharacterEncoding("utf-8");
+ArrayList<ScheduleInfo> scheduleList = (ArrayList<ScheduleInfo>)request.getAttribute("scheduleList");
+// 일정 목록이 들어있는 ArrayList<ScheduleInfo>를 형변환하여 받아옴
+
+String sy = request.getParameter("sy");
+String o = request.getParameter("o");
+String keyword = request.getParameter("keyword");
+
+String args = "", yargs = "", oargs = "", schargs = "";
+if (sy != null && !sy.equals("")) 				yargs += "&sy=" + sy;
+if (o != null && !o.equals("")) 				oargs += "&o=" + o;
+else 	o = "";
+if (keyword != null && !keyword.equals("")) 	schargs += "&keyword=" + keyword; 
+else 	keyword = "";
+
+args = "&yargs=" + oargs + schargs; // 일정 디테일 보기용 쿼리
+
+%>
 <div class="container">
    <div class="container-default_box">
    		<br><br><br><br>
    		<a href="ischd_list.jsp" id="title"><span id="subtitle">관심 일정</span></a><br><br><br><br>
    		<select class="year">
-			<option value="total">전체보기</option>
-			<option value="2022">2022</option>
-			<option value="2021">나중에 수정</option>
+				<option value="">전체보기</option>
+<%
+String today = LocalDate.now() + "";
+int maxYear = Integer.parseInt(today.substring(0, 4));
+for (int i = 2020 ; i <= maxYear + 1 ; i++) {
+	
+%>	   		
+				<option value="<%=i %>" ><%=i %> 년</option>
+<%		
+}
+%>
 		 </select>
-		 <select class="o">
-			<option value="datedesc">등록 최신 순</option>
-			<option value="dateasc">등록 오래된 순</option>
+		 <select name="o" onchange="location.href='/traverSite/ischdDetail?<%=schargs + yargs%>&o=' + this.value;">
+				<option value="a" <% if (o.equals("a")) { %>selected="selected"<% } %>>등록 최신 순</option>
+				<option value="b" <% if (o.equals("b")) { %>selected="selected"<% } %>>등록 오래된 순</option>
 		 </select>
-		 <span> 총 일정 수 : </span>
-		 <div id="schbox">
-		 	<select class="sch">
-				<option value="schdname">일정 제목</option>
-				<option value="place">장소명</option>
-			</select>
+		 
+		 <span> 총 일정 수 :    </span>
+		 <div id="schNbtn">
 			<div id= "search-box" >
-			 	<input type="text"><button class="btn"><img src="../../file/img/x.png" id="x-sch"></button>
+			 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >
 			</div>
+			<button class="btn" onclick="btnClick()">
+				<img src="/traverSite/file/img/sch.png" id="schBtn"/>
+			</button>
 		 </div>
-		 <br><a href="ischd_detail.jsp">관심 일정 디테일로</a><br>
+		 
 		 <div id="list">
 			<div class="post">
 	   			<div class="post_title">

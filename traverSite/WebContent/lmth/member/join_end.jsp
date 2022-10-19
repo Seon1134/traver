@@ -7,7 +7,7 @@
 <style>
 .join_complete { 
     width:600px; height:500px; 
-    margin:auto; margin-top:150px; 
+    margin:auto; margin-top:150px; margin-bottom:150px; 
     border:solid 1px #39f; 
 }
 .c1 { 

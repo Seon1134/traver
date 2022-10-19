@@ -36,17 +36,18 @@ select { height: 29px; vertical-align: middle; cursor: pointer; }
 input[type="text"] { height:23px; border: none; margin-left: 5px; }
 
 .schNbtn { display: flex;  }
-#schBtn { 
-	width:70px; height:35px; 
-	margin-left: 5px; 
-	border: none; 
-}
 .btn {
 	margin-bottom:60px;
 	background: inherit; border: none; 
 	box-shadow: none; border-radius: 0; 
 	padding: 0;  cursor: pointer; 
 }
+#schBtn { 
+	width:70px; height:35px; 
+	margin-left: 5px; 
+	border: none; 
+}
+
 .upBox { 
 	background: #efefef; width:178px; height:50px; 
 	border:solid 1px lightgray; color:black;

@@ -34,7 +34,7 @@
 <div class="container">
    <div class="container-default_box">
    		<br><br><br><br>
-   		<a href="ischd_detail.jsp" id="title"><span id="subtitle">관심 일정</span></a><br><br><br><br>
+   		<a href="ischd_detail.jsp" id="title"><span id="subtitle">관심 일정 상세보기</span></a><br><br><br><br>
    		<select id="dayselect">
 			<option value="day1">1일차</option>
 			<option value="day1">여기두 나중에 수정</option>
