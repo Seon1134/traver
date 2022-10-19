@@ -63,6 +63,7 @@ request.setCharacterEncoding("utf-8");
 	padding: 0; overflow: visible; cursor: pointer;
 }
 #startbtn2 {
+	margin-top: 40px;
 	width: 150px;
 }
 
@@ -95,12 +96,12 @@ request.setCharacterEncoding("utf-8");
    			<div class="sub_desc">
    				<img src="file/img/sub_img2.png" class="sub_img">
    				<h2 class="sub_title">다양한 일정표 활용</h2>
-   				<p>다른회원들의 일정표를 내 일정으로 등록하여 다양한 여행을 즐겨보세요!</p>
+   				<p>다른 회원들의 일정을 내 일정으로<br>등록하여 다양한 여행을 즐겨보세요!</p>
    			</div>  
    			<div class="sub_desc">
    				<img src="file/img/sub_img3.png" class="sub_img">
    				<h2 class="sub_title">지도를 통한 경로 확인</h2>
-   				<p>지도를 통해 좌표를 보여주는 형식으로 간단한 길 찾기부터 사람들의 다양한 정보까지!</p>
+   				<p>지도를 통해 장소를 확인하여 나에게 딱 맞는 효율적인 일정을 찾아보세요!</p>
    			</div>  
    			<a href="lmth/mbti/mbti_start_sub.jsp"><button class="btn"><image class="startbtn_img" id="startbtn2" src="file/img/startbtn2.png" alt="시작하기"></button></a>
    		</div>

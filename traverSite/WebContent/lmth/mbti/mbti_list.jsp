@@ -232,7 +232,10 @@ $(document).ready(function() {
 				<br> <br> <a href="/traverSite/postList" id="title"><span
 					id="title_font">여행 전체보기</span></a> <select id="schselect" name="schselect">
 					<option value="title" <% if (schselect.equals("title")) { %> selected <% } %>>글제목</option>
-					<option value="writer" <% if (schselect.equals("writer")) { %> selected <% } %>>작성자</option>
+					<option value="content" <% if (schselect.equals("content")) { %> selected <% } %>>내용</option>
+					<option value="place" <% if (schselect.equals("place")) { %> selected <% } %>>장소</option>
+					<option value="id" <% if (schselect.equals("id")) { %> selected <% } %>>아이디</option>
+					<option value="nickname" <% if (schselect.equals("nickname")) { %> selected <% } %>>닉네임</option>
 				</select>
 				<div id="search-box">
 					<input type="text" name="schkeyword" value="<%=schkeyword %>">

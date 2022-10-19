@@ -17,7 +17,6 @@ public class MemberCtrl extends HttpServlet {
 
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	request.setCharacterEncoding("utf-8");
-    	System.out.println("회원 정보 관리중");
     	String kind = "";
     	String mi_mbti = "";
     	if (request.getAttribute("kind") != null) 

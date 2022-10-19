@@ -39,8 +39,14 @@ public class PostListCtrl extends HttpServlet {
             
             if ( schselect.equals("title"))
                 where += " and gp_title like '%" + schkeyword + "%' ";
-            else 
+            else if ( schselect.equals("id") )
                 where += " and mi_id like '%" + schkeyword + "%' ";
+            else if ( schselect.equals("nickname") )
+                where += " and mi_nickname like '%" + schkeyword + "%' ";
+            else if ( schselect.equals("content") )
+                where += " and gp_content like '%" + schkeyword + "%' ";
+            else if ( schselect.equals("place") )
+                where += " and gp_list like '%" + schkeyword + "%' ";
         } 
         
         if ( session.getAttribute("loginInfo") != null ) {

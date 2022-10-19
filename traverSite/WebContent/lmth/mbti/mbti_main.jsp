@@ -50,6 +50,7 @@ ArrayList<GoodPost> popPostList = (ArrayList<GoodPost>)request.getAttribute("pop
 	padding: 0; overflow: visible; cursor: pointer;
 	position: absolute; right: 5px; float: right;
 }
+.golistbtn { width: 140px; position: relative; top: -11px; }
 
 hr { margin: 20px 0;}
 .sub_font { 
@@ -187,7 +188,7 @@ $(document).ready(function() {
 	   	<hr>
 	   	<div id="mbti-rcmd">
 		   	<span class="sub_font"><span><%=mbtiPostList.get(0).getGp_mbti() %></span> 추천 일정</span>
-		   	<a href="/traverSite/postList"><button class="btn"><image class="golistbtn" src="file/img/" alt="전체 일정표 보기"></button></a>
+		   	<a href="/traverSite/postList"><button class="btn"><image class="golistbtn" src="file/img/gopostlist.png" alt="전체 일정표 보기"></button></a>
 		   	<br>
 		   	<div class="arrowbox">
 			   	<button class="arrowbtn left hide" id="t-l-btn"><img class="arrow" src="file/img/left.png"></button>
@@ -228,7 +229,7 @@ $(document).ready(function() {
 	   	<br><hr>
 	   	<div id="pop-rcmd">
 		   	<span class="sub_font">인기 일정</span>
-		   	<a href="/traverSite/postList"><button class="btn"><image class="golistbtn" src="file/img/" alt="전체 일정표 보기"></button></a>
+		   	<a href="/traverSite/postList"><button class="btn"><image class="golistbtn" src="file/img/gopostlist.png" alt="전체 일정표 보기"></button></a>
 		   	<br>
 		   	<div class="arrowbox">
 			   	<button class="arrowbtn left hide" id="b-l-btn"><img class="arrow" src="file/img/left.png"></button>

@@ -79,7 +79,6 @@ public class MemberProcDao { //traverSite
         try {
             String sql = "update t_member_info set mi_mbti = '" + memberInfo.getMi_mbti()  
             + "' where mi_id = '" + memberInfo.getMi_id() + "'";
-            System.out.println(sql);
             stmt = conn.createStatement();
             result = stmt.executeUpdate(sql);
 
