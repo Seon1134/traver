@@ -29,6 +29,7 @@ public class PlaceListCtrl extends HttpServlet {
 		}
 		if (searchKeyword == null || searchKeyword.equals("")) { // 입력한 키워드가 없으면 기본값은 "" 
 			searchKeyword = "";
+			placeCategory = "0";
 		}
 
 		// view 옵션 관련 where 추가 switch문
@@ -57,12 +58,14 @@ public class PlaceListCtrl extends HttpServlet {
 		
 		// 카테고리 관련 where 추가 switch문
 		switch (placeCategory) {
-		case "1" : // '숙소'카테고리를 선택했으면
-			where += " and pi_ctgr = '1' "; 	break;
-		case "2" : // '음식점' 카테고리를 선택했으면
-			where += " and pi_ctgr = '2' ";		break;
-		case "3" : // '관광지' 카테고리를 선택했으면
-			where += " and pi_ctgr = '3' "; 	break;
+		    case "0" : // 카테고리 선택을 안했으면
+		        break;
+    		case "1" : // '숙소'카테고리를 선택했으면
+    			where += " and pi_ctgr = '1' "; 	break;
+    		case "2" : // '음식점' 카테고리를 선택했으면
+    			where += " and pi_ctgr = '2' ";		break;
+    		case "3" : // '관광지' 카테고리를 선택했으면
+    			where += " and pi_ctgr = '3' "; 	break;
 		} // 카테고리를 선택하지 않았으면 무엇도 추가하지 않는다. (전부 보여주기)
 		
 		

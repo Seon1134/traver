@@ -32,7 +32,6 @@
 	.left-side { 
 		position: absolute; 
 		width: 270px; 
-		top: 100px;
 		height: 96vh; 
 		z-index: 20; 
 		background-color: #fdfdfd;
@@ -126,7 +125,6 @@
 	.right-side {
 		position: fixed;
 		right: 0;
-		top: 100px;
 		height: 100vh;
 		width: 290px;
 		background: #f1ecec;

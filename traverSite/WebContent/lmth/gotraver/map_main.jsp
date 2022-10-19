@@ -197,7 +197,8 @@ if (isLogin) {
 
 
  
-
+</form>
+<form action="#">
 <!-- 우측 사이드 박스 -->
 <div class="right-side open">
 	<div class="right-side_header">
@@ -210,11 +211,13 @@ if (isLogin) {
 		<!-- js를 통해 버튼에 선택에 따라 btnSelect클래스 생성/삭제, select 클래스가있으면 배경색상변경 -->
 		<!-- 검색값 여부에  따라 btnNone 클래스 생성/삭제, btnNone 클래스가 있으면 버튼 비활성화 (=onclick 이벤트 삭제) -->
 	<button type="button" name="placeCategory" value="0" class="display_none" onclick="placeCategoryChange(this.value)">전체</button>
-	<button type="button" name="placeCategory" value="1" class="ctgr" onclick="placeCategoryChange(this.value)">숙소</button>
-	<button type="button" name="placeCategory" value="2" class="ctgr" onclick="placeCategoryChange(this.value)">음식점</button>
-	<button type="button" name="placeCategory" value="3" class="ctgr" onclick="placeCategoryChange(this.value)">관광지</button>
+	<button type="submit" name="placeCategory" value="1" class="ctgr" onclick="placeCategoryChange(this.value)">숙소</button>
+	<button type="submit" name="placeCategory" value="2" class="ctgr" onclick="placeCategoryChange(this.value)">음식점</button>
+	<button type="submit" name="placeCategory" value="3" class="ctgr" onclick="placeCategoryChange(this.value)">관광지</button>
 		</div>
 	</div>
+</form>
+<form action="/traverSite/scheduleIn">
 	<div class="place-area">
 	<% if (isHaveLodging) { %>
 		<!-- 숙소 -->
