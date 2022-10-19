@@ -233,7 +233,7 @@ if (isLogin) {
 		%>
 				<div class="place">
 					<div class="place__img">
-						<img src="<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
+						<img src="traverSite/file/img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
 					</div>
 					<div class="place-info">
 						<div class="place__title"><%=pi.getPi_name() %></div>
@@ -269,7 +269,7 @@ if (isLogin) {
 		%>
 				<div class="place">
 					<div class="place__img">
-						<img src="file/place_img/<%=pi.getPi_img1() %>" alt="" />
+						<img src="traverSite/file/img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
 					</div>
 					<div class="place-info">
 						<div class="place__title"><%=pi.getPi_name() %></div>
@@ -305,7 +305,7 @@ if (isLogin) {
 		%>
 				<div class="place">
 					<div class="place__img">
-						<img src="#" alt="" />
+						<img src="traverSite/file/img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
 					</div>
 					<div class="place-info">
 						<div class="place__title"><%=pi.getPi_name() %></div>
