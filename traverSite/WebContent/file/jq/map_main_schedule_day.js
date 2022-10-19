@@ -11,6 +11,7 @@
 				} else {
 					let place = event.currentTarget; // 이벤트가 발생한 '현재 엘리먼트'을 가져온다
 					let piid = place.getAttribute("value");
+					let coords = place.getAttribute("data-id");
 					let piname = place.parentElement.parentElement.querySelector('.place__title').innerText;
 					let sddnum = sessionStorage.getItem("selectDay");
 					let sddate = sessionStorage.getItem("selectDate");
@@ -19,6 +20,7 @@
 						url : "/traverSite/scheduleDay",
 						data : {
 							"piid" : piid,
+							"coords" : coords,
 							"piname" : piname,
 							"sddnum" : sddnum,
 							"sddate" : sddate

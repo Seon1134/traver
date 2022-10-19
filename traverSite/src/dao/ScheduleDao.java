@@ -100,9 +100,10 @@ public class ScheduleDao {
             stmt = conn.createStatement();
             for(int i = 0; i < scheduleDayList.size(); i++) {
                 ScheduleDay sd = scheduleDayList.get(i);
-                String sql = "insert into t_schedule_day (si_id, pi_id, pi_name, sd_dnum, sd_date, sd_seq) " + 
+                String sql = "insert into t_schedule_day (si_id, pi_id, pi_name, sd_dnum, sd_date, sd_seq, sd_coords) " + 
                         " values ('" + siid + "', '" + sd.getPi_id() + "', '" +  sd.getPi_name() +"', '" +
-                        sd.getSd_dnum()+ "', '"+ sd.getSd_date() +"', '" + i +"') ";
+                        sd.getSd_dnum()+ "', '"+ sd.getSd_date() +"', '" + i +"', '" + sd.getSd_coords() + "') ";
+                System.out.println(sql);
                 success += stmt.executeUpdate(sql); target++;
             }
         } catch (Exception e) {
