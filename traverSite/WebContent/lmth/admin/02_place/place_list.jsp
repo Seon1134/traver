@@ -98,7 +98,7 @@ $(document).ready(function() {
 				</form>
 				<form action="placeFormIn" name="frm_place_svc" method="post">
 					<ul>
-						<li><span class="count">총 장소 : <span class="place_num"><%=rcnt %></span></span></li>
+						<li><span class="count">총 장소 : <span class="place_num"><%=rcnt %>개</span></span></li>
 						<li><input type="button" value="장소 삭제" id="placeDel" onclick="getSelectedValues()"></li>
 						<li><input type="button" value="장소 추가" id="placeIn" onclick="location.href='/traverSite/lmth/admin/02_place/place_form_in.jsp';"></li>
 					</ul>

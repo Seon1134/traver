@@ -29,8 +29,8 @@ public class AdminScheduleListDao {
     
         try {
             stmt = conn.createStatement();
-            String sql = "select a.si_id, a.mi_id, b.mi_nickname, b.mi_name, a.si_name, a.si_date " +
-                    " from t_schedule_info a, t_member_info b" + where + " order by a.si_date desc " + 
+            String sql = "select a.si_id, a.mi_id, b.mi_nickname, b.mi_name, a.si_dnum, a.si_name, a.si_date " +
+                    " from t_schedule_info a, t_member_info b" + where + " group by a.si_id order by a.si_date desc " + 
                     " limit " + ((cpage -1) * psize) + ", " + psize;
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -39,6 +39,7 @@ public class AdminScheduleListDao {
                 as.setMi_id(rs.getString("mi_id"));
                 as.setMi_nickname(rs.getString("mi_nickname"));
                 as.setMi_name(rs.getString("mi_name"));
+                as.setSi_dnum(rs.getInt("si_dnum"));
                 as.setSi_name(rs.getString("si_name"));
                 as.setSi_date(rs.getString("si_date"));
                 adminSchList.add(as);

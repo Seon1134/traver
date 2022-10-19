@@ -28,6 +28,6 @@ public class AdminScheduleListSvc {
         rcnt = adminScheduleListDao.getSchListCount(where);
         close(conn);
         
-        return 0;
+        return rcnt;
     }
 }

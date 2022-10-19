@@ -106,7 +106,9 @@ ul, li {margin: 0; padding: 0; list-style: none;}
 }
 .gnb_link_sub > li {
 	padding: 16px 30px;
-  	border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+.gnb_link_sub > li:first-child {
+	border-bottom: 1px solid rgb(255 255 255 / 15%);
 }
 
 .gnb_link_sub > li > a {

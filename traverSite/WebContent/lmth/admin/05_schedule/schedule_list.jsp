@@ -28,15 +28,15 @@ args = "&cpage=" + cpage + schargs;
 <link href="/traverSite/lmth/admin/file/css/style.css" type="text/css" rel="stylesheet">
 <script src="/traverSite/lmth/admin/file/js/jquery-3.6.1.js"></script>
 <script>
-function adminMemberDel(miid) {
+function adminShceduleDel(siid) {
 	if (confirm("정말 삭제하시겠습니까?")) {
 		$.ajax({
 			type : "POST", 
-			url : "/traverSite/adminMemberProcDel", 
-			data : {"miid" : miid}, 
+			url : "/traverSite/admimScheduleProcDel", 
+			data : {"siid" : siid}, 
 			success : function(chkRs) {
 				if (chkRs == 0) {
-					alert("회원 삭제에 실패했습니다.\n다시 시도하세요.");
+					alert("일정 삭제에 실패했습니다.\n다시 시도하세요.");
 				}
 				location.reload();
 			}
@@ -46,14 +46,14 @@ function adminMemberDel(miid) {
 	
 function getSelectedValues() {
 // 체크박스들 중 선택된 체크박스들의 값들을 쉼표로 구분하여 문자열로 리턴하는 함수
-	var chk = document.frm_member_table.chk;
+	var chk = document.frm_schedule_table.chk;
 	var idxs = "";	// chk컨트롤 배열에서 선택된 체크박스의 값들을 누적 저장할 변수(ex 1,2,3)
 	for (var i = 0 ; i < chk.length ; i++) {
 		if (chk[i].checked)	{
 			idxs += "," + chk[i].value;
 		}
 	}
-	adminMemberDel(idxs.substring(1))
+	adminShceduleDel(idxs.substring(1))
 	return idxs.substring(1);
 }
 
@@ -78,7 +78,7 @@ $(document).ready(function() {
 	<div class="main">
 		<div class="container">
 			<div class="sch_contents">
-				<h2>전체 게시글</h2>
+				<h2>일정 관리</h2>
 				<div class="subS">
 					<!-- 찾기 영역 -->
 					<form action="" name="frm_sch">
@@ -94,23 +94,24 @@ $(document).ready(function() {
 					</form>
 					<form action="schedule" name="frm_schedule_svc" method="post">
 					<ul>
-						<li><span class="count">총 일정 수 : <span class="sch_num"><%=rcnt %></span></span></li>
+						<li><span class="count">총 일정 수 : <span class="sch_num"><%=rcnt %>개</span></span></li>
 						<li><input type="button" value="선택 삭제" id="schDel" onclick="getSelectedValues()"></li>
 					</ul>
 					</form>
 				</div>
 			</div>
 			<div class="schs_table">
-			<form action="" name="frm_schedule" method="get">
+			<form action="" name="frm_schedule_table" method="get">
 				<table>
 					<thead>
 						<tr>
 							<th scope="col"><input type="checkbox" id="chkAll"></th>
-							<th scope="col">아이디</th>
-							<th scope="col">닉네임</th>
-							<th scope="col">이름</th>
-							<th scope="col">일정명</th>
-							<th scope="col">등록일</th>
+							<th scope="col">아 이 디</th>
+							<th scope="col">닉 네 임</th>
+							<th scope="col">이 름</th>
+							<th scope="col">총 일 수</th>
+							<th scope="col">일 정 명</th>
+							<th scope="col">등 록 일</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -127,6 +128,7 @@ $(document).ready(function() {
 							<td><%=as.getMi_id() %></td>
 							<td><%=as.getMi_nickname() %></td>
 							<td><%=as.getMi_name() %></td>
+							<td><%=as.getSi_dnum() - 1 %>박 <%=as.getSi_dnum() %>일</td>
 							<td><%=as.getSi_name() %></td>
 							<td><%=as.getSi_date() %></td>
 						</tr>
@@ -140,6 +142,44 @@ $(document).ready(function() {
 					</tbody>
 				</table>
 			</form>
+			<div class="num_list">
+					<tr>
+					<td>
+					<%
+					if (rcnt > 0) {	// 게시글이 있으면 - 페이징 영역을 보여줌
+						String lnk = "adminScheduleList?cpage=";
+						pcnt = rcnt / psize;
+						if (rcnt % psize > 0)	pcnt++;	// 전체 페이지 수
+					
+						if (cpage == 1) {
+							out.println("[처음]&nbsp;&nbsp;&nbsp;[이전]&nbsp;&nbsp;");
+						} else {
+							out.println("<a href='" + lnk + "1" + schargs + "'>[처음]</a>&nbsp;&nbsp;&nbsp;");
+							out.println("<a href='" + lnk + (cpage - 1) + schargs + "'>[이전]</a>&nbsp;&nbsp;");
+						}
+					
+						spage = (cpage - 1) / bsize * bsize + 1;	// 현재 블록에서의 시작 페이지 번호
+						for (int i = 1, j = spage ; i <= bsize && j <= pcnt ; i++, j++) {
+						// i : 블록에서 보여줄 페이지의 개수만큼 루프를 돌릴 조건으로 사용되는 변수
+						// j : 실제 출력한 페이지 번호로 전체 페이지 개수(마지막 페이지 번호)를 넘지 않게 사용해야 함
+							if (cpage == j) {
+								out.println("&nbsp;<strong>" + j + "</strong>&nbsp;");
+							} else {
+								out.println("&nbsp;<a href='" + lnk + j + schargs + "'>" + j + "</a>&nbsp;");
+							}
+						}
+					
+						if (cpage == pcnt) {
+							out.println("&nbsp;&nbsp;[다음]&nbsp;&nbsp;&nbsp;[마지막]");
+						} else {
+							out.println("&nbsp;&nbsp;<a href='" + lnk + (cpage + 1) + schargs + "'>[다음]</a>");
+							out.println("&nbsp;&nbsp;&nbsp;<a href='" + lnk + pcnt + schargs + "'>[마지막]</a>");
+						}
+					}
+					%>
+					</td>
+					</tr>
+				</div>
 			</div>
 		</div>
 	</div>

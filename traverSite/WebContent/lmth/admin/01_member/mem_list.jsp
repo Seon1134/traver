@@ -95,7 +95,7 @@ $(document).ready(function() {
 					</form>
 					<form action="memberFormIn" name="frm_member_svc" method="post">
 						<ul>
-							<li><span class="count">총 회원수 : <span class="mem_num"><%=rcnt %></span></span></li>
+							<li><span class="count">총 회원수 : <span class="mem_num"><%=rcnt %>명</span></span></li>
 							<li><input type="button" value="회원 삭제" id="memDel"  onclick="getSelectedValues()"></li>
 							<li><input type="button" value="회원 추가" id="memIn" onclick="location.href='/traverSite/lmth/admin/01_member/mem_form_in.jsp';"></li>
 						</ul>
@@ -108,13 +108,13 @@ $(document).ready(function() {
 					<thead>
 						<tr>
 							<th scope="col"><input type="checkbox" id="chkAll"></th>
-							<th scope="col">아이디</th>
-							<th scope="col">닉네임</th>
-							<th scope="col">이름</th>
-							<th scope="col">이메일</th>
-							<th scope="col">상태</th>
-							<th scope="col">가입일</th>
-							<th scope="col">관리</th>
+							<th scope="col">아 이 디</th>
+							<th scope="col">닉 네 임</th>
+							<th scope="col">이 름</th>
+							<th scope="col">이 메 일</th>
+							<th scope="col">상 태</th>
+							<th scope="col">가 입 일</th>
+							<th scope="col">관 리</th>
 						</tr>
 					</thead>
 					<tbody>
