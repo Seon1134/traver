@@ -32,9 +32,10 @@
 	.left-side { 
 		position: absolute; 
 		width: 270px; 
-		height: 96vh; 
+		height: 100vh; 
 		z-index: 20; 
 		background-color: #fdfdfd;
+		box-shadow: 0.4px 0px 3px 0px rgb(58 98 120 / 27%);
 	}
 	.side__open { 
 		position: absolute;
@@ -140,7 +141,7 @@
 	
 	.place-area {
 		overflow-y: auto;
-		max-height: 72vh;
+		max-height: calc(100vh - 94px - 108px);
 		margin-top: -2px;
 	}
 	

@@ -29,7 +29,6 @@ public class PlaceListCtrl extends HttpServlet {
 		}
 		if (searchKeyword == null || searchKeyword.equals("")) { // 입력한 키워드가 없으면 기본값은 "" 
 			searchKeyword = "";
-			placeCategory = "0";
 		}
 
 		// view 옵션 관련 where 추가 switch문
