@@ -83,6 +83,7 @@ input[type="text"] {
 	display: inline;
 	padding: 10px 20px 0 0;
 }
+#gorecimg { width: 150px; position: relative; top: -13px; }
 
 #side {
 	width: 200px;
@@ -246,7 +247,7 @@ $(document).ready(function() {
 				<% if ( isLogin ) { %>
 				<a href="/traverSite/postFormIn">
 				<button type="button" class="btn" id="gorecbtn">
-				<image src="file/img/" alt="일정 추천하기">
+				<image id="gorecimg" src="file/img/gorec.png" alt="일정 추천하기">
 				</button></a> 
 				<% } %>
 				<br><br><br>

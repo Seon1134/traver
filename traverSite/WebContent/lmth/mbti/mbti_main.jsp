@@ -43,8 +43,8 @@ ArrayList<GoodPost> popPostList = (ArrayList<GoodPost>)request.getAttribute("pop
 	position: relative; 
 	cursor: pointer;
 }
-#retestbtn { right: 25px; position: relative; }
-#retestimg { margin-top: 10px; }
+#retestbtn { top: 3px; right: 20px; position: relative; }
+#retestimg { width: 80px; }
 .btn {
 	background: inherit ; border: none; box-shadow: none; border-radius: 0; 
 	padding: 0; overflow: visible; cursor: pointer;
@@ -182,7 +182,7 @@ $(document).ready(function() {
 	   		</select>
 	   		</form>
 	   		<% if ( isLogin ) { %>
-	   		<a href="lmth/mbti/mbti_test.jsp"><button class="btn" id="retestbtn"><image id="retestimg" src="file/img/" alt="재검사"></button></a>
+	   		<a href="lmth/mbti/mbti_test.jsp"><button class="btn" id="retestbtn"><image id="retestimg" src="file/img/retest.png" alt="재검사"></button></a>
 	   		<% } %>
 	   	</div><br><br>
 	   	<hr>

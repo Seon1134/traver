@@ -36,6 +36,8 @@
 	margin-right: 10px;
 }
 
+.getbtn { height: 38px; }
+
 .sub_font {
 	font-size: 19px;
 	font-weight: bold;
@@ -213,11 +215,11 @@ function submit(i) {
 		<div class="container-default_box">
 			<div id="section1">
 				<button class="btn" id="getoldbtn">
-					<image src="file/img/" alt="기존 일정 가져오기">
+					<image class="getbtn" src="file/img/getold.png" alt="기존 일정 가져오기">
 				</button>
 				</a>&nbsp;&nbsp;
 				<button class="btn" id="getnewbtn">
-					<image src="file/img/" alt="새 일정 만들기">
+					<image class="getbtn" src="file/img/getnew.png" alt="새 일정 만들기">
 				</button>
 				</a> <br>
 				<br>
@@ -325,7 +327,7 @@ function submit(i) {
 					<span id="ctcnt"><span id="count">0</span> / 1000</span> <br>
 					<br> <a href="mbti_view.jsp"><button type="submit"
 							class="btn" id="subbtn">
-							<image src="file/img/" alt="등록하기">
+							<image class="getbtn" src="file/img/submit.png" alt="등록하기">
 						</button></a>
 				</form>
 			</div>

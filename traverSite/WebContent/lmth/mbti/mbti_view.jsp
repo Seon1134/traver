@@ -64,7 +64,7 @@ hr { margin: 15px 0;}
 #report2 { padding: 10px; border: 1px solid #DEEBF7; }
 .btn2{ float: none; display :inline-block; }
 #button { text-align: center; }
-
+.btn3 { height: 35px; }
 .display_none { display: none; }
 </style>
 <script src="file/jq/jquery-3.6.1.js"></script>
@@ -240,15 +240,15 @@ var clickCnt = 0;
    			</div>
    			<hr>
    			<% if ( isLogin && loginInfo.getMi_id().equals(goodPost.getMi_id()) ) { %>
-   			<button type="submit" class="btn" id="updatebtn"><img src="../../file/img/" id="updateimg" alt="수정"></button>
+   			<button type="submit" class="btn" id="updatebtn"><img class="btn3" src="file/img/rewrite.png" id="updateimg" alt="수정"></button>
    			</form>
  			<form name="Delfrm" action="/traverSite/postProcDel" method="post">
-   			<button type="button" class="btn" id="deletebtn" onclick="postDel();"><img src="../../file/img/" id="deleteimg" alt="삭제"></button>
+   			<button type="button" class="btn" id="deletebtn" onclick="postDel();"><img class="btn3" src="file/img/delete.png" id="deleteimg" alt="삭제"></button>
    			<input type="hidden" name="kind" value="list">
    			<input type="hidden" name="gp_id" value="<%=goodPost.getGp_id() %>">
    			</form>
    			<% } %>
-   			<a href="/traverSite/postList"><button type="button" class="btn" id="list"><img src="../../file/img/" id="list" alt="목록"></button></a>
+   			<a href="/traverSite/postList"><button type="button" class="btn" id="list"><img class="btn3" src="file/img/list.png" id="list" alt="목록"></button></a>
    		
    		</div>
    		<div class="display_none" id="section2">
