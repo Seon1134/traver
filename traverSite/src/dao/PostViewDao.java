@@ -32,6 +32,7 @@ public class PostViewDao {
                  goodPost.setGp_id(rs.getString("gp_id"));
                  goodPost.setGi_id(rs.getString("gi_id"));
                  goodPost.setMi_id(rs.getString("mi_id"));
+                 goodPost.setMi_nickname(rs.getString("mi_nickname"));
                  goodPost.setGp_mbti(rs.getString("gp_mbti"));
                  goodPost.setGp_title(rs.getString("gp_title"));
                  goodPost.setGp_list(rs.getString("gp_list"));

@@ -32,7 +32,7 @@ hr { margin: 15px 0;}
 #dayselect { width: 100px; height: 30px; }
 #map { border: 1px solid #888; }
 #contentbox { width: 100%; margin-bottom: 20px;  }
-#update, #delete { float: left; margin-right: 5px; }
+#updatebtn, #deletebtn { float: left; margin-right: 5px; }
 #list { float: right; top: -500px;  }
 
 
@@ -93,6 +93,7 @@ window.onload = function(){
 	cancel.addEventListener('click', function() {
 		section3.classList.add('display_none');
 	});
+	
 }
 </script>
 <script>
@@ -158,7 +159,15 @@ var clickCnt = 0;
 <div class="container">
    <div class="container-default_box">
    		<div id="section1">
-   		<form name="mbtiViewFrm" method="post">
+   		<form name="mbtiViewFrm" action="/traverSite/postFormUp" method="post">
+   		<input type="hidden" name="gpid" value="<%=goodPost.getGp_id()%>">
+   		<input type="hidden" name="giid" value="<%=goodPost.getGi_id()%>">
+   		<input type="hidden" name="title" value="<%=goodPost.getGp_title()%>">
+   		<input type="hidden" name="nickname" value="<%=goodPost.getMi_nickname()%>">
+   		<input type="hidden" name="mbti" value="<%=goodPost.getGp_mbti()%>">
+   		<input type="hidden" name="giname" value="<%=goodInfo.getGi_name()%>">
+   		<input type="hidden" name="list" value="<%=goodPost.getGp_list()%>">
+   		<input type="hidden" name="content" value="<%=goodPost.getGp_content()%>">
 			<span id="title"><%=goodPost.getGp_title() %></span>
 			<% if ( isLogin ) { %>
 			<button type="button" class="btn"><img src="file/img/report.png" id="report" alt="신고"></button>
@@ -170,13 +179,13 @@ var clickCnt = 0;
 			id="goodicon" alt="좋아요"><span id="goodcnt"> 추천 : <%=goodPost.getGp_gcnt() %></span></button>
 			<% } %>
 			<br>
-			<span class="ctt_font" id="writer"><%=goodPost.getMi_id() %>(<%=goodPost.getGp_mbti() %>)</span>
+			<span class="ctt_font" id="writer"><%=goodPost.getMi_nickname() %>(<%=goodPost.getGp_mbti() %>)</span>
 			<% if ( goodPost.getGp_last() != null ) { %>
 			<span id="lastup">마지막 수정 : <%=goodPost.getGp_last() %></span>
 			<% } %>
 			<span id="date">등록일 : <%=goodPost.getGp_date() %></span>
 			<hr>
-			<p id="schname">일정이름<% %></p><br>
+			<p id="schname"><%=goodInfo.getGi_name() %></p><br>
 			<%=goodPost.getGp_list() %>
    			<hr>
    			<select id="dayselect">
@@ -229,12 +238,12 @@ var clickCnt = 0;
 			<div id="contentbox">
    				<span class="ctt_font" id="content"><%=goodPost.getGp_content() %></span>
    			</div>
-   			</form>
    			<hr>
    			<% if ( isLogin && loginInfo.getMi_id().equals(goodPost.getMi_id()) ) { %>
-   			<a href="mbti_form_up.jsp"><button type="button" class="btn" id="update"><img src="../../file/img/" id="update" alt="수정"></button></a>
+   			<button type="submit" class="btn" id="updatebtn"><img src="../../file/img/" id="updateimg" alt="수정"></button>
+   			</form>
  			<form name="Delfrm" action="/traverSite/postProcDel" method="post">
-   			<button type="button" class="btn" id="delete" onclick="postDel();"><img src="../../file/img/" id="delete" alt="삭제"></button>
+   			<button type="button" class="btn" id="deletebtn" onclick="postDel();"><img src="../../file/img/" id="deleteimg" alt="삭제"></button>
    			<input type="hidden" name="kind" value="list">
    			<input type="hidden" name="gp_id" value="<%=goodPost.getGp_id() %>">
    			</form>
