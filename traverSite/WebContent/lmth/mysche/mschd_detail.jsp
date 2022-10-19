@@ -46,7 +46,7 @@ for (int i = 0; i < schdDayList.size(); i ++) {
 
 %>
 <div class="container">
-   <div class="container-default_box">
+   <div class="container-default_box" style="height:1200px;">
    		<br><br><br><br>
    		<a href="mschdDetail?siid=<%=si.getSi_id() %>" id="title"><span id="subtitle">내 일정 상세보기</span></a><br><br><br><br>
    		<select name="dayselect" id="">

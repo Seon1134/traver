@@ -69,7 +69,7 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 .postimg { width: 200px; height: 200px; }
 .display_none { display: none; }
 
-.tableBox { width:100%; height:70%; overflow:auto; }
+.tableBox { width:100%; height:1000px; overflow:auto; }
 </style>
 </head>
 <body>
@@ -94,7 +94,7 @@ args = "&yargs=" + oargs + schargs; // 일정 디테일 보기용 쿼리
 
 %>
 <div class="container">
-   <div class="container-default_box">
+   <div class="container-default_box" style="height:1200px;">
    
    	<div class="contents_con">
    		<div class="contents_sch">
