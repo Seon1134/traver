@@ -20,7 +20,7 @@ if (url == null) {
 	justify-content: center;
 	height : 100vh;
 }
-.container .inner{padding: 40px 40px; border: 1px solid #999; width: 500px; height: 250px; display: grid; align-content: center;}
+.container .inner{padding: 40px 40px; border: 1px solid #999; width: 500px; height: 250px; display: grid; align-content: center; }
 .container .inner h2{text-align : center; font-size: 35px;}
 .container .inner form{display : flex; justify-content: center;}
 .container .inner form div:first-child{margin-right : 10px;}

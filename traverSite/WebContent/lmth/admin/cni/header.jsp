@@ -26,7 +26,7 @@ if (adminInfo != null) {
 					<li><a href="/traverSite/adminMemberList">회원 관리</a></li>
 					<li><a href="/traverSite/adminPlaceList">장소 관리</a></li>
 					<li><a href="/traverSite/lmth/admin/03_report/report_list.jsp">신고 관리</a></li>
-					<li><a href="/traverSite/lmth/admin/04_bbs/bbs_01.jsp">게시물 관리</a></li>
+					<li><a href="/traverSite/admimBbsContentsList">게시물 관리</a></li>
 					<li><a href="/traverSite/adminScheduleList">일정 관리</a></li>
 				</ul>
 			</nav>

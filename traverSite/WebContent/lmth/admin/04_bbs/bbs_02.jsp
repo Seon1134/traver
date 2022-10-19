@@ -28,10 +28,10 @@ var state = 1;
 function bbs_02_img_chn() {
     if ( state == 0 ) {
         state = 1;
-        document.getElementById('bbs_02_chn').src = "/traver/lmth/admin/file/img/bbs_02_down.png";
+        document.getElementById('bbs_02_chn').src = "/traverSite/lmth/admin/file/img/bbs_02_down.png";
     } else {
         state = 0;
-        document.getElementById('bbs_02_chn').src = "/traver/lmth/admin/file/img/bbs_02_up.png";
+        document.getElementById('bbs_02_chn').src = "/traverSite/lmth/admin/file/img/bbs_02_up.png";
     }
 }
 </script>
@@ -89,8 +89,8 @@ function bbs_02_img_chn() {
 										<td>1</td>
 										<td>
 											<div id="btn1"  onclick="toggleBtn1()">
-												<p>여행 후기입니다. 여기 완전 재미있네요.
-												<img src="/traverSite/lmth/admin/file/img/bbs_02_down.png" id="bbs_02_chn" onclick="bbs_02_img_chn()" class="bbs_02_review_img">
+												<p onclick="bbs_02_img_chn()">여행 후기입니다. 여기 완전 재미있네요.
+												<img src="/traverSite/lmth/admin/file/img/bbs_02_down.png" id="bbs_02_chn" class="bbs_02_review_img">
 												</p>
 											</div>
 											<div id="btn2" style="display: none;">
