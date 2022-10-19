@@ -11,9 +11,11 @@ request.setCharacterEncoding("utf-8");
 .main_box { width: 100%; height: 800px; display: flex; align-items: center; justify-content: center; }
 
 .leftBox {
-	width:200px; height:800px;
-    border:solid 1px lightgray; border-top:none;
-    margin-right:0;
+	width: 200px;
+    height: 800px;
+    border: solid 1px lightgray;
+    border-top: none;
+    margin-right: 72px;
 }
 .mypage { 
 	color:black; font-weight:bold; font-size:18px;
@@ -23,15 +25,16 @@ request.setCharacterEncoding("utf-8");
 }
 a:hover{ color:black; }
 
+.twoBigBoxes { display:flex; margin-right:50px; }
 .skybluebox1 { 
 	width:350px; height:700px;
     top:150px; background-color:#deeef4;
-    margin-right:150px; 
+    margin-left:50px; 
 }
 .skybluebox2 {
 	width:350px; height:700px;
     top:150px; background-color:#deeef4;
-    margin-right:150px; 
+    margin-left:80px; 
 }
 .box1 { color:black; font-weight:bold; font-size:20px; }
 .box2 { width:350px; height:500px; overflow:auto;}
@@ -56,6 +59,7 @@ a:hover{ color:black; }
 				<li><a href="member_del.jsp" class="menu">&nbsp;&nbsp;|회원 탈퇴</a></li><br/>
 			</ul>
 	 	</div>
+	 	<div class="twoBigBoxes">
 	 	<div class="skybluebox1">
 	 		<div>
 	 			<br/><br/>
@@ -68,7 +72,7 @@ a:hover{ color:black; }
 	 			</div>
 			</div>
 	 	</div>
-	   <div class="skybluebox2">
+	   	<div class="skybluebox2">
 	   		<div>
 	   			<br/><br/>
 	   			<p class="box1">&nbsp;&nbsp;작성 리뷰</p><br/><br/><hr/>
@@ -98,6 +102,8 @@ a:hover{ color:black; }
 	   			</div>
 			</div>
 	   </div>
+	   </div>
+	   
    	</div> <!-- main_box  -->
    	
    </div>
