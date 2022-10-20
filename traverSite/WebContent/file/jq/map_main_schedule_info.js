@@ -21,8 +21,6 @@ function scheduleInfo (sisdate, siedate, sidnum) {
 }
 
 function scheduleSelect(selectDay, selectDate, dateList) {
-	sessionStorage.setItem("selectDay", selectDay);	// '자바스크립트 세션'에 현재 Day값 저장
-	sessionStorage.setItem("selectDate", selectDate);	// '자바스크립트 세션'에 현재 선택한 Day의 실제 날짜 저장
 	$.ajax({
 		type : "POST",
 		url : "/traverSite/scheduleSelect",
@@ -35,6 +33,8 @@ function scheduleSelect(selectDay, selectDate, dateList) {
 			if (result == null) {
 				alert("일차 등록 실패");
 			}
+			sessionStorage.setItem("selectDay", selectDay);	// '자바스크립트 세션'에 현재 Day값 저장
+			sessionStorage.setItem("selectDate", selectDate);	// '자바스크립트 세션'에 현재 선택한 Day의 실제 날짜 저장
 			location.reload();
 		}
 	})

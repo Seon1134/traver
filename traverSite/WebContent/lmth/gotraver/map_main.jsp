@@ -7,12 +7,14 @@ ArrayList<PlaceInfo> placeList = (ArrayList<PlaceInfo>)request.getAttribute("pla
 
 
 
+int viewDayNum = 1;
 String addSchedulePlaceId = "";
 String placeCategory = request.getParameter("placeCategory");
 String searchKeyword = request.getParameter("searchKeyword");
 boolean isHaveLodging = false; // 숙소 존재여부
 boolean isHaveRestaurant = false; // 음식점 존재여부
 boolean isHaveTourist = false; // 관광지 존재여부
+int viewOption = 0;	// 상단 보기 결과값
 
 if (searchKeyword == null) {
 	searchKeyword = "";
@@ -47,6 +49,7 @@ for (int i = 0; i < placeList.size(); i++ ) { // 장소들을 가져온다.
 <script type="text/javascript" src="/traverSite/file/js/map_main_move.js" ></script>
 <script type="text/javascript" src="/traverSite/file/js/map_main_calendar.js" ></script>
 <script type="text/javascript" src="/traverSite/file/jq/map_main_schedule_info.js" ></script>
+
 </head>
 <body>
 <%@ include file="../../cni/header.jsp" %>
@@ -376,42 +379,27 @@ window.onresize = function(event){ // 윈도우 크기 size 변경되면
 	}
 
 var map = new daum.maps.Map(mapContainer, mapOption); // 지도 생성
-var imageSrc = '/traverSite/file/img/icon_map.png', // 마커이미지의 주소입니다 
-imageSize = new kakao.maps.Size(29, 42), // 마커이미지의 크기입니다
-imageOption = {offset: new kakao.maps.Point(14, 39)} // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.  
-var addDayMarkers = [];	//장소에 추가한 마커들을 가지고 있을 배열
-
-
-//마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
 
 <%
 for (int i = 0; i < placeList.size(); i++ ) {
 	PlaceInfo pi = placeList.get(i);
-	
-	if(addSchedulePlaceId.indexOf(pi.getPi_id()) > 0) { // 일정에 추가한 마커라면
-%>
-	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-	markerPosition = new kakao.maps.LatLng(<%=pi.getPi_coords()%>); // 마커가 표시될 위치입니다
-<%
-	} 
 %>
 	var position<%=pi.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
 		 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=pi.getPi_name()%></div>", 
 	     latlng: new kakao.maps.LatLng<%=pi.getPi_coords()%>
 	});
-	
+	<% if(addSchedulePlaceId.indexOf(pi.getPi_id()) < 0 ) {
+		// 해당 장소가 일정에 추가하지 않은 장소에다가
+		// 추가할 일차의 값이 현재 선택한 SelectDay값과 같지않다
+	%>
     var marker = new kakao.maps.Marker({ // 마커를 생성
         map: map, // 마커를 표시할 지도
-        position: position<%=pi.getPi_id()%>.latlng 
-    <% if(addSchedulePlaceId.indexOf(pi.getPi_id()) > 0) { // 일정에 추가한 마커라면 %> 
-	    , image: markerImage // 마커이미지 설정 
-    <%} %>
+        position: position<%=pi.getPi_id()%>.latlng
     });
-    
+    <% } %>
 
-    
     var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
-        content: position<%=pi.getPi_id()%>.content 
+        content: position<%=pi.getPi_id() %>.content 
     });
     
     var listBoxes = document.querySelector('.place');
@@ -419,41 +407,104 @@ for (int i = 0; i < placeList.size(); i++ ) {
     kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow, listBoxes));
     kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 
-    <% if(addSchedulePlaceId.indexOf(pi.getPi_id()) > 0) { // 일정에 추가한 마커라면 %>
-	marker.setZIndex(5);
-	addDayMarkers.push(marker);
-    <%} %>
     marker.setMap(map); // 맵에 표시
-    
-    
-    
-<% 
-    if(addSchedulePlaceId.indexOf(pi.getPi_id()) > 0) { // 일정에 추가한 마커라면 
-		String[] addSchedulePlaseIdArr = addSchedulePlaceId.split(",");
-		for (int j = 1; j < addSchedulePlaseIdArr.length; j++) {
-			if (addSchedulePlaseIdArr[j].equals(pi.getPi_id())) {
-			// 현재 입력해야할 장소의 값이 일정의 몇번째 순서인지 찾아온다.
+
+<%
+}
 %>
-			 // 커스텀 오버레이가 표시될 위치입니다 
-			 var overlayPosition<%=pi.getPi_id()%> = new kakao.maps.LatLng<%=pi.getPi_coords()%>;
+
+
+var imageSrc = '/traverSite/file/img/icon_map.png', // 마커이미지의 주소
+imageSize = new kakao.maps.Size(29, 42), // 마커이미지의 크기
+imageOption = {offset: new kakao.maps.Point(14, 39)} // 마커이미지의 옵션. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정한다.  
+var addDayMarkers = [];	//장소에 추가한 마커들을 가지고 있을 배열
+
+<%
+if (isLogin) { 
+	ArrayList<ScheduleDay> scheduleDayList = (ArrayList<ScheduleDay>)session.getAttribute("scheduleDayList");
+	int selectDay = (int)session.getAttribute("selectDay");
+	if (scheduleDayList != null) {
+		for (int j = 0 ; j < scheduleDayList.size(); j++) {
+			ScheduleDay sd = scheduleDayList.get(j);
 			
-			 var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%=j %></span><span class="right"></span></div>';
+			switch(viewOption) {	// 0 Day별로 / 1 전체보기 / 2 추가장소 / 3 찜 / 4 추가찜
+			case 0: // Day별로 보기 (선택안함)
+				if (sd.getSd_dnum() == selectDay) { // 만약 '추가장소 일차'가 '현재 보여주는 일차'라면
+%>
+					var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+					markerPosition = new kakao.maps.LatLng(<%=sd.getSd_coords()%>);
+					//마커의 이미지정보를 가지고 있는 마커이미지를 생성
+					
+					
+					var position<%=sd.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
+						 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=sd.getPi_name()%></div>", 
+					     latlng: new kakao.maps.LatLng<%=sd.getSd_coords()%>
+					});
+					
+				    var marker = new kakao.maps.Marker({ // 마커를 생성
+				        map: map,
+				        position: position<%=sd.getPi_id()%>.latlng,
+				        image: markerImage, // 마커이미지 설정 
+				        zIndex: 5
+				    });
+				    addDayMarkers.push(marker);
+				    
+				    var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
+				        content: position<%=sd.getPi_id() %>.content 
+				    });
+				    
+				    var listBoxes = document.querySelector('.place');
+				    
+				    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow, listBoxes));
+				    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+				    marker.setMap(map); // 맵에 표시
+				    
+					//커스텀 오버레이의 위치, 내용
+					var overlayPosition<%=sd.getPi_id()%> = new kakao.maps.LatLng<%=sd.getSd_coords() %>;
+					var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%=viewDayNum %></span><span class="right"></span></div>';
+					
+					 
+					 // 커스텀 오버레이를 생성
+					 var customOverlay = new kakao.maps.CustomOverlay({
+					     position: overlayPosition<%=sd.getPi_id()%>,
+					     content: overlayContent,
+					     zIndex: 5
+					 });
 				
-			 // 커스텀 오버레이를 생성합니다
-			 var customOverlay = new kakao.maps.CustomOverlay({
-			     position: overlayPosition<%=pi.getPi_id()%>,
-			     content: overlayContent
-			 });
-			customOverlay.setZIndex(5);
-		
-			// 커스텀 오버레이를 지도에 표시합니다
-			customOverlay.setMap(map);
-	<%
-			break;
+					// 커스텀 오버레이를 지도에 표시
+					customOverlay.setMap(map);
+		<%		    				
+					viewDayNum ++; // 일차 번호값 증가 
+				}
+				break;
+			case 1 : // 전체보기
+		%>
+				var overlayPosition<%=sd.getPi_id() %> = new kakao.maps.LatLng<%=sd.getSd_coords()%>;
+				var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%=j %></span><span class="right"></span></div>';
+				
+				// 커스텀 오버레이를 생성
+				var customOverlay = new kakao.maps.CustomOverlay({
+				     position: overlayPosition<%=sd.getPi_id()%>,
+				     content: overlayContent,
+				     zIndex: 5
+				});
+			
+				// 커스텀 오버레이를 지도에 표시
+				customOverlay.setMap(map);
+		<%
+				break;
+			case 2 : // 추가장소보기
+				break;
+			case 3: // 찜
+				break;
+			case 4: // 추가+찜
+				break;	
 			}
 		}
 	}
 }
+
 %>
 
 

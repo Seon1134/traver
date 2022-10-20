@@ -88,7 +88,6 @@
 			}
 		}
 		
-
 		scheduleSelect(day, sddate, dateList);
 		
 		return sddate;

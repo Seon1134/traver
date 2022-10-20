@@ -18,6 +18,7 @@ public class PlaceListCtrl extends HttpServlet {
 		
 		String placeCategory = request.getParameter("placeCategory"); // 우측 사이드박스의 카테고리 선택여부 변수
 		String viewOption = request.getParameter("viewOption"); // '추가한 장소' '찜한장소'등 상단 [옵션박스] value 변수
+		// 0 Day별로 / 1 전체보기 / 2 추가장소 / 3 찜 / 4 추가찜
 		String searchKeyword = request.getParameter("searchKeyword"); // '검색어' 변수
 		String where = " where pi_isview = 'y' "; // 옵션 값을 넘길 where 절을 저장할 변수
 		
