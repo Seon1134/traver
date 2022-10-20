@@ -9,21 +9,20 @@
 .container-default_box { padding: 0px 100px 0px 100px; }
 #title { color: #000; }
 #subtitle { font-size: 25px; font-weight: bold; margin: 0px 70px 50px 10px;}
-#dayselect { width: 100px; height: 30px; cursor: pointer; }  
 #map { border: 1px solid #888; }
 
 #myschd { width: 100%; height: 100%; border: 1px solid #BDD7EE; margin-bottom: 70px; }
 #schd_name, #daybox { font-size: 20px; font-weight: bold; }
 
-
 #schd_name { float: left; margin-top: 4px;}
-#rec { float: right; font-size: 15px; color: #888; margin: 7px 5px 0 0; }
 .btn { cursor: pointer; }
-#recbtn { float: right; background: none;  font-size: 14px; width: 120px; height: 30px; margin-bottom:30px;}
+#rec { float: right; font-size: 15px; color: #888; margin: 7px 5px 0 0; }
+#recbtn { float: right; background: none;  font-size: 14px; height: 30px; }
 
 #daybox { background-color: #EDEDED; padding: 10px; }
 #placebox { padding: 10px; }
 #myschd .daytd { padding: 0px; border: 1px solid #BDD7EE; cursor: pointer; }
+
 #placebox { padding: 15px; }
 .place { padding-bottom: 10px; }
 .tableBox { overflow:auto; width:100%; }

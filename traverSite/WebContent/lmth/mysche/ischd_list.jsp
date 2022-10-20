@@ -49,9 +49,9 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 
 .upBox { 
 	background-color: #C5E0B4; width:225px; height:70px; 
-	border:solid 1px lightgray; color:black;
+	border:solid 1px lightgray; color:black; padding-top:5px;
 }
-.mouseEventBox:hover { background: #efefef; width:225px; height:250px; }
+.mouseEventBox:hover { background: #efefef; width:225px; height:260px; }
 .dnumSize { font-size: 20px; font-weight: bold; ;}
 #schdName { 
 	width: 180px;
@@ -157,7 +157,6 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 				<div class="mouseEventBox">
 					<a href="ischdDetail?giid=<%=gi.getGi_id() + args %>">
 						<div class="upBox" >
-							<br/>
 							<span id="schdName"><%=title %></span><br />
 							<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
 						</div>	

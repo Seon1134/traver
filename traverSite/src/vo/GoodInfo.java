@@ -1,9 +1,12 @@
 package vo;
 
+import java.util.ArrayList;
+
 public class GoodInfo {
 
     private String gi_id, mi_id, gi_nickname, gi_date, gi_name, gi_img; 
     private int gi_dnum;
+    private ArrayList<GoodDay> goodDayList;
     
     public String getGi_id() {
         return gi_id;
@@ -46,6 +49,12 @@ public class GoodInfo {
     }
     public void setGi_dnum(int gi_dnum) {
         this.gi_dnum = gi_dnum;
+    }
+    public ArrayList<GoodDay> getGoodDayList() {
+        return goodDayList;
+    }
+    public void setGoodDayList(ArrayList<GoodDay> goodDayList) {
+        this.goodDayList = goodDayList;
     }
     
 }

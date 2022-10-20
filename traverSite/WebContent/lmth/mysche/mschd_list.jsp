@@ -48,40 +48,28 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 	margin-left: 5px; 
 }
 
-
-/*
-.post_title {
-	width: 180px;
-	height: 52px;
-	padding: 10px;
-	background-color: #BDD7EE;
-	font-size: 20px;
-	font-weight: bold;
-	line-height: 1.5;
-}
-
-.small {
-	font-size: 14px;
-}
-*/
 .upBox { 
 	background-color: #BDD7EE; width:225px; height:70px; 
-	border:solid 1px lightgray; color:black;
+	border:solid 1px lightgray; color:black; padding-top:5px; padding-bottom:5px;
 }
-.mouseEventBox:hover { background: #efefef; width:225px; height:250px; }
-.dnumSize { font-size: 20px; font-weight: bold; ;}
+.mouseEventBox:hover { background: #efefef; width:225px; height:260px; }
+.dnumSize { font-size: 18px; font-weight: bold; ;}
 #schdName { 
 	width: 180px;
 	height: 52px;
 	padding: 10px;
-	
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: bold;
 	line-height: 1.5;
 }
 
 #subtitle { font-size: 25px; font-weight: bold;}
 .tableBox { width:100%; height:1000px; overflow:auto; }
+
+.delSchd {
+    cursor: pointer;
+    float: right;
+}
 
 </style>
 </head>
@@ -155,6 +143,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 		
 		<div class="tableBox">
 		<table width="100%" callpadding="5" >
+
 <%
 	if (scheduleList.size() > 0) { 	// 일정 목록이 있으면
 		int i = 0;
@@ -172,6 +161,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 
 		<td width="20%" align="center" >
 			<div class="mouseEventBox">
+				<button class="delSchd">X</button>
 				<a href="mschdDetail?siid=<%=si.getSi_id() + args %>">
 					<div class="upBox" >
 						<span id="schdName"><%=title %></span><br />
