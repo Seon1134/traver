@@ -54,7 +54,7 @@
         
        <input type="button" id="goTravel" value="여행 떠나기" onclick="location='/traverSite/placeList'"/>
        &nbsp;&nbsp;&nbsp;
-       <input type="button" id="goMbti" value="MBTI 여행" onclick="location='#'"/>
+       <input type="button" id="goMbti" value="MBTI 여행" onclick="location='/traverSite/MBTIMain'"/>
    </div>
    
    </div>
