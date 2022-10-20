@@ -50,6 +50,12 @@ a:hover{ color:black; }
 </head>
 <body>
 <%@ include file="../../cni/header.jsp" %>
+<%
+if (!isLogin) {
+		out.println("<script> alert('잘못된 경로로 들어오셨습니다.'); history.back(); </script>");
+		out.close();
+	}
+%>
 <!-- 컨테이너 시작 -->
 <div class="container">
    <div class="container-default_box">
