@@ -53,7 +53,7 @@ $(document).ready(function() {
 			<div class="sub_nav">
 				<h2>게시물관리</h2>
 				<ul>
-					<li><a href="/traverSite/lmth/admin/04_bbs/bbs_01.jsp">전체 게시글</a></li>
+					<li><a href="/traverSite/admimBbsContentsList">전체 게시글</a></li>
 					<li><a href="/traverSite/lmth/admin/04_bbs/bbs_02.jsp">전체 리뷰</a></li>
 				</ul>
 			</div>

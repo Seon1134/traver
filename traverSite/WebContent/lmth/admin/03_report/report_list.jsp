@@ -42,14 +42,14 @@
 					<thead>
 						<tr>
 							<th scope="col"><input type="checkbox"></th>
-							<th scope="col">게시글 링크</th>
-							<th scope="col">분류</th>
-							<th scope="col">신고자 아이디</th>
-							<th scope="col">신고대상 아이디</th>
-							<th scope="col">신고 사유</th>
-							<th scope="col">신고자 아이피</th>
-							<th scope="col">신고 날짜</th>
-							<th scope="col">상태</th>
+							<th scope="col">게 시 글 링 크</th>
+							<th scope="col">분 류</th>
+							<th scope="col">신 고 자 아 이 디</th>
+							<th scope="col">신 고 대 상 아 이 디</th>
+							<th scope="col">신 고 사 유</th>
+							<th scope="col">신 고 자 아 이 피</th>
+							<th scope="col">신 고 날 짜</th>
+							<th scope="col">상 태</th>
 						</tr>
 					</thead>
 					<tbody>

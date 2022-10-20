@@ -81,7 +81,7 @@ $(document).ready(function() {
 			<div class="sub_nav">
 				<h2>게시물 관리</h2>
 				<ul>
-					<li><a href="/traverSite/lmth/admin/04_bbs/bbs_01.jsp">전체 게시글</a></li>
+					<li><a href="/traverSite/admimBbsContentsList">전체 게시글</a></li>
 					<li><a href="/traverSite/lmth/admin/04_bbs/bbs_02.jsp">전체 리뷰</a></li>
 				</ul>
 			</div>
@@ -114,18 +114,20 @@ $(document).ready(function() {
 						</div>
 						<div class="bbs_table">
 						<form action="adminBbsContentsFormUp" name="frm_bbs_contents_table" method="get">
-							<table>
+							<table style="table-layout: fixed;">
 								<thead>
 									<tr>
-										<th scope="col"><input type="checkbox" id="chkAll"></th>
+										<th scope="col" width="3%">
+											<input type="checkbox" id="chkAll">
+										</th>
 										<th scope="col">게 시 물 링 크</th>
-										<th scope="col">닉 네 임</th>
-										<th scope="col">아 이 디</th>
-										<th scope="col">M B T I</th>
-										<th scope="col">등 록 일</th>
-										<th scope="col">아 이 피</th>
-										<th scope="col">추 천 수</th>
-										<th scope="col">관 리</th>
+										<th scope="col" width="7%">닉 네 임</th>
+										<th scope="col" width="7%">아 이 디</th>
+										<th scope="col" width="7%">M B T I</th>
+										<th scope="col" width="15%">등 록 일</th>
+										<th scope="col" width="13%">아 이 피</th>
+										<th scope="col" width="5%">추 천</th>
+										<th scope="col" width="5%">관 리</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -139,11 +141,13 @@ $(document).ready(function() {
 										<td>
 											<input type="checkbox" name="chk" value="<%=gp.getGi_id() %>">
 										</td>
-										<td><a href="http://naver.com" target="_blank">http://naver.com</a></td>
+										<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+											<a href="/traverSite/postView?pgid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>&miid=<%=gp.getMi_id() %>" target="_blank">/traverSite/postView?pgid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>&miid=<%=gp.getMi_id() %></a>
+										</td>
 										<td><%=gp.getMi_nickname() %></td>
 										<td><%=gp.getMi_id() %></td>
 										<td><%=gp.getGp_mbti() %></td>
-										<td><%=gp.getGp_mbti() %></td>
+										<td><%=gp.getGp_date() %></td>
 										<td><%=gp.getGp_ip() %></td>
 										<td><%=gp.getGp_gcnt() %></td>
 										<td><input type="button" value="수정" onclick="Location.href='adminBbsFormUp?gpid=<%=gpid %> %>';" class="bbs_01_btn_type"></td>

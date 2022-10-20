@@ -43,7 +43,6 @@ public class AdminBbsContentsListDao {
                 gp.setGp_ip(rs.getString("gp_ip"));
                 gp.setGp_gcnt(rs.getInt("gp_gcnt"));
                 adminGoodPost.add(gp);
-                System.out.println(sql);
             }
 
         } catch (Exception e) {
