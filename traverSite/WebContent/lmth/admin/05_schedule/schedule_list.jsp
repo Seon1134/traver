@@ -71,6 +71,36 @@ $(document).ready(function() {
 		else $("#chkAll").prop("checked", true); 
 	});
 });
+$(document).ready(function(){
+ $('#adminSch_tabel th').each(function (column) {
+    $(this).click(function() {
+      if($(this).is('.asc')) {
+        $(this).removeClass('asc');
+        $(this).addClass('desc');
+        sortdir=-1;
+
+      } else {
+        $(this).addClass('asc');
+        $(this).removeClass('desc'); sortdir=1;
+      }
+
+      $(this).siblings().removeClass('asc');
+      $(this).siblings().removeClass('desc');
+
+      var rec = $('#adminSch_tabel').find('tbody>tr').get();
+
+      rec.sort(function (a, b) {
+        var val1 = $(a).children('td').eq(column).text().toUpperCase();
+        var val2 = $(b).children('td').eq(column).text().toUpperCase();
+        return (val1 < val2)?-sortdir:(val1>val2)?sortdir:0;
+      });
+
+      $.each(rec, function(index, row) {
+          $('#adminSch_tabel tbody').append(row);
+      });
+    });
+ });
+});
 </script>
 </head>
 <body>
@@ -102,16 +132,16 @@ $(document).ready(function() {
 			</div>
 			<div class="schs_table">
 			<form action="" name="frm_schedule_table" method="get">
-				<table>
+				<table id="adminSch_tabel">
 					<thead>
 						<tr>
 							<th scope="col"><input type="checkbox" id="chkAll"></th>
-							<th scope="col">아 이 디</th>
-							<th scope="col">닉 네 임</th>
-							<th scope="col">이 름</th>
-							<th scope="col">총 일 수</th>
-							<th scope="col">일 정 명</th>
-							<th scope="col">등 록 일</th>
+							<th scope="col" style="cursor: pointer;">아 이 디</th>
+							<th scope="col" style="cursor: pointer;">닉 네 임</th>
+							<th scope="col" style="cursor: pointer;">이 름</th>
+							<th scope="col" style="cursor: pointer;">총 일 수</th>
+							<th scope="col" style="cursor: pointer;">일 정 명</th>
+							<th scope="col" style="cursor: pointer;">등 록 일</th>
 						</tr>
 					</thead>
 					<tbody>

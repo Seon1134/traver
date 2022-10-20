@@ -7,6 +7,39 @@
 <title>Insert title here</title>
 <link href="/traverSite/lmth/admin/file/css/reset.css" type="text/css" rel="stylesheet">
 <link href="/traverSite/lmth/admin/file/css/style.css" type="text/css" rel="stylesheet">
+<script src="/traverSite/lmth/admin/file/js/jquery-3.6.1.js"></script>
+<script>
+$(document).ready(function(){
+ $('#adminRep_table th').each(function (column) {
+    $(this).click(function() {
+      if($(this).is('.asc')) {
+        $(this).removeClass('asc');
+        $(this).addClass('desc');
+        sortdir=-1;
+
+      } else {
+        $(this).addClass('asc');
+        $(this).removeClass('desc'); sortdir=1;
+      }
+
+      $(this).siblings().removeClass('asc');
+      $(this).siblings().removeClass('desc');
+
+      var rec = $('#adminRep_table').find('tbody>tr').get();
+
+      rec.sort(function (a, b) {
+        var val1 = $(a).children('td').eq(column).text().toUpperCase();
+        var val2 = $(b).children('td').eq(column).text().toUpperCase();
+        return (val1 < val2)?-sortdir:(val1>val2)?sortdir:0;
+      });
+
+      $.each(rec, function(index, row) {
+          $('#adminRep_table tbody').append(row);
+      });
+    });
+ });
+});
+</script>
 </head>
 <body>
 	<%@ include file="../cni/header.jsp"%>
@@ -38,18 +71,18 @@
 				</div>
 			</div>
 			<div class="report_table">
-				<table>
+				<table id="adminRep_table">
 					<thead>
 						<tr>
 							<th scope="col"><input type="checkbox"></th>
-							<th scope="col">게 시 글 링 크</th>
-							<th scope="col">분 류</th>
-							<th scope="col">신 고 자 아 이 디</th>
-							<th scope="col">신 고 대 상 아 이 디</th>
-							<th scope="col">신 고 사 유</th>
-							<th scope="col">신 고 자 아 이 피</th>
-							<th scope="col">신 고 날 짜</th>
-							<th scope="col">상 태</th>
+							<th scope="col" style="cursor: pointer;">게 시 글 링 크</th>
+							<th scope="col" style="cursor: pointer;">분 류</th>
+							<th scope="col" style="cursor: pointer;">신 고 자 아 이 디</th>
+							<th scope="col" style="cursor: pointer;">신 고 대 상 아 이 디</th>
+							<th scope="col" style="cursor: pointer;">신 고 사 유</th>
+							<th scope="col" style="cursor: pointer;">신 고 자 아 이 피</th>
+							<th scope="col" style="cursor: pointer;">신 고 날 짜</th>
+							<th scope="col" style="cursor: pointer;">상 태</th>
 						</tr>
 					</thead>
 					<tbody>

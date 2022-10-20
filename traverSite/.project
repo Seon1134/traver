@@ -28,6 +28,23 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>WebContent/lmth/admin/file/img/down.png</name>
+			<type>1</type>
+			<location>C:/Users/Administrator/Desktop/down.png</location>
+		</link>
+		<link>
+			<name>WebContent/lmth/admin/file/img/up.png</name>
+			<type>1</type>
+			<location>C:/Users/Administrator/Desktop/up.png</location>
+		</link>
+		<link>
+			<name>WebContent/lmth/admin/file/img/up_down.png</name>
+			<type>1</type>
+			<location>C:/Users/Administrator/Desktop/up_down.png</location>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1665559552778</id>

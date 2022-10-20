@@ -71,6 +71,36 @@ $(document).ready(function() {
 		else $("#chkAll").prop("checked", true); 
 	});
 });
+$(document).ready(function(){
+ $('#adminBbs_con_table th').each(function (column) {
+    $(this).click(function() {
+      if($(this).is('.asc')) {
+        $(this).removeClass('asc');
+        $(this).addClass('desc');
+        sortdir=-1;
+
+      } else {
+        $(this).addClass('asc');
+        $(this).removeClass('desc'); sortdir=1;
+      }
+
+      $(this).siblings().removeClass('asc');
+      $(this).siblings().removeClass('desc');
+
+      var rec = $('#adminBbs_con_table').find('tbody>tr').get();
+
+      rec.sort(function (a, b) {
+        var val1 = $(a).children('td').eq(column).text().toUpperCase();
+        var val2 = $(b).children('td').eq(column).text().toUpperCase();
+        return (val1 < val2)?-sortdir:(val1>val2)?sortdir:0;
+      });
+
+      $.each(rec, function(index, row) {
+          $('#adminBbs_con_table tbody').append(row);
+      });
+    });
+ });
+});
 </script>
 </head>
 <body>
@@ -114,19 +144,19 @@ $(document).ready(function() {
 						</div>
 						<div class="bbs_table">
 						<form action="adminBbsContentsFormUp" name="frm_bbs_contents_table" method="get">
-							<table style="table-layout: fixed;">
+							<table style="table-layout: fixed;" id="adminBbs_con_table">
 								<thead>
 									<tr>
 										<th scope="col" width="3%">
 											<input type="checkbox" id="chkAll">
 										</th>
-										<th scope="col">게 시 물 링 크</th>
-										<th scope="col" width="7%">닉 네 임</th>
-										<th scope="col" width="7%">아 이 디</th>
-										<th scope="col" width="7%">M B T I</th>
-										<th scope="col" width="15%">등 록 일</th>
-										<th scope="col" width="13%">아 이 피</th>
-										<th scope="col" width="5%">추 천</th>
+										<th scope="col" style="cursor: pointer;">게 시 물 링 크</th>
+										<th scope="col" width="7%" style="cursor: pointer;">닉 네 임</th>
+										<th scope="col" width="7%" style="cursor: pointer;">아 이 디</th>
+										<th scope="col" width="7%" style="cursor: pointer;">M B T I</th>
+										<th scope="col" width="15%" style="cursor: pointer;">등 록 일</th>
+										<th scope="col" width="13%" style="cursor: pointer;">아 이 피</th>
+										<th scope="col" width="5%" style="cursor: pointer;">추 천</th>
 										<th scope="col" width="5%">관 리</th>
 									</tr>
 								</thead>

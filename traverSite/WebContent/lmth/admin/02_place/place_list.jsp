@@ -74,6 +74,36 @@ $(document).ready(function() {
 		else $("#chkAll").prop("checked", true); 
 	});
 });
+$(document).ready(function(){
+ $('#adminPla_table th').each(function (column) {
+    $(this).click(function() {
+      if($(this).is('.asc')) {
+        $(this).removeClass('asc');
+        $(this).addClass('desc');
+        sortdir=-1;
+
+      } else {
+        $(this).addClass('asc');
+        $(this).removeClass('desc'); sortdir=1;
+      }
+
+      $(this).siblings().removeClass('asc');
+      $(this).siblings().removeClass('desc');
+
+      var rec = $('#adminPla_table').find('tbody>tr').get();
+
+      rec.sort(function (a, b) {
+        var val1 = $(a).children('td').eq(column).text().toUpperCase();
+        var val2 = $(b).children('td').eq(column).text().toUpperCase();
+        return (val1 < val2)?-sortdir:(val1>val2)?sortdir:0;
+      });
+
+      $.each(rec, function(index, row) {
+          $('#adminPla_table tbody').append(row);
+      });
+    });
+ });
+});
 </script>
 </head>
 <body>
@@ -107,16 +137,16 @@ $(document).ready(function() {
 			</div>
 				<div class="place_table">
 				<form action="adminPlaceFormUp" name="frm_place_table" method="get">
-					<table>
+					<table id="adminPla_table">
 						<thead>
 							<tr>
 								<th scope="col"><input type="checkbox" id="chkAll"></th>
-								<th scope="col">장 소 명</th>
-								<th scope="col">번 호</th>
-								<th scope="col">분 류</th>
-								<th scope="col">등 록 일</th>
-								<th scope="col">게 시 여 부</th>
-								<th scope="col">주 소</th>
+								<th scope="col" style="cursor: pointer;">장 소 명</th>
+								<th scope="col" style="cursor: pointer;">번 호</th>
+								<th scope="col" style="cursor: pointer;">분 류</th>
+								<th scope="col" style="cursor: pointer;">등 록 일</th>
+								<th scope="col" style="cursor: pointer;">게 시 여 부</th>
+								<th scope="col" style="cursor: pointer;">주 소</th>
 								<th scope="col">관 리</th>
 							</tr>
 						</thead>
