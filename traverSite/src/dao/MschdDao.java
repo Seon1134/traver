@@ -62,7 +62,7 @@ public class MschdDao {
     }
 
     public ScheduleInfo getMschdDetail(String miid, String siid) {
-    // 받아온(지정한) 일정아이디에 해당하는 일정 정보들을 ScheduleInfo형 인스턴스로 저장하여 리턴하는 메소드
+    // 받아온(지정한) 일정아이디에 해당하는 일정 디테일 정보들을 ScheduleInfo형 인스턴스로 저장하여 리턴하는 메소드
         Statement stmt = null;
         ResultSet rs = null;
         ScheduleInfo si = null;

@@ -19,9 +19,8 @@ function btnClick() {
 
 /* 재덕 수정 시작 */
 .sch_h2 {margin: 40px 0;}
-.contents_sch {height: 100px; width: 400px}
+.contents_sch {height: 100px; width: 400px;}
 .contents_con {height: 600px;}
- 
 /* 재덕 수정 끝 */
 
 #title { color: #000; }
@@ -30,10 +29,12 @@ select { height: 29px; vertical-align: middle; cursor: pointer; }
     border: 1px solid #767676;
     width:200px;
     height:30px;
-    margin-left:800px;
+    margin-left: 615px;
     margin-bottom:50px;
 }
 input[type="text"] { height:23px; border: none; margin-left: 5px; }
+
+.linematch { display: flex; white-space: nowrap; }
 
 .schNbtn { display: flex;  }
 .btn {
@@ -43,33 +44,45 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 	padding: 0;  cursor: pointer; 
 }
 #schBtn { 
-	width:70px; height:35px; 
+	width:70px; height:33px; 
 	margin-left: 5px; 
-	border: none; 
 }
 
+
+/*
+.post_title {
+	width: 180px;
+	height: 52px;
+	padding: 10px;
+	background-color: #BDD7EE;
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 1.5;
+}
+
+.small {
+	font-size: 14px;
+}
+*/
 .upBox { 
-	background: #efefef; width:178px; height:50px; 
+	background-color: #BDD7EE; width:225px; height:70px; 
 	border:solid 1px lightgray; color:black;
 }
-.mouseEventBox:hover { background: #efefef; width:178px; height:230px; }
-
+.mouseEventBox:hover { background: #efefef; width:225px; height:250px; }
+.dnumSize { font-size: 20px; font-weight: bold; ;}
+#schdName { 
+	width: 180px;
+	height: 52px;
+	padding: 10px;
+	
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 1.5;
+}
 
 #subtitle { font-size: 25px; font-weight: bold;}
-
-#list { width: 100%; }
-.post { float: left; margin: 10px 20px 10px 20px;}
-.post_title { 
-	width: 180px; height: 52px; 
-	display: inline-block; padding: 10px;
-	background-color: #BDD7EE;
-	font-size: 20px; font-weight: bold; line-height: 1.5;
-}
-.small { font-size: 14px; }
-.postimg { width: 200px; height: 200px; }
-.display_none { display: none; }
-
 .tableBox { width:100%; height:1000px; overflow:auto; }
+
 </style>
 </head>
 <body>
@@ -106,33 +119,35 @@ args = "&yargs=" + oargs + schargs; // 일정 디테일 보기용 쿼리
 		 	<input type="hidden" name="o" value="<%=o%>"/>
 		 	<input type="hidden" name="sy" value="<%=sy %>"/>
 
-	   		<select name="sy" onchange="location.href='/traverSite/mschdList?<%=schargs + oargs%>&sy=' + this.value;">
-				<option value="">전체보기</option>
+			<div class="linematch">
+		   		<select name="sy" onchange="location.href='/traverSite/mschdList?<%=schargs + oargs%>&sy=' + this.value;">
+					<option value="">전체보기</option>
 <%
 String today = LocalDate.now() + "";
 int maxYear = Integer.parseInt(today.substring(0, 4));
 for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 	
 %>	   		
-				<option value="<%=i %>" ><%=i %> 년</option>
+					<option value="<%=i %>" ><%=i %> 년</option>
 <%		
 }
 %>
-			 </select>		 
-			 <select name="o" onchange="location.href='/traverSite/mschdList?<%=schargs + yargs%>&o=' + this.value;">
-				<option value="a" <% if (o.equals("a")) { %>selected="selected"<% } %>>등록 최신 순</option>
-				<option value="b" <% if (o.equals("b")) { %>selected="selected"<% } %>>등록 오래된 순</option>
-			 </select>
-			 
-			 <span> 총 일정 수 :         </span>
-			 	<div class="schNbtn">
-				 	<div id= "search-box" >
-					 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >
+				 </select>		 
+				 <select name="o" onchange="location.href='/traverSite/mschdList?<%=schargs + yargs%>&o=' + this.value;">
+					<option value="a" <% if (o.equals("a")) { %>selected="selected"<% } %>>등록 최신 순</option>
+					<option value="b" <% if (o.equals("b")) { %>selected="selected"<% } %>>등록 오래된 순</option>
+				 </select>
+				 
+				 <span>&nbsp;&nbsp;&nbsp;일정 수 : <%=scheduleList.size() %></span>
+				 	<div class="schNbtn">
+					 	<div id= "search-box" >
+						 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >
+						</div>
+						<button class="btn" onclick="btnClick()">
+							<img src="/traverSite/file/img/sch.png" id="schBtn"/>
+						</button>
 					</div>
-					<button class="btn" onclick="btnClick()">
-						<img src="/traverSite/file/img/sch.png" id="schBtn"/>
-					</button>
-				</div>
+				</div> <!-- linematch -->
 			 </form>	
 			 	
 		</div> <!-- contents_sch -->
@@ -147,7 +162,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 			ScheduleInfo si = scheduleList.get(i);
 			
 			String title = si.getSi_name();
-			if (title.length() > 12)	title = title.substring(0, 10) + " ...";
+			if (title.length() > 10)	title = title.substring(0, 9) + " ...";
 			
 			String dnum1 = (si.getSi_dnum() - 1) + "박";
 			String dnum2 = si.getSi_dnum() + "일";
@@ -160,10 +175,10 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 				<a href="mschdDetail?siid=<%=si.getSi_id() + args %>">
 					<div class="upBox" >
 						<span id="schdName"><%=title %></span><br />
-						<span><%=dnum1%>&nbsp;<%=dnum2%></span><br />
+						<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
 						<span><%=si.getSi_sdate() %>~<%=si.getSi_edate() %></span><br />
 					</div>	
-					<img src="/traverSite/file/img/<%=si.getSi_img() %>" width="180" height="180"/>
+					<img src="/traverSite/file/img/<%=si.getSi_img() %>" width="227" height="180"/>
 				</a>	
 			</div><br/>
 		</td>

@@ -32,7 +32,7 @@ if (loginInfo != null)  isLogin = true;
 					<a href="" class="gnb_link_menu">내 일정/장소</a>
 						<ul class="gnb_link_sub" style="width: 170px;">
 							<li><a href="/traverSite/mschdList">내 일정</a></li>
-							<li><a href="#">관심 일정</a></li>
+							<li><a href="/traverSite/ischdList">관심 일정</a></li>
 						</ul>
 					<% } else { %> <!-- 로그인 상태가 아니면 -->
 					<a href="#" class="gnb_link_menu" style="visibility:hidden;">내 일정/장소</a>
