@@ -137,7 +137,7 @@ main .container .mem_02_tab01, .mem_02_tab02{width : 100%; padding : 0 80px; mar
 
 
 
-/* bbs_01 시작 */
+/* bbsContents_list 시작 */
 /* 서브메뉴  시작 */
 .content{display : flex;}
 .content .inner{display : flex; width: 100%;}
@@ -168,8 +168,9 @@ main .container .mem_02_tab01, .mem_02_tab02{width : 100%; padding : 0 80px; mar
 .main .bbs_table table th:nth-of-type(1n+1) {background: #e6e6e6; height: 30px;}
 .main .bbs_table table th, .main .bbs_table table td{border : 1px solid #ccc; padding : 10px; vertical-align: middle;}
 .main .bbs_table .bbs_01_btn_type { vertical-align: middle; height: 30px; width: 50px; box-sizing: border-box; background: inherit; border: 1px solid #ccc; }
+.main .bbs_table .bbs_01_btn_type:hover { color : #fff; background-color : #666; }
 
-/* bss_01 끝 */
+/* bbsContents_list 끝 */
 
 
 
@@ -213,6 +214,7 @@ main .container .mem_02_tab01, .mem_02_tab02{width : 100%; padding : 0 80px; mar
 .main_bbs_02 .bbs_02_table #btn2 {}
 .main_bbs_02 .bbs_02_table .bbs_02_review_img {width: 14px; margin-left: 15px; vertical-align: bottom;}
 .main_bbs_02 .bbs_02_table .bbs_02_btn_type { vertical-align: middle; height: 30px; width: 50px; box-sizing: border-box; background: inherit; border: 1px solid #ccc; }
+.main_bbs_02 .bbs_02_table .num_list { display: flex; justify-content: center; margin: 50px 0 100px;}
 
 /* bbs_02 끝 */
 
