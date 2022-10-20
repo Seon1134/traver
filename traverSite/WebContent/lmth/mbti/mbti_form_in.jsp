@@ -350,7 +350,7 @@ function submit(i) {
           					<input type="hidden" name="content">    
           				<% 
 							String si_name = si.getSi_name();
-							if (si_name.length() > 12)	si_name = si_name.substring(0, 10) + " ...";
+							if (si_name.length() > 10)	si_name = si_name.substring(0, 9) + " ...";
 						%>
 							<div class="post" onclick="submit('<%=i %>');">
 								<div class="post_title">

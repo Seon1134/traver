@@ -1,6 +1,7 @@
 package ctrl;
 
 import java.io.*;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,12 +20,16 @@ public class MemberCtrl extends HttpServlet {
     	request.setCharacterEncoding("utf-8");
     	String kind = "";
     	String mi_mbti = "";
+    	String mi_pw = "";
     	if (request.getAttribute("kind") != null) 
     	        kind = (String)request.getAttribute("kind");
     	else    kind = request.getParameter("kind");
     	if (request.getAttribute("mi_mbti") != null)
     	        mi_mbti = (String)request.getAttribute("mi_mbti");
-    	else    mi_mbti = request.getParameter("mi_mbti");
+    	else if ( request.getParameter("mi_mbti") != null )   
+    	    mi_mbti = request.getParameter("mi_mbti");
+    	if ( request.getParameter("mi_pw") != null )
+    	    mi_pw = request.getParameter("mi_pw");
     	
         MemberInfo memberInfo = new MemberInfo();  
         
@@ -33,6 +38,10 @@ public class MemberCtrl extends HttpServlet {
         
         if (kind.equals("mbti1") || kind.equals("mbti2")) {
             memberInfo.setMi_mbti(mi_mbti);
+        }
+        
+        if (kind.equals("pwUp")) {
+            memberInfo.setMi_pw(mi_pw);
         }
         
         if (kind.equals("in") || kind.equals("up")) {
@@ -50,7 +59,7 @@ public class MemberCtrl extends HttpServlet {
             memberInfo.setMi_birth(request.getParameter("mi_birth"));
             
 
-        } else if (kind.equals("up") || kind.equals("del") || kind.equals("mbti1") || kind.equals("mbti2")) {
+        } else if (kind.equals("up") || kind.equals("del") || kind.equals("mbti1") || kind.equals("mbti2") || kind.equals("pwUp") ) {
         // 정보 수정이나 탈퇴인 경우는 로그인 상태이므로 아이디를 세션에서 추출하여 가져감
             mi = (MemberInfo)session.getAttribute("loginInfo");
             memberInfo.setMi_id(mi.getMi_id());
@@ -64,10 +73,20 @@ public class MemberCtrl extends HttpServlet {
 
         String link = "../index.jsp";   // 작업 후 이동할 경로를 저장할 변수
         if (result == 1) {  // 정상적으로 동작되었으면
-            if (kind.equals("in"))          link = "../member/login_form.jsp";
+            if (kind.equals("in"))          {
+                session.setAttribute("loginInfo", memberInfo);
+                session.setMaxInactiveInterval(1800);
+                ArrayList<ScheduleDay> scheduleDayList = new ArrayList<ScheduleDay>(); // 내 일정에 담은 장소를 저장할 스케줄 장소리스트
+                ScheduleInfo scheduleInfo = new ScheduleInfo(); // 일정정보
+                session.setAttribute("scheduleDayList", scheduleDayList); //세션에 담기
+                session.setAttribute("scheduleInfo", scheduleInfo); //세션에 담기
+                session.setAttribute("selectDay", 0);
+                session.setAttribute("selectDate", " ");
+                link = "../member/join_end.jsp";
+            }
             else if (kind.equals("del"))    link = "../member/logout.jsp";
             else if (kind.equals("up")) {
-                link = "../index.jsp";
+                link = "../mypage/info_up_form.jsp";
                 mi.setMi_mbti(memberInfo.getMi_mbti());
                 mi.setMi_mail(memberInfo.getMi_mail());
                 // 정보 수정 성공시 현재 세션에 들어있는 로그인 회원 정보도 변경시킴
@@ -81,6 +100,10 @@ public class MemberCtrl extends HttpServlet {
                 link="lmth/mbti/mbti_start_sub2.jsp";
                 mi.setMi_mbti(memberInfo.getMi_mbti());
                 mi.setMi_mail(memberInfo.getMi_mail());
+            }
+            else if (kind.equals("pwUp")) {
+                link="../mypage/pw_check.jsp";
+                mi.setMi_pw(memberInfo.getMi_pw());
             }
         } else {
             response.setContentType("text/html; charset=utf-8");

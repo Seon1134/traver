@@ -52,7 +52,7 @@
 	   <p class="font_setting2"><bold class="font_bold" >트레버</bold>와 함께 
 	   <bold class="font_bold">여행</bold>을 떠나 볼까요?</p>
         
-       <input type="button" id="goTravel" value="여행 떠나기" onclick="location='../gotraver/map_main.jsp'"/>
+       <input type="button" id="goTravel" value="여행 떠나기" onclick="location='/traverSite/placeList'"/>
        &nbsp;&nbsp;&nbsp;
        <input type="button" id="goMbti" value="MBTI 여행" onclick="location='#'"/>
    </div>

@@ -40,5 +40,19 @@ public class DupCtrl extends HttpServlet {
 	            out.println(1);
 	        }
 		}
+		
+		if ( request.getParameter("pw") != null) {
+            String pw = request.getParameter("pw").trim();
+            String id = request.getParameter("id");
+            try {
+                DupSvc dupSvc = new DupSvc();
+                int result = dupSvc.chkPw(id, pw);
+                out.println(result);
+            } catch(Exception e) {
+                e.printStackTrace();
+                out.println(0);
+            }
+        }
+		
 	}
 }

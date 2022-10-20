@@ -91,4 +91,47 @@ public class MemberProcDao { //traverSite
 
         return result;
     }
+
+    public int pwUpdate(MemberInfo memberInfo) {
+        Statement stmt = null;
+        int result = 0;
+
+        try {
+            String sql = "update t_member_info set mi_pw = '" + memberInfo.getMi_pw()  
+            + "' where mi_id = '" + memberInfo.getMi_id() + "'";
+            System.out.println(sql);
+            stmt = conn.createStatement();
+            result = stmt.executeUpdate(sql);
+
+        } catch(Exception e) {
+            System.out.println("MemberProcDao 클래스의 pwUpdate() 메소드 오류");
+            e.printStackTrace();
+        } finally {
+            close(stmt);
+        }
+
+        return result;
+        
+       
+    }
+
+    public int memberDelete(MemberInfo memberInfo) {
+        Statement stmt = null;
+        int result = 0;
+
+        try {
+            String sql = "update t_member_info set mi_status = 'c' where mi_id = '" + memberInfo.getMi_id() + "'";
+            System.out.println(sql);
+            stmt = conn.createStatement();
+            result = stmt.executeUpdate(sql);
+
+        } catch(Exception e) {
+            System.out.println("MemberProcDao 클래스의 memberDelete() 메소드 오류");
+            e.printStackTrace();
+        } finally {
+            close(stmt);
+        }
+
+        return result;
+    }
 }

@@ -13,10 +13,10 @@
     margin-right:200px;
 }
 .mypage { 
-	color:black; font-weight:bold; font-size:18px;
+	color:black; font-weight:bold; font-size:20px; margin-left: 33px;
 }
 .menu { color: gray; 
-	font-weight:bold; font-size:16px;
+	font-weight:bold; font-size:18px; line-height: 1.5;
 }
 a:hover{ color:black; }
 
@@ -46,16 +46,17 @@ a:hover{ color:black; }
   	 <div class="main_box">
 		<div class="leftBox">
 			<br/><br/><br/>
-			<h2 class="mypage">&nbsp;&nbsp;마이페이지</h2><br/><br/>
+			<a href="/traverSite/mypageList"><h2 class="mypage">&nbsp;&nbsp;마이페이지</h2></a><br/><br/>
 			<hr/>
 			<ul><br/><br/>
-				<li><a href="post_review_list.jsp" class="menu">&nbsp;&nbsp;|내 작성 글/리뷰</a></li><br/>
-				<li><a href="info_up_form.jsp" class="menu">&nbsp;&nbsp;|회원 정보 수정</a></li><br/>
-				<li><a href="pw_check.jsp" class="menu">&nbsp;&nbsp;|비밀번호 변경</a></li><br/>
-				<li><a href="member_del.jsp" class="menu">&nbsp;&nbsp;|회원 탈퇴</a></li><br/>
+				<li><a href="/traverSite/mypageList" class="menu">&nbsp;&nbsp;| 내 작성 글/리뷰</a></li><br/>
+				<li><a href="info_up_form.jsp" class="menu">&nbsp;&nbsp;| 회원 정보 수정</a></li><br/>
+				<li><a href="pw_check.jsp" class="menu">&nbsp;&nbsp;| 비밀번호 변경</a></li><br/>
+				<li><a href="member_del.jsp" class="menu">&nbsp;&nbsp;| 회원 탈퇴</a></li><br/>
 			</ul>
 		</div>
-		<form name="cancelFrm" action="#" method="post">
+		<form name="cancelFrm" action="member_proc.mem" method="post">
+		<input type="hidden" name="kind" value="del" /> 
 			<div class="pwChkBox"><br/><br/>
 				<h2 class="chk1">회원 탈퇴</h2><br/><br/>
 				<p class="chk2">정말 탈퇴 하시겠습니까?</p>

@@ -42,7 +42,7 @@ if (loginInfo != null)  isLogin = true;
 		</nav>
 		<div class="header-service_area">
 			<% if (isLogin) { %>
-			<a href="/traverSite/lmth/mypage/post_review_list.jsp" class="service-mypage">마이페이지</a>
+			<a href="/traverSite/mypageList" class="service-mypage">마이페이지</a>
 			<a href="/traverSite/lmth/member/logout.jsp" class="service-logout">로그아웃</a>
 			<% } else { %>
 			<a href="#" class="service-mypage" style="visibility:hidden;">마이페이지</a>
