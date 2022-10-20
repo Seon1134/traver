@@ -27,9 +27,14 @@
 						},
 						success : function(result) {
 							if (result == 0) {
-								alert("하루 장소 추가는 최대 10개까지만 가능합니다");
+								console.log("알 수 없는 에러입니다.");
+							} else if (result == 1) {
+								alert("일정은 하루에 최대 10개까지 등록 가능합니다");
+							} else if (result == 2) {
+								alert("동일 일차에 같은 장소 중복 등록은 불가능합니다.");
+							} else {
+								location.reload();
 							}
-							location.reload();
 						}
 					})
 				}
