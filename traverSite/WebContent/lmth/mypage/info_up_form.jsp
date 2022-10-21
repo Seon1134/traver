@@ -10,6 +10,22 @@ String[] arrDomain = {"naver.com", "nate.com", "gmail.com", "daum.net", "yahoo.c
 <meta charset="UTF-8">
 <title>회원 정보 수정</title>
 <style>
+<!-- 재덕 css 수정 시작 -->
+
+.container_test {display: flex;}
+.container_test .container-default_box_test {width: 100%; height: 800px;}
+.container_test .leftBox_test { width: 250px; height: 30vh; border-right: #666; text-align: center; margin: 60px 0 0 273px; position: fixed;}
+.container_test .leftBox_test .mypage_test {font-size: 22px; font-weight: 600; padding-bottom: 45px; border-bottom: 1px solid gray;}
+.container_test .leftBox_test .menu_test {font-size: 18px; font-weight: 500; padding: 15px; }
+.container_test .leftBox_test .menu_test:hover {background: #10b492; color: white;}
+.container_test .leftBox_test .menu_test a:hover {color: white;}
+.container_test .container-default_box_test .infoFormBox_test {width: calc(100% - 575px); background: #fff; padding: 60px;box-sizing: border-box; display: flex; justify-content: flex-end;}
+.container_test .container-default_box_test .infoFormBox_test .join_form_test {margin-top: 60px;  border: 1px solid gray; border-radius: 5px; padding: 50px;}
+
+
+<!-- 재덕 css 수정 끝 -->
+
+
 .main_box { width: 100%; height: 800px; display: flex; align-items: center; justify-content: center; }
 
 .leftBox {
@@ -31,7 +47,7 @@ String[] arrDomain = {"naver.com", "nate.com", "gmail.com", "daum.net", "yahoo.c
 }
 .infoChange { 
     font-size:20px; font-weight:bold;
-    text-align:center;
+    text-align:center; padding: 30px;
 }
 .btnChk { height:36px; }
 #nickNameMsg { margin: 10px 0px; }
@@ -92,24 +108,24 @@ if (!isLogin) {
 	}
 %>
 <!-- 컨테이너 시작 -->
-<div class="container">
-   <div class="container-default_box">
+<div class="container_test">
+   <div class="container-default_box_test">
    
-   <div class="main_box">
-		<div class="leftBox">
-			<br/><br/><br/>
-			<a href="/traverSite/mypageList"><h2 class="mypage">&nbsp;&nbsp;마이페이지</h2></a><br/><br/>
-			<hr/>
-			<ul><br/><br/>
-				<li><a href="/traverSite/mypageList" class="menu">&nbsp;&nbsp;| 내 작성 글/리뷰</a></li><br/>
-				<li><a href="lmth/mypage/info_up_form.jsp" class="menu">&nbsp;&nbsp;| 회원 정보 수정</a></li><br/>
-				<li><a href="pw_check.jsp" class="menu">&nbsp;&nbsp;| 비밀번호 변경</a></li><br/>
-				<li><a href="member_del.jsp" class="menu">&nbsp;&nbsp;| 회원 탈퇴</a></li><br/>
+   <!-- <div class="main_box"> -->
+		<div class="leftBox_test">
+	   		<ul class="mypage_test">
+	   			<li><a href="/traverSite/mypageList"><h2>마이페이지</h2></a></li>
 			</ul>
-		</div>
-	  		<div class="infoFormBox"><br/><br/>
-			<h2 class="infoChange">회원 정보 수정</h2><br/><br/>
-			<form name="frmInfoChange" action="member_proc.mem" method="post">
+			<ul>
+				<li class="menu_test menu_first"><a href="/traverSite/mypageList">내 작성 게시글 및 리뷰</a></li>
+				<li class="menu_test"><a href="lmth/mypage/info_up_form.jsp">회원 정보 수정</a></li>
+				<li class="menu_test"><a href="lmth/mypage/pw_check.jsp">비밀번호 변경</a></li>
+				<li class="menu_test"><a href="lmth/mypage/member_del.jsp">회원 탈퇴</a></li>
+			</ul>
+	 	</div>
+	  		<div class="infoFormBox_test">
+			<form name="frmInfoChange" action="member_proc.mem" method="post" class="join_form_test">
+			<h2 class="infoChange">회원 정보 수정</h2>
 			<input type="hidden" name="kind" value="up" />
 				<div class="nnBox">
 					<label for="mi_nickname" style="font-weight:bold;">닉네임</label>&nbsp;&nbsp;
@@ -171,7 +187,7 @@ if (!isLogin) {
 			    </div>
 			</form>
 	  		</div>
-   		</div><!-- main_box -->
+   		<!-- </div>main_box -->
    		
    </div>
 </div>
