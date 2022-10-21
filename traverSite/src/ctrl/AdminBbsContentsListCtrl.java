@@ -34,7 +34,12 @@ public class AdminBbsContentsListCtrl extends HttpServlet {
         } else if (!schtype.equals("") && !keyword.equals("")) {    // 검색조건과 검색어가 있을 경우
             URLEncoder.encode(keyword, "UTF-8");
             // 쿼리스트링으로 주고 받는 검색어가 한글일 경우 IE에서 간혹 문제가 발생할 수 있으므로 유니코드로 변환시킴
-            where = " where gp_" + schtype + " like '%" + keyword + "%' ";
+            if (schtype.equals("nickname")) {
+                where = " where mi_" + schtype + " like '%" + keyword + "%' ";
+            } else if (schtype.equals("id")) {
+                where = " where mi_" + schtype + " like '%" + keyword + "%' ";
+            }
+            
         }
         
         AdminBbsContentsListSvc adminBbsContentsListSvc = new AdminBbsContentsListSvc();

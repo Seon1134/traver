@@ -28,16 +28,22 @@ public class AdminScheduleListCtrl extends HttpServlet {
         
         String schtype = request.getParameter("schtype"); // 검색조건
         String keyword = request.getParameter("keyword");   // 검색어 
-        String where = "";      // 검색 조건이 있을 경우 where절을 저장할 변수
+        String where = " where a.mi_id = b.mi_id ";      // 검색 조건이 있을 경우 where절을 저장할 변수
         if (schtype == null || keyword == null) {
             schtype = "";   keyword = "";
         } else if (!schtype.equals("") && !keyword.equals("")) {    // 검색조건과 검색어가 있을 경우
             URLEncoder.encode(keyword, "UTF-8");
             // 쿼리스트링으로 주고 받는 검색어가 한글일 경우 IE에서 간혹 문제가 발생할 수 있으므로 유니코드로 변환시킴
-            if (schtype.equals("mi")) { // 검색조건이 
-                where = " where mi_" + schtype + " like '%" + keyword + "%' ";
-            } else {
-                where = " where si_" + schtype + " like '%" + keyword + "%' ";
+            if (schtype.equals("id")) { // 검색조건이 
+                where = " b.mi_" + schtype + " like '%" + keyword + "%' ";
+            } else if (schtype.equals("nick")) {
+                where = " b.mi_" + schtype + " like '%" + keyword + "%' ";
+            } else if (schtype.equals("name")) {
+                where = " b.mi_" + schtype + " like '%" + keyword + "%' ";
+            } else if (schtype.equals("name")) {
+                where = " a.si" + schtype + " like '%" + keyword + "%' ";
+            } else if (schtype.equals("date")) {
+                where = " a.si_" + schtype + " like '%" + keyword + "%' ";
             }
         }
         

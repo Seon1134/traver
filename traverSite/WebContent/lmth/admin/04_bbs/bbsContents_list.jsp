@@ -123,13 +123,13 @@ $(document).ready(function(){
 							<div class="subB">
 								<!-- 찾기 영역 -->
 								<form action="" name="frm_bbs_con">
-									<select name="bbsSel">
-										<option value="nickname">닉네임</option>
-										<option value="id">아이디</option>
-										<option value="mbti">MBTI</option>
-										<option value="date">등록일</option>
-										<option value="gcnt">추천수</option>
-										<option value="ip">아이피</option>
+									<select name="schtype">
+										<option value="nickname" <% if (schtype.equals("nickname")) { %> selected="selected" <% } %>>닉네임</option>
+										<option value="id" <% if (schtype.equals("id")) { %> selected="selected" <% } %>>아이디</option>
+										<option value="mbti" <% if (schtype.equals("mbti")) { %> selected="selected" <% } %>>MBTI</option>
+										<option value="date" <% if (schtype.equals("date")) { %> selected="selected" <% } %>>등록일</option>
+										<option value="gcnt" <% if (schtype.equals("gcnt")) { %> selected="selected" <% } %>>추천수</option>
+										<option value="ip" <% if (schtype.equals("ip")) { %> selected="selected" <% } %>>아이피</option>
 									</select> 
 									<input type="text" name="keyword" placeholder="검색란" value="<%=keyword %>"> 
 									<input type="submit" value="찾기" style="cursor: pointer;">

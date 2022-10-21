@@ -112,12 +112,12 @@ $(document).ready(function(){
 				<div class="subS">
 					<!-- 찾기 영역 -->
 					<form action="" name="frm_sch">
-						<select name="schSel">
-							<option value="mi" <% if (schtype.equals("mi_id")) { %> selected="selected" <% } %>>아이디</option>
-							<option value="mi" <% if (schtype.equals("mi_nickname")) { %> selected="selected" <% } %>>닉네임</option>
-							<option value="mi" <% if (schtype.equals("mi_name")) { %> selected="selected" <% } %>>이름</option>
-							<option value="si" <% if (schtype.equals("si_name")) { %> selected="selected" <% } %>>일정명</option>
-							<option value="si" <% if (schtype.equals("si_date")) { %> selected="selected" <% } %>>등록일</option>
+						<select name="schtype">
+							<option value="miid" <% if (schtype.equals("id")) { %> selected="selected" <% } %>>아이디</option>
+							<option value="minick" <% if (schtype.equals("nick")) { %> selected="selected" <% } %>>닉네임</option>
+							<option value="miname" <% if (schtype.equals("name")) { %> selected="selected" <% } %>>이름</option>
+							<option value="name" <% if (schtype.equals("name")) { %> selected="selected" <% } %>>일정명</option>
+							<option value="date" <% if (schtype.equals("date")) { %> selected="selected" <% } %>>등록일</option>
 						</select> 
 						<input type="text" name="keyword" placeholder="검색란" value="<%=keyword %>"> 
 						<input type="submit" value="찾기" style="cursor: pointer;">
@@ -165,7 +165,7 @@ $(document).ready(function(){
 					<%
 						}
 					} else {
-						out.println("<tr><td colspan='6' align='center'>");
+						out.println("<tr><td colspan='7' align='center'>");
 						out.println("검색결과가 없습니다.</td></tr>");
 					}
 					%>

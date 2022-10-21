@@ -144,7 +144,7 @@ function checkSize(input) {
          <div class="place_02_h2">
             <h2>장소 수정</h2>
          </div>
-         <form name="frm_place_up" action="/traverSite/adminPlaceProcUp" method="post">
+         <form name="frm_place_up" action="/traverSite/adminPlaceProcUp" method="post" enctype="multipart/form-data">
          <input type="hidden" name="piid" value="<%=placeInfo.getPi_id() %>">
             <div class="place_02_tab01">
                <h3>장소 기본 정보</h3>
@@ -202,7 +202,7 @@ function checkSize(input) {
                         <div class="filebox">
                            <input class="upload-name" value="<% if (placeInfo.getPi_img1() == null ) { %><%=placeInfo.getPi_img1() %><% } else { %>파일 선택<% } %>" disabled="disabled">
                            <label for="filename">업로드</label> 
-                           <input type="file" id="filename" name="file_path_ssum" class="upload-hidden" accept="image/png, image/jpeg" onchange="checkSize(this)" value="<%=placeInfo.getPi_img1() %>">
+                           <input type="file" id="filename" name="img_file" class="upload-hidden" accept="image/png, image/jpeg" onchange="checkSize(this)" value="<%=placeInfo.getPi_img1() %>">
                            <span class="imgSel">＊이미지 크기는 2MB이하로 해주세요. (등록 가능한 이미지 JPG, PNG, JPEG)</span>
                         </div>
                      </td>
@@ -214,22 +214,22 @@ function checkSize(input) {
                         <div class="filebox" style="margin-bottom: 10px;">
                            <input class="upload-name" value="<% if (placeInfo.getPi_img2() == null ) { %><%=placeInfo.getPi_img2() %><% } else { %>파일 선택<% } %>" disabled="disabled">
                            <label for="ex_filename_01">업로드</label>
-                           <input type="file" id="ex_filename_01" name="file_path1" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img2() %>">
+                           <input type="file" id="ex_filename_01" name="img_file" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img2() %>">
                         </div>
                         <div class="filebox" style="margin-bottom: 10px;">
                            <input class="upload-name" value="<% if (placeInfo.getPi_img3() == null ) { %><%=placeInfo.getPi_img3() %><% } else { %>파일 선택<% } %>" disabled="disabled">
                            <label for="ex_filename_02">업로드</label>
-                           <input type="file" id="ex_filename_02" name="file_path2" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img3() %>">
+                           <input type="file" id="ex_filename_02" name="img_file" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img3() %>">
                         </div>
                         <div class="filebox" style="margin-bottom: 10px;">
                            <input class="upload-name" value="<% if (placeInfo.getPi_img4() == null ) { %><%=placeInfo.getPi_img4() %><% } else { %>파일 선택<% } %>" disabled="disabled">
                            <label for="ex_filename_03">업로드</label>
-                           <input type="file" id="ex_filename_03" name="file_path3" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img4() %>">
+                           <input type="file" id="ex_filename_03" name="img_file" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img4() %>">
                         </div>
                         <div class="filebox" style="margin-bottom: 10px;">
                            <input class="upload-name" value="<% if (placeInfo.getPi_img5() == null ) { %><%=placeInfo.getPi_img5() %><% } else { %>파일 선택<% } %>" disabled="disabled">
                            <label for="ex_filename_04">업로드</label>
-                           <input type="file" id="ex_filename_04" name="file_path4" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img5() %>">
+                           <input type="file" id="ex_filename_04" name="img_file" class="upload-hidden" onchange="checkSize(this)" value="<%=placeInfo.getPi_img5() %>">
                         </div>
                         </div>
                      </td>

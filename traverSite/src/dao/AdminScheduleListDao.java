@@ -30,7 +30,7 @@ public class AdminScheduleListDao {
         try {
             stmt = conn.createStatement();
             String sql = "select a.si_id, a.mi_id, b.mi_nickname, b.mi_name, a.si_dnum, a.si_name, a.si_date " +
-                    " from t_schedule_info a, t_member_info b" + where + " group by a.si_id order by a.si_date desc " + 
+                    " from t_schedule_info a, t_member_info b " + where + " group by a.si_id order by a.si_date desc " + 
                     " limit " + ((cpage -1) * psize) + ", " + psize;
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -63,7 +63,7 @@ public class AdminScheduleListDao {
 
         try {
             stmt = conn.createStatement();
-            String sql = "select count(*) cnt from t_schedule_info " + where;
+            String sql = "select count(*) cnt from t_schedule_info a, t_member_info b " + where;
             rs = stmt.executeQuery(sql);
             if (rs.next())  rcnt = rs.getInt("cnt");
 
