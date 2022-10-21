@@ -294,8 +294,8 @@ var clickCnt = 0;
 			</div>
 			<br>
 			<div id="button">
-			<button type="submit" class="btn btn2"><img src="file/img/" id="reportsubmit" alt="확인"></button>&nbsp;&nbsp;&nbsp;
-			<button type="button" class="btn btn2" id="cancel"><img src="file/img/" id="reportcancel" alt="취소"></button>
+			<button type="submit" class="btn btn2"><img class="btn3" src="file/img/ok.png" id="reportsubmit" alt="확인"></button>&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn btn2" id="cancel"><img class="btn3" src="file/img/cancel.png" id="reportcancel" alt="취소"></button>
 			</div>
 			</form>
 		</div>

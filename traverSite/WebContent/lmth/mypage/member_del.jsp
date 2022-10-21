@@ -47,22 +47,15 @@ function chkPw(id, pw) { //
 	        var msg = "";          
 	        if (chkRs == 1) {      
 	            msg = "<span class='fontBlue'>비밀번호가 일치합니다.</span>";
-	            $("#pwChk").val("y");   
+	            $("#submitbtn").removeAttr("disabled")  
 	        } else {                
 	            msg = "<span class='fontRed'>비밀번호를 확인해 주세요.</span>";
-	            $("#pwChk").val("n");   
+	            $("#submitbtn").attr("disabled","disabled")   
 	        }
 	        $("#pwMsg").html(msg);
 	    }
 	});
 }
-$(document).ready(function() { // 이메일 도메인 선택 시 우측 input에 자동 입력
-    $("#mi_pw").keyup(function() {
-    	if ($("#pwChk").val() == "y" )	 $("#submitbtn").removeAttr("disabled")
-    	else 							 $("#submitbtn").attr("disabled","disabled")
-    	
-    });
-});
 </script>
 </head>
 <body>

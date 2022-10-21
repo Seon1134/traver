@@ -44,23 +44,16 @@ function chkPw(id, pw) { //
 	    success : function(chkRs) {
 	        var msg = "";          
 	        if (chkRs == 1) {      
-	            msg = "<span class='fontBlue'>비밀번호가 일치합니다.</span>";
-	            $("#pwChk").val("y");   
+	            msg = "<span class='fontBlue'>비밀번호가 일치합니다.</span>"; 
+	            $("#pwsubmit").removeAttr("disabled")
 	        } else {                
-	            msg = "<span class='fontRed'>비밀번호를 확인해 주세요.</span>";
-	            $("#pwChk").val("n");   
+	            msg = "<span class='fontRed'>비밀번호를 확인해 주세요.</span>"; 
+	            $("#pwsubmit").attr("disabled","disabled")
 	        }
 	        $("#pwMsg").html(msg);
 	    }
 	});
 }
-$(document).ready(function() { // 이메일 도메인 선택 시 우측 input에 자동 입력
-    $("#mi_pw").keyup(function() {
-    	if ($("#pwChk").val() == "y" )	 $("#pwsubmit").removeAttr("disabled")
-    	else 							 $("#pwsubmit").attr("disabled","disabled")
-    	
-    });
-});
 </script>
 </head>
 <body>
@@ -90,8 +83,6 @@ if (!isLogin) {
 		<div class="pwChkBox"><br/><br/>
 			<h2 class="pw1">비밀번호 변경</h2><br/><br/>
 			<form name="frmPwCheck" action="pw_up.jsp" method="post">
-			<input type="hidden" name="kind" value="my" />
-			<input type="hidden" name="pwChk" id="pwChk" value="n" />
 				<div class="pw2"><span>※개인정보 보호를 위해 비밀번호를 재확인합니다.</span></div>
 				<div class="pw3">
 					<label for="mi_pw" style="font-weight:bold;">비밀번호 재확인</label>&nbsp;&nbsp;

@@ -11,10 +11,11 @@ import vo.*;
 
 
 public class AdminPlaceImg {
-    public void saveImg(Collection<Part> collection) throws IOException {
+    public String[] saveImg(Collection<Part> collection) throws IOException {
+        String imgs = "";
         for (Part part : collection) {
            
-           if (part.getName().equals("img_file")) { // 이미지가 들어있던 input type=file 의 이름 설정
+           if (part.getName().contains("img_file")) { // 이미지가 들어있던 input type=file 의 이름 설정
               String contentDisposition = part.getHeader("content-disposition");
               System.out.println(contentDisposition); //잘 받았나 확인
 
@@ -23,9 +24,14 @@ public class AdminPlaceImg {
               String uploadFileName = getUploadFileName(contentDisposition);
               if (!uploadFileName.equals("")) {// 업로드할 파일이 있으면
                  part.write(uploadFileName);
+                 imgs += "," + uploadFileName ;
               }
            }
         }
+        imgs = imgs.substring(1);
+        String[] imgArr = imgs.split(",");
+        
+        return imgArr;
      }
 
      private String getUploadFileName(String contentDisposition) {

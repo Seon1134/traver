@@ -13,7 +13,7 @@ import vo.*;
 @WebServlet("/adminPlaceProcUp")
 @MultipartConfig(
         fileSizeThreshold = 0, 
-        location = "D:/deok/jsp/work/traver/traverSite/WebContent/file/img/map_img"
+        location = ""
      )
 public class AdminPlaceProcUpCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,11 +38,9 @@ public class AdminPlaceProcUpCtrl extends HttpServlet {
         
         String isview = request.getParameter("pi_isview");
         String desc = request.getParameter("pi_text");
-        String img1 = request.getParameter("img_file");
-        String img2 = request.getParameter("img_file");
-        String img3 = request.getParameter("img_file");
-        String img4 = request.getParameter("img_file");
-        String img5 = request.getParameter("img_file");
+        
+        AdminPlaceImg adminPlaceImg = new AdminPlaceImg();
+        String[] imgArr = adminPlaceImg.saveImg(request.getParts());
         
         
         PlaceInfo placeInfo = new PlaceInfo();
@@ -57,17 +55,16 @@ public class AdminPlaceProcUpCtrl extends HttpServlet {
         placeInfo.setPi_addr2(addr2);
         placeInfo.setPi_isview(isview);
         placeInfo.setPi_desc(desc);
-        placeInfo.setPi_img1(img1);
-        placeInfo.setPi_img2(img2);
-        placeInfo.setPi_img3(img3);
-        placeInfo.setPi_img4(img4);
-        placeInfo.setPi_img5(img5);
+        placeInfo.setPi_img1(imgArr[0]);
+        placeInfo.setPi_img2(imgArr[1]);
+        placeInfo.setPi_img3(imgArr[2]);
+        placeInfo.setPi_img4(imgArr[3]);
+        placeInfo.setPi_img5(imgArr[4]);
         
         AdminPlaceProcUpSvc adminPlaceProcUpSvc = new AdminPlaceProcUpSvc();
         int result = adminPlaceProcUpSvc.AdminPlaceProcUp(placeInfo);
         
-        AdminPlaceImg adminPlaceImg = new AdminPlaceImg();
-        adminPlaceImg.saveImg(request.getParts());
+        
         
         if (result > 0) {   // 정상적으로 글이 수정되었다면
             response.sendRedirect("/traverSite/adminPlaceList");

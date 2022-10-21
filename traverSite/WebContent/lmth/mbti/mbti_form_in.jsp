@@ -212,7 +212,7 @@ function submit(i) {
 <body>
 	<%@ include file="../../cni/header.jsp"%>
 	<div class="container">
-		<div class="container-default_box">
+		<div class="container-default_box" style="height: 990px;">
 			<div id="section1">
 				<button class="btn" id="getoldbtn">
 					<image class="getbtn" src="file/img/getold.png" alt="기존 일정 가져오기">
@@ -239,17 +239,17 @@ function submit(i) {
 					<label for="title" class="sub_font"> 제목 </label><input name="title" type="text" size="50" autofocus required
 					value="<%=title %>">
 					<hr>
-					<label for="schd_name" class="sub_font"> 일정 </label> <input id="schd_name" type="text" 
-					<% if (scheduleInfo != null ) { %> placeholder="<%=scheduleInfo.getSi_name()%>" <% } %> size="20" readonly required><br>
-					<br>
-				<%  String sdList = "";
-					if ( scheduleInfo != null ) {
-				%>	 
+					<span class="sub_font"> 일정 </span>
+				<% if ( scheduleInfo != null ) {
+					String sdList = "";	%>
 					<input type="hidden" name="si" value="<%=scheduleInfo.getMi_id()%>">
 					<input type="hidden" name="si" value="<%=loginInfo.getMi_nickname()%>">
 					<input type="hidden" name="si" value="<%=scheduleInfo.getSi_dnum()%>">
 					<input type="hidden" name="si" value="<%=scheduleInfo.getSi_name()%>">
 					<input type="hidden" name="si" value="<%=scheduleInfo.getSi_img()%>">
+					<input id="schd_name" type="text" 
+					value="<%=scheduleInfo.getSi_name()%>" size="20" readonly required><br>
+					<br>	
 				     <% 
 						for ( int j = 1; j <= scheduleInfo.getSi_dnum(); j++) {
 						  sdList += j + "일차 : ";
@@ -264,61 +264,84 @@ function submit(i) {
 							}
 							sdList += "<br><br>";
 						} 
-				 %>
+					 %>
 				 	<%=sdList %>
 				 	<input type="hidden" name="sdList" value="<%=sdList %>">
-				 <% } %>
 					<select id="dayselect" onchange="">
 				<% 
-					if ( scheduleInfo != null ) {
 						for ( int i = 1; i <= scheduleInfo.getSi_dnum(); i++ ) { 
 				%>
 								<option value="<%=i %>"><%=i %>일차</option>
-				<%			
-						}
-					}
-				%>
+				<% } %>
 					</select><br>
 					<br>
 					<div id="map" style="width: 100%; height: 350px;"></div>
+					<style>
+						.label {margin-bottom: 50px; }
+					</style>
 					<script type="text/javascript"
 						src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b05cef42f58551f118588eb3f26ff67&libraries=services"></script>
 					<script>
-						var mapContainer = document.getElementById('map'), // 지도를 표시할 div ID 넣기
+						var mapContainer = document.getElementById('map'), 
 						mapOption = {
-							center : new kakao.maps.LatLng(33.3880, 126.60000), // 지도의 중심좌표 : 제주도로 설정해놨어
+							center : new kakao.maps.LatLng(33.3880, 126.60000), 
 							level : 10
-						// 지도의 확대 레벨 : 줄이거나 늘리면댐
 						};
-
 						// 지도를 표시할 div와  지도 옵션으로  지도를 생성
 						var map = new kakao.maps.Map(mapContainer, mapOption);
 						
 						<%
-						if ( scheduleDayList != null ) {
-							for (int i = 0; i < scheduleDayList.size(); i++ ) {
-								ScheduleDay sd = scheduleDayList.get(i);
-								%> 
-								
-								var position<%=sd.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
-									 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=sd.getPi_name()%></div>", 
-								     latlng: new kakao.maps.LatLng<%=sd.getSd_coords()%>
-								});
-								
-							    var marker = new kakao.maps.Marker({ // 마커를 생성
-							        map: map, // 마커를 표시할 지도
-							        position: position<%=sd.getPi_id()%>.latlng 
-							    });
-							    
-							    var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
-							        content: position<%=sd.getPi_id()%>.content 
-							    });
-						    <% 
-						    } 
-						}	
+						for (int i = 0; i < scheduleDayList.size(); i++ ) {
+							ScheduleDay sd = scheduleDayList.get(i);
+							%> 
+							
+							var imageSrc = '/traverSite/file/img/icon_map.png', // 마커이미지의 주소
+							imageSize = new kakao.maps.Size(29, 42), // 마커이미지의 크기
+							imageOption = {offset: new kakao.maps.Point(14, 39)} // 마커이미지의 옵션. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정한다.  
+							
+							var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+							markerPosition = new kakao.maps.LatLng(<%=sd.getSd_coords()%>);
+							
+							var position<%=sd.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
+								 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=sd.getPi_name()%></div>", 
+							     latlng: new kakao.maps.LatLng<%=sd.getSd_coords()%>
+							});
+							
+						    var marker = new kakao.maps.Marker({ // 마커를 생성
+						        map: map, // 마커를 표시할 지도
+						        position: position<%=sd.getPi_id()%>.latlng, 
+						        image: markerImage, // 마커이미지 설정 
+						        zIndex: 5
+						    });
+						    
+						    var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
+						        content: position<%=sd.getPi_id()%>.content 
+						    });
+						    
+						    marker.setMap(map); // 맵에 표시
+						    
+							//커스텀 오버레이의 위치, 내용
+							var overlayPosition<%=sd.getPi_id()%> = new kakao.maps.LatLng<%=sd.getSd_coords() %>;
+							var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%=scheduleDayList.get(1).getSd_seq() %></span><span class="right"></span></div>';
+							
+							 
+							 // 커스텀 오버레이를 생성
+							 var customOverlay = new kakao.maps.CustomOverlay({
+							     position: overlayPosition<%=sd.getPi_id()%>,
+							     content: overlayContent,
+							     zIndex: 5
+							 });
+						
+							// 커스텀 오버레이를 지도에 표시
+							customOverlay.setMap(map);
+					    <% 
+					    } 
 						%>
+						
+						
 					
 					</script>
+					<% } %>
 					<br>
 					<hr>
 					<label for="content" class="sub_font">일정소개</label><br>

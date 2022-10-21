@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import svc.*;
 
-@WebServlet("/dup") // 아이디, 닉네임 중복 검사
+@WebServlet("/dup") // 아이디, 닉네임 중복 검사 + 비밀번호 확인
 public class DupCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public DupCtrl() { super(); }
@@ -41,7 +41,7 @@ public class DupCtrl extends HttpServlet {
 	        }
 		}
 		
-		if ( request.getParameter("pw") != null) {
+		if ( request.getParameter("pw") != null) { // 비밀번호 확인
             String pw = request.getParameter("pw").trim();
             String id = request.getParameter("id");
             try {
