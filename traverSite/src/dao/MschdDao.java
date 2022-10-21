@@ -126,4 +126,26 @@ public class MschdDao {
         return schdDayList;
     }
 
+    public int mschdDelete(String where) {
+     // 지정한 조건에 맞는 일정을 하나 삭제하는 메소드
+        Statement stmt = null;      
+        int result = 0;         
+        
+        try {   
+            stmt = conn.createStatement();
+            String sql = "delete from t_schedule_info " + where;
+            
+            System.out.println(sql);
+            result = stmt.executeUpdate(sql);
+            
+        } catch(Exception e) {
+            System.out.println("MschdDao 클래스의 mschdDelete() 메소드 오류");
+            e.printStackTrace();
+        } finally {
+            close(stmt);
+        }
+        
+        return result;
+    }
+
 }

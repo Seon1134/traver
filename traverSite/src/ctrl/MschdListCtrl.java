@@ -46,10 +46,8 @@ public class MschdListCtrl extends HttpServlet {
         case "b" : // 등록 오래된 순
             orderBy = " order by si_date";        break;
         }
-       
 		
 		MschdListSvc mschdListSvc = new MschdListSvc();
-		
 		scheduleList = mschdListSvc.getMschdList(where, orderBy); // 목록화면에서 보여줄 일정 목록 ArrayList형으로 받아옴
 		
 		request.setAttribute("sy", sy); 

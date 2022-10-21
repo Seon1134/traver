@@ -13,15 +13,19 @@ function btnClick() {
 		alert("검색어를 입력해 주세요.");
 	}
  } 
+ 
+function realDel() {
+	if (confirm("정말 삭제하시겠습니까?\n삭제된 일정은 다시 복구할 수 없습니다.")) {
+		location.href = "ischdProcDel?siid=";
+	}
+}
 </script>
 <style>
 .container-default_box { padding: 0px 40px 0px 40px; }
 
-/* 재덕 수정 시작 */
 .sch_h2 {margin: 40px 0;}
 .contents_sch {height: 100px; width: 400px;}
 .contents_con {height: 600px;}
-/* 재덕 수정 끝 */
 
 #title { color: #000; }
 select { height: 29px; vertical-align: middle; cursor: pointer; }
@@ -29,7 +33,7 @@ select { height: 29px; vertical-align: middle; cursor: pointer; }
 	border: 1px solid #767676;
     width:200px;
     height:30px;
-    margin-left:615px;
+    margin-left:643px;
     margin-bottom:50px;
 }
 input[type="text"] { height:23px; border: none; margin-left: 5px; }
@@ -52,13 +56,15 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 	border:solid 1px lightgray; color:black; padding-top:5px;
 }
 .mouseEventBox:hover { background: #efefef; width:225px; height:260px; }
-.dnumSize { font-size: 20px; font-weight: bold; ;}
+.delbtnInside { width:220px; }
+.delBtn {cursor: pointer; float: right; }
+
+.dnumSize { font-size: 17px; font-weight: bold; ;}
 #schdName { 
 	width: 180px;
 	height: 52px;
 	padding: 10px;
-	
-	font-size: 20px;
+	font-size: 17px;
 	font-weight: bold;
 	line-height: 1.5;
 }
@@ -155,13 +161,14 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 
 			<td width="20%" align="center" >
 				<div class="mouseEventBox">
-					<a href="ischdDetail?giid=<%=gi.getGi_id() + args %>">
-						<div class="upBox" >
-							<span id="schdName"><%=title %></span><br />
-							<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
-						</div>	
-						<img src="/traverSite/file/img/<%=gi.getGi_img() %>" width="227" height="180"/>
-					</a>	
+					<div class="delbtnInside"><button class="delBtn" onclick="realDel()">X</button></div>
+						<a href="ischdDetail?giid=<%=gi.getGi_id() + args %>">
+							<div class="upBox" >
+								<span id="schdName"><%=title %></span><br />
+								<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
+							</div>	
+							<img src="/traverSite/file/img/<%=gi.getGi_img() %>" width="227" height="180"/>
+						</a>	
 				</div><br/>
 			</td>
 <%		
@@ -178,7 +185,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 	}
 out.println("</table>");
 %>		
-	</div>	<!-- tableBox -->
+			</div>	<!-- tableBox -->
 		</div> <!-- contents_con -->
 		
    </div> <!-- container-default_box -->

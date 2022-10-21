@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>내 일정 목록</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 function btnClick() {
 	var frm = document.frmSch;
@@ -13,15 +14,31 @@ function btnClick() {
 		alert("검색어를 입력해 주세요.");
 	}
  } 
+
+function mscdDel(siid) {
+// 내 일정에서 특정 일정을 삭제하는 함수
+	if (confirm("정말 삭제하시겠습니까?\n삭제된 일정은 다시 복구할 수 없습니다.")) {
+		$.ajax({
+			type : "POST",
+			url : "/traverSite/mschdProcDel",
+			data : {"siid" : siid},
+			success : function(chkRs) {	 
+				if (chkRs == 0) {	// 삭제에 실패했을 경우
+					alert("일정 삭제에 실패했습니다. \n다시 시도해 보세요.");
+				}
+				location.reload();	
+			}
+		});
+	}
+}
+
 </script>
 <style>
 .container-default_box { padding: 0px 40px 0px 40px; }
 
-/* 재덕 수정 시작 */
 .sch_h2 {margin: 40px 0;}
 .contents_sch {height: 100px; width: 400px;}
 .contents_con {height: 600px;}
-/* 재덕 수정 끝 */
 
 #title { color: #000; }
 select { height: 29px; vertical-align: middle; cursor: pointer; }
@@ -29,7 +46,7 @@ select { height: 29px; vertical-align: middle; cursor: pointer; }
     border: 1px solid #767676;
     width:200px;
     height:30px;
-    margin-left: 615px;
+    margin-left: 643px;
     margin-bottom:50px;
 }
 input[type="text"] { height:23px; border: none; margin-left: 5px; }
@@ -53,23 +70,21 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 	border:solid 1px lightgray; color:black; padding-top:5px; padding-bottom:5px;
 }
 .mouseEventBox:hover { background: #efefef; width:225px; height:260px; }
-.dnumSize { font-size: 18px; font-weight: bold; ;}
+.delbtnInside { width:220px; }
+.delBtn {cursor: pointer; float: right; }
+
+.dnumSize { font-size: 17px; font-weight: bold; ;}
 #schdName { 
 	width: 180px;
 	height: 52px;
 	padding: 10px;
-	font-size: 18px;
+	font-size: 17px;
 	font-weight: bold;
 	line-height: 1.5;
 }
 
 #subtitle { font-size: 25px; font-weight: bold;}
 .tableBox { width:100%; height:1000px; overflow:auto; }
-
-.delSchd {
-    cursor: pointer;
-    float: right;
-}
 
 </style>
 </head>
@@ -79,6 +94,13 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 request.setCharacterEncoding("utf-8");
 ArrayList<ScheduleInfo> scheduleList = (ArrayList<ScheduleInfo>)request.getAttribute("scheduleList");
 // 일정 목록이 들어있는 ArrayList<ScheduleInfo>를 형변환하여 받아옴
+
+if (scheduleList.size() > 0) {
+for (int i = 0 ; i < scheduleList.size() ; i++) {
+	ScheduleInfo si = scheduleList.get(i);
+		String siid = si.getSi_id();
+	}
+}
 
 String sy = request.getParameter("sy");
 String o = request.getParameter("o");
@@ -142,7 +164,8 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 		<br/><br/><br/><br/>
 		
 		<div class="tableBox">
-		<table width="100%" callpadding="5" >
+			<form name="frmSch2" method="post">
+				<table width="100%" callpadding="5" >
 
 <%
 	if (scheduleList.size() > 0) { 	// 일정 목록이 있으면
@@ -150,6 +173,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 		for (i = 0 ; i < scheduleList.size() ; i++) {
 			ScheduleInfo si = scheduleList.get(i);
 			
+			String siid = si.getSi_id();
 			String title = si.getSi_name();
 			if (title.length() > 10)	title = title.substring(0, 9) + " ...";
 			
@@ -158,20 +182,23 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 			
 			if (i % 5 == 0) 	out.println("<tr>");
 %>
+			
+				<td width="20%" align="center" >
+					<div class="mouseEventBox">
+						<div class="delbtnInside">
+							<input type="button" value="X" class="delBtn" onclick="mscdDel('<%=siid %>');" />
 
-		<td width="20%" align="center" >
-			<div class="mouseEventBox">
-				<button class="delSchd">X</button>
-				<a href="mschdDetail?siid=<%=si.getSi_id() + args %>">
-					<div class="upBox" >
-						<span id="schdName"><%=title %></span><br />
-						<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
-						<span><%=si.getSi_sdate() %>~<%=si.getSi_edate() %></span><br />
-					</div>	
-					<img src="/traverSite/file/img/<%=si.getSi_img() %>" width="227" height="180"/>
-				</a>	
-			</div><br/>
-		</td>
+							<a href="mschdDetail?siid=<%=si.getSi_id() + args %>">
+								<div class="upBox" >
+									<span id="schdName" ><%=title %></span><br />
+									<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
+									<span><%=si.getSi_sdate() %>~<%=si.getSi_edate() %></span><br />
+								</div>	
+								<img src="/traverSite/file/img/<%=si.getSi_img() %>" width="227" height="180"/>
+							</a>	
+					</div><br/>
+				</td>
+			</form>
 <%		
 			if (i % 5 == 4) 	out.println("</tr>");
 		}
@@ -186,7 +213,8 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 	}
 out.println("</table>");
 %>		
-	</div>	<!-- tableBox -->
+				
+			</div>	<!-- tableBox -->
 		</div> <!-- contents_con -->
 		
    </div> <!-- container-default_box -->
