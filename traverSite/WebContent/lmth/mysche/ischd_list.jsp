@@ -178,7 +178,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 			
 			String giid = gi.getGi_id();
 			String title = gi.getGi_name();
-			if (title.length() > 12)	title = title.substring(0, 10) + " ...";
+			if (title.length() > 10)	title = title.substring(0, 9) + " ...";
 			
 			String dnum1 = (gi.getGi_dnum() - 1) + "박";
 			String dnum2 = gi.getGi_dnum() + "일";
