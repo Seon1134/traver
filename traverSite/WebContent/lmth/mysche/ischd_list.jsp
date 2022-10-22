@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관심 일정 목록</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 function btnClick() {
 	var frm = document.frmSch;
@@ -14,9 +15,19 @@ function btnClick() {
 	}
  } 
  
-function realDel() {
-	if (confirm("정말 삭제하시겠습니까?\n삭제된 일정은 다시 복구할 수 없습니다.")) {
-		location.href = "ischdProcDel?siid=";
+function mscdDel(giid) {
+	if (confirm("정말 삭제하시겠습니까?")) {
+		$.ajax({
+			type : "POST",
+			url : "/traverSite/ischdProcDel",
+			data : {"giid" : giid},
+			success : function(chkRs) {	 
+				if (chkRs == 0) {	// 삭제에 실패했을 경우
+					alert("관심일정 삭제에 실패했습니다. \n다시 시도해 보세요.");
+				}
+				location.reload();	
+			}
+		});
 	}
 }
 </script>
@@ -72,6 +83,7 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 
 #subtitle { font-size: 25px; font-weight: bold;}
 .tableBox { width:100%; height:1000px; overflow:auto; }
+
 </style>
 </head>
 <body>
@@ -80,6 +92,19 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 request.setCharacterEncoding("utf-8");
 ArrayList<GoodInfo> goodList = (ArrayList<GoodInfo>)request.getAttribute("goodList");
 // 관심일정 목록이 들어있는 ArrayList<GoodInfo>를 형변환하여 받아옴
+
+if (!isLogin) { // 로그인이 안되어 있으면
+	out.println("<script> alert('잘못된 경로로 들어오셨습니다.'); history.back(); </script>");
+	out.close();
+}
+
+
+if (goodList.size() > 0) {
+for (int i = 0 ; i < goodList.size() ; i++) {
+	GoodInfo gi = goodList.get(i);
+		String giid = gi.getGi_id();
+	}
+}
 
 String sy = request.getParameter("sy");
 String o = request.getParameter("o");
@@ -143,13 +168,15 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 			<br/><br/><br/><br/>
 		 
 			<div class="tableBox">
-			<table width="100%" callpadding="5" >
+				<form name="frmSch2" method="post">
+					<table width="100%" callpadding="5" >
 <%
 	if (goodList.size() > 0) { 	// 관심일정 목록이 있으면
 		int i = 0;
 		for (i = 0 ; i < goodList.size() ; i++) {
 			GoodInfo gi = goodList.get(i);
 			
+			String giid = gi.getGi_id();
 			String title = gi.getGi_name();
 			if (title.length() > 12)	title = title.substring(0, 10) + " ...";
 			
@@ -159,18 +186,21 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 			if (i % 5 == 0) 	out.println("<tr>");
 %>
 
-			<td width="20%" align="center" >
-				<div class="mouseEventBox">
-					<div class="delbtnInside"><button class="delBtn" onclick="realDel()">X</button></div>
-						<a href="ischdDetail?giid=<%=gi.getGi_id() + args %>">
-							<div class="upBox" >
-								<span id="schdName"><%=title %></span><br />
-								<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
-							</div>	
-							<img src="/traverSite/file/img/<%=gi.getGi_img() %>" width="227" height="180"/>
-						</a>	
-				</div><br/>
-			</td>
+					<td width="20%" align="center" >
+						<div class="mouseEventBox">
+							<div class="delbtnInside">
+								<input type="button" value="X" class="delBtn" onclick="mscdDel('<%=giid %>');" />
+							</div>
+								<a href="ischdDetail?giid=<%=gi.getGi_id() + args %>">
+									<div class="upBox" >
+										<span id="schdName"><%=title %></span><br />
+										<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
+									</div>	
+									<img src="/traverSite/file/img/<%=gi.getGi_img() %>" width="227" height="180"/>
+								</a>	
+						</div><br/><!-- mouseEventBox -->
+					</td>
+				</form>
 <%		
 			if (i % 5 == 4) 	out.println("</tr>");
 		}

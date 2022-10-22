@@ -108,6 +108,7 @@ public class IschdDao {
                 gd.setGd_name(rs.getString("gd_name"));
                 gd.setPi_id(rs.getInt("pi_id"));
                 gd.setGd_dnum(rs.getInt("gd_dnum"));
+                gd.setGd_coords(rs.getString("gd_coords"));
                 goodDayList.add(gd);
             }
             
@@ -121,4 +122,50 @@ public class IschdDao {
         return goodDayList;
     }
 
+    public int ischdDelete(String where) {
+    // 지정한 조건에 맞는 관심일정을 하나 삭제하는 메소드
+        Statement stmt = null;      
+        int result = 0;         
+        
+        try {   
+            stmt = conn.createStatement();
+            String sql = "delete from t_schedule_zzim " + where;
+            
+            //System.out.println(sql);
+            result = stmt.executeUpdate(sql);
+            
+        } catch(Exception e) {
+            System.out.println("IschdDao 클래스의 ischdDelete() 메소드 오류");
+            e.printStackTrace();
+        } finally {
+            close(stmt);
+        }
+        
+        return result;
+    }
+
+    public GoodPost getGoodPost(String giid) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        GoodPost goodPost = new GoodPost();   
+        
+        try {
+             stmt = conn.createStatement();
+             String sql = "select * from t_good_post a, t_good_info b where a.gi_id = b.gi_id and a.gi_id = '" + giid + "' ";
+             //System.out.println(sql);
+             rs = stmt.executeQuery(sql);
+             while (rs.next()) {
+                 goodPost.setGp_id(rs.getString("gp_id"));
+                 goodPost.setMi_nickname(rs.getString("mi_nickname"));
+             }
+        } catch (Exception e) {
+             System.out.println("IschdDao 클래스의 getGoodPost() 메소드 오류");
+             e.printStackTrace();
+          } finally {
+             close(rs);
+             close(stmt);
+          }
+        
+        return goodPost;
+    }
 }

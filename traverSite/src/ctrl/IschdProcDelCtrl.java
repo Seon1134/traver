@@ -7,32 +7,32 @@ import javax.servlet.http.*;
 import svc.*;
 import vo.*;
 
-@WebServlet("/mschdProcDel")
-public class MschdProcDelCtrl extends HttpServlet {
+@WebServlet("/ischdProcDel")
+public class IschdProcDelCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public MschdProcDelCtrl() { super(); }
+    public IschdProcDelCtrl() { super(); }
 	
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8"); 
-        String siid = request.getParameter("siid");
-        //System.out.println(siid);
+        String giid = request.getParameter("giid");
+        //System.out.println(giid);
         
         HttpSession session = request.getSession();
         MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo"); 
         String miid = loginInfo.getMi_id(); 
+       
+        // 관심일정 목록에서 특정 관심일정 삭제하기 위한 where절
+        // delete from t_schedule_zzim where mi_id = 'test11' and gi_id = 'GI1003';
+        String where = " where mi_id = '" + miid + "' and gi_id = '" + giid + "' ";
         
-        // t_schedule_info 및 t_schedule_day 테이블에서 특정일정 삭제하기 위한 where절
-        // delete from t_schedule_info where mi_id = 'test11' and si_id = 'SI1001'
-        String where = " where mi_id = '" + miid + "' and si_id = '" + siid + "' ";
-        
-        MschdProcDelSvc mschdProcDelSvc = new MschdProcDelSvc();
-        int result = mschdProcDelSvc.mschdDelete(where);        
+        IschdProcDelSvc ischdProcDelSvc = new IschdProcDelSvc();
+        int result = ischdProcDelSvc.ischdDelete(where);        
         
         response.setContentType("text/html; charset=utf-8"); 
         PrintWriter out = response.getWriter();
         out.println(result);
     }
-    
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    doProcess(request, response);
 	}

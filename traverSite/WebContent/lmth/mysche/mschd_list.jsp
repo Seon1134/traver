@@ -94,6 +94,10 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 request.setCharacterEncoding("utf-8");
 ArrayList<ScheduleInfo> scheduleList = (ArrayList<ScheduleInfo>)request.getAttribute("scheduleList");
 // 일정 목록이 들어있는 ArrayList<ScheduleInfo>를 형변환하여 받아옴
+if (!isLogin) { // 로그인이 안되어 있으면
+	out.println("<script> alert('잘못된 경로로 들어오셨습니다.'); history.back(); </script>");
+	out.close();
+}
 
 if (scheduleList.size() > 0) {
 for (int i = 0 ; i < scheduleList.size() ; i++) {
@@ -187,7 +191,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 					<div class="mouseEventBox">
 						<div class="delbtnInside">
 							<input type="button" value="X" class="delBtn" onclick="mscdDel('<%=siid %>');" />
-
+						</div>
 							<a href="mschdDetail?siid=<%=si.getSi_id() + args %>">
 								<div class="upBox" >
 									<span id="schdName" ><%=title %></span><br />
@@ -195,8 +199,8 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 									<span><%=si.getSi_sdate() %>~<%=si.getSi_edate() %></span><br />
 								</div>	
 								<img src="/traverSite/file/img/<%=si.getSi_img() %>" width="227" height="180"/>
-							</a>	
-					</div><br/>
+							</a>
+					</div><br/><!-- mouseEventBox -->
 				</td>
 			</form>
 <%		
@@ -212,8 +216,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 		out.println("등록된 일정이 없습니다.");
 	}
 out.println("</table>");
-%>		
-				
+%>				
 			</div>	<!-- tableBox -->
 		</div> <!-- contents_con -->
 		

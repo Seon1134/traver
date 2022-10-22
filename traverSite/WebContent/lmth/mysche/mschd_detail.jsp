@@ -25,8 +25,9 @@
 
 #placebox { padding: 15px; }
 .place { padding-bottom: 10px; }
-.tableBox { overflow:auto; width:100%; }
-.mouseEventBox:hover { background: #efefef;  width:100%; height:180px; }
+.tableBox { overflow:auto; width:100%; heigth:100%;}
+.mouseEventBox:hover { background: #efefef;  width:100%;  } 
+
 #title_td { padding-top: 6px; }
 </style>
 </head>
@@ -37,11 +38,17 @@ request.setCharacterEncoding("utf-8");
 ScheduleInfo si = (ScheduleInfo)request.getAttribute("si");
 ArrayList<ScheduleDay> schdDayList = si.getSchdDayList();
 
+if (!isLogin) { // 로그인이 안되어 있으면
+	out.println("<script> alert('잘못된 경로로 들어오셨습니다.'); history.back(); </script>");
+	out.close();
+}
+
 for (int i = 0; i < schdDayList.size(); i ++) {	
 	ScheduleDay sd = schdDayList.get(i);
 	//out.println(sd.getSd_id());
 }
-// out.println(si.getSi_dnum()); //출력확인용
+//out.println(loginInfo.getMi_mbti()); //출력확인용
+
 
 %>
 <div class="container">
@@ -71,6 +78,29 @@ if ( si != null ) {
 		
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		<%
+		if ( schdDayList != null ) {
+			for (int i = 0; i < schdDayList.size(); i++ ) {
+				ScheduleDay sd = schdDayList.get(i);
+				%> 
+				
+				var position<%=sd.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
+					 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=sd.getPi_name()%></div>", 
+				     latlng: new kakao.maps.LatLng<%=sd.getSd_coords()%>
+				});
+				
+			    var marker = new kakao.maps.Marker({ // 마커를 생성
+			        map: map, // 마커를 표시할 지도
+			        position: position<%=sd.getPi_id()%>.latlng 
+			    });
+			    
+			    var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
+			        content: position<%=sd.getPi_id()%>.content 
+			    });
+		    <% 
+		    } 
+		}	
+		%>
 		</script>
 		<br>
 		<div class="tableBox">
@@ -78,7 +108,11 @@ if ( si != null ) {
 				<tr bgColor="#BDD7EE" height="50" width="100%">
 					<td colspan="5" id="title_td">
 						<span id="schd_name">제목 : <%=si.getSi_name() %></span>
+						<% if (loginInfo.getMi_mbti() != null && !loginInfo.getMi_mbti().equals("")) { %>
 						<a href="/traverSite/postFormIn?siid=<%=si.getSi_id() %>"><button type="button" class="btn" id="recbtn">MBTI 일정 추천</button></a>
+						<% } else { %>
+						<a href="/traverSite/MBTIMain"><button type="button" class="btn" id="recbtn">MBTI 일정 추천</button></a>
+						<% } %>
 						<span id="rec">회원님과 같은 MBTI에게 일정을 추천해보세요</span>
 					</td>
 				</tr>
@@ -91,7 +125,7 @@ if (si.getSi_dnum() != 0) { 	// DAY가 있으면
 %>			
 				<td class="daytd" width="20%">
 					<div class="mouseEventBox">
-						<a href="#" width="180" height="180"> <!-- 일차정보를 가지고 여행떠나기 메인으로 이동 -->
+						<a href="#" width="180" height="100%"> <!-- 일차정보를 가지고 여행떠나기 메인으로 이동 -->
 							<div id="daybox">
 								<span class="day"> <%=i %>일차 </span>
 							</div>

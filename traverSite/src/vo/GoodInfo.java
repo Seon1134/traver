@@ -13,7 +13,7 @@ public class GoodInfo {
     }
     public void setGi_id(String gi_id) {
         this.gi_id = gi_id;
-    }
+    }    
     public String getMi_id() {
         return mi_id;
     }

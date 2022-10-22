@@ -19,4 +19,16 @@ public class IschdDetailSvc {
         return gi;
     }
 
+    public GoodPost getGoodPost(String giid) {
+        GoodPost goodPost = new GoodPost();
+        Connection conn = getConnection();
+        IschdDao ischdDao = IschdDao.getInstance();
+        ischdDao.setConnection(conn);
+        
+        goodPost = ischdDao.getGoodPost(giid);
+        close(conn);
+        
+        return goodPost;
+    }
+
 }
