@@ -5,6 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>관심 일정 상세보기</title>
+<script>
+function postDel() {
+	alert("추천 글이 삭제되었습니다.");
+ } 
+ 
+</script>
 <style>
 .container-default_box { padding: 0px 100px 0px 100px; }
 #title { color: #000; }
@@ -41,12 +47,6 @@ request.setCharacterEncoding("utf-8");
 GoodInfo gi = (GoodInfo)request.getAttribute("gi");
 ArrayList<GoodDay> goodDayList = gi.getGoodDayList();
 GoodPost goodPost = (GoodPost)request.getAttribute("goodPost");
-
-if (!isLogin) { // 로그인이 안되어 있으면
-	out.println("<script> alert('잘못된 경로로 들어오셨습니다.'); history.back(); </script>");
-	out.close();
-}
-
 // out.println(goodPost.getGp_id());
 
 for (int i = 0; i < goodDayList.size(); i ++) {	
@@ -113,8 +113,13 @@ if ( gi != null ) {
 			<table id="myschd" cellspacing="0" width="100%" >
 				<tr bgColor="#C5E0B4" height="50" width="100%">
 					<td colspan="5" id="title_td">
+					<%if (goodPost.getGp_id() != null) { %>
 						<span id="schd_name">일정명 : <%=gi.getGi_name() %> | 작성자 : <%=goodPost.getMi_nickname()%></span>
 						<a href="/traverSite/postView?gpid=<%=goodPost.getGp_id() %>&giid=<%=gi.getGi_id()%>&miid=<%=gi.getMi_id()%>"><button type="button" class="btn" id="recpost">추천글 보기</button></a>
+					<%} else { %>
+						<span id="schd_name">일정명 : <%=gi.getGi_name() %> | 작성자 : <% %></span>
+						<a href="#"><button type="button" class="btn" id="recpost" onclick="postDel()">추천글 보기</button></a>
+					<%} %>
 						<a href="#"><button type="button" class="btn" id="insert">내 일정으로 등록</button>
 					</td>
 				</tr>

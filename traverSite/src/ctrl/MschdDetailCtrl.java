@@ -23,7 +23,7 @@ public class MschdDetailCtrl extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println("<script>");
             out.println("alert('로그인 후 사용하실 수 있습니다.');");
-            out.println("location.replace('/traverSite/index.jsp');");
+            out.println("location.replace('/traverSite/lmth/member/login_form.jsp');");
             out.println("</script>");
             out.close();
         } 

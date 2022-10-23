@@ -38,11 +38,6 @@ request.setCharacterEncoding("utf-8");
 ScheduleInfo si = (ScheduleInfo)request.getAttribute("si");
 ArrayList<ScheduleDay> schdDayList = si.getSchdDayList();
 
-if (!isLogin) { // 로그인이 안되어 있으면
-	out.println("<script> alert('잘못된 경로로 들어오셨습니다.'); history.back(); </script>");
-	out.close();
-}
-
 for (int i = 0; i < schdDayList.size(); i ++) {	
 	ScheduleDay sd = schdDayList.get(i);
 	//out.println(sd.getSd_id());

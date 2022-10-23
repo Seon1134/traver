@@ -94,10 +94,6 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 request.setCharacterEncoding("utf-8");
 ArrayList<ScheduleInfo> scheduleList = (ArrayList<ScheduleInfo>)request.getAttribute("scheduleList");
 // 일정 목록이 들어있는 ArrayList<ScheduleInfo>를 형변환하여 받아옴
-if (!isLogin) { // 로그인이 안되어 있으면
-	out.println("<script> alert('잘못된 경로로 들어오셨습니다.'); history.back(); </script>");
-	out.close();
-}
 
 if (scheduleList.size() > 0) {
 for (int i = 0 ; i < scheduleList.size() ; i++) {

@@ -19,6 +19,15 @@ public class IschdProcDelCtrl extends HttpServlet {
         
         HttpSession session = request.getSession();
         MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo"); 
+        if (loginInfo == null) { // 로그인 되어 있지 않으면
+            response.setContentType("text/html; charset=utf-8"); 
+            PrintWriter out = response.getWriter();
+            out.println("<script>");
+            out.println("alert('로그인 후 사용하실 수 있습니다.');");
+            out.println("location.replace('/traverSite/lmth/member/login_form.jsp');");
+            out.println("</script>");
+            out.close();
+        } 
         String miid = loginInfo.getMi_id(); 
        
         // 관심일정 목록에서 특정 관심일정 삭제하기 위한 where절
