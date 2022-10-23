@@ -25,15 +25,16 @@ public class ScheduleInCtrl extends HttpServlet {
             response.setContentType("text/html; charset=utf-8");
             PrintWriter out = response.getWriter();
             out.println("<script>");
-            out.println("alert('일정을 추가한 후 다시 시도해 주세요.');");
+            out.println("alert('일정을 추가한 후 다시 시도해 주세요.'); history.back(); ");
             out.println("</script>");
             out.close();
         }
         
 
         //scheduleInfo Insert 모음집
-        String scheduleName = (String)session.getAttribute("schedule_name"); // 일정명
-        if (scheduleName == null || scheduleName.equals("null")) {
+        String scheduleName = request.getParameter("schedule_name"); // 일정명
+        System.out.println("ScheduleInCtrl_36 scheduleName : " +scheduleName);
+        if (scheduleName == null || scheduleName.equals("null") || scheduleName.equals("")) {
             scheduleName = "임시 저장 일정";
         }
         ScheduleInfo scheduleInfo = (ScheduleInfo)session.getAttribute("scheduleInfo"); 

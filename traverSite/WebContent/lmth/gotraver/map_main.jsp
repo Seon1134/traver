@@ -122,7 +122,7 @@ if (isLogin) {
 				<option value="" class="schedule_day1" <%if (selectDay == 0){%>selected="selected"<% } %> >일차 선택</option>
 				<% 
 				if (si.getSi_dnum() != 0) { 
-					for(int j = 1; j < si.getSi_dnum() + 1; j++) {
+					for(int j = 1; j <= si.getSi_dnum() + 1; j++) {
 				%>
 				<option value="<%= j %>" <%if (selectDay == j) {%>selected="selected"<% } %>>Day<%=j %></option>
 				<%
@@ -154,7 +154,7 @@ if (isLogin) {
 			</div>
 			<div class="schedule_item">
 				<div class="go_schedule_top">
-					<input type="text" name="schedule_name"class="schedule_title" placeholder="일정명을 입력하세요" />
+					<input type="text" id="schedule_name" name="schedule_name" class="schedule_title" placeholder="일정명을 입력하세요" />
 					<div class="chedule_button_box">
 						<input type="button" class="chedule_button go_map" value="지도로 돌아가기"/>
 						<input type="submit" class="chedule_button save_schdule" value="내 일정 등록"/>
