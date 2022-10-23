@@ -130,12 +130,12 @@ if (isLogin) {
 				}
 				%>
 			</select>
-			<select name="schedule_group" class="schedule_group" id="">
+<!-- 			<select name="schedule_group" class="schedule_group" id="">
 				<option value="1">전체보기</option>
 				<option value="2">추가한 장소</option>
 				<option value="3">찜한 장소</option>
 				<option value="4">추가 + 찜한 장소</option>
-			</select>
+			</select> -->
 		</div>
 	</div>
 	
