@@ -21,6 +21,11 @@ public class PlaceListCtrl extends HttpServlet {
 		// 0 Day별로 / 1 전체보기 / 2 추가장소 / 3 찜 / 4 추가찜
 		String searchKeyword = request.getParameter("searchKeyword"); // '검색어' 변수
 		String where = " where pi_isview = 'y' "; // 옵션 값을 넘길 where 절을 저장할 변수
+		int viewDayNum = 1;   // Day별 장소수을 저장할 변수
+		
+		if (request.getParameter("viewDayNum") != null ) {
+		    viewDayNum = Integer.parseInt(request.getParameter("viewDayNum"));
+		}
 		
 		if (viewOption == null || viewOption.equals("")) {	// 만약 옵션박스를 어떤것도 선택하지 않았으면 기본값은 1
 			viewOption = "1";
@@ -80,6 +85,7 @@ public class PlaceListCtrl extends HttpServlet {
 		ArrayList<PlaceInfo> placeList = placeListSvc.getPlaceList(where);
 		
 		request.setAttribute("placeList", placeList);
+        request.setAttribute("viewDayNum", viewDayNum);
 		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();

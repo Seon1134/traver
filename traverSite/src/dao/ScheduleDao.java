@@ -28,7 +28,7 @@ public class ScheduleDao {
 
         try {
             stmt = conn.createStatement();
-            String sql = "select right(si_id, 4) num from t_schedule_info order by si_date desc limit 0, 1";
+            String sql = "select right(si_id, 4) num from t_schedule_info order by si_id desc limit 0, 1";
             // 가장 최근 등록된 일정의 숫자를 가져오는 쿼리
             rs = stmt.executeQuery(sql);
             if (rs.next()) {    // 검색된 일정이 존재하면

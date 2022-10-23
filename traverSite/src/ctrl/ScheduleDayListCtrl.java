@@ -19,6 +19,7 @@ public class ScheduleDayListCtrl extends HttpServlet {
         String piid =  request.getParameter("piid");        // 장소 id
         String coords =  request.getParameter("coords");        // 장소 id
         String piname = request.getParameter("piname");     // 장소 이름
+        String ctgr = request.getParameter("ctgr");     // 카테고리
         int sddnum = Integer.parseInt(request.getParameter("sddnum"));     // 해당 일차
         String sddate = request.getParameter("sddate");     // 해당 날짜
         
@@ -65,6 +66,7 @@ public class ScheduleDayListCtrl extends HttpServlet {
             sd.setSd_coords(coords);
             sd.setSd_dnum(sddnum);
             sd.setSd_date(sddate);
+            sd.setPi_ctgr(ctgr);
             
             scheduleDayList.add(sd);
             session.setAttribute("scheduleDayList", scheduleDayList);

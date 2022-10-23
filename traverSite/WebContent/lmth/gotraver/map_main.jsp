@@ -9,6 +9,9 @@ ArrayList<PlaceInfo> placeList = (ArrayList<PlaceInfo>)request.getAttribute("pla
 
 int viewDayNum = 1;
 String addSchedulePlaceId = "";
+String addSchedulePlaceIdArr[]; // 추가한 장소들 목록을 '배열로'저장할 변수
+
+String placeListString = "";	// 검색결과가 포함된 장소명들을 넣을 변수
 String placeCategory = request.getParameter("placeCategory");
 String searchKeyword = request.getParameter("searchKeyword");
 boolean isHaveLodging = false; // 숙소 존재여부
@@ -23,6 +26,7 @@ if (searchKeyword == null) {
 
 for (int i = 0; i < placeList.size(); i++ ) { // 장소들을 가져온다.
 	PlaceInfo pi = placeList.get(i);
+	placeListString += ","+pi.getPi_name();
 	if(pi.getPi_ctgr().equals("1")) { //카테고리가 숙소인게 있다면
 		isHaveLodging = true;
 	} else if(pi.getPi_ctgr().equals("2")) { // 카테고리가 음식점이라면
@@ -75,7 +79,9 @@ if (isLogin) {
 		<%
 		for (int i = 0; i < scheduleDayList.size(); i ++) {	
 			ScheduleDay sd = scheduleDayList.get(i);
-			addSchedulePlaceId += "," + sd.getPi_id();
+			if (sd.getSd_dnum() == selectDay) {
+				addSchedulePlaceId += "," + sd.getPi_id();
+			}
 			
 			if (sd.getSd_dnum() == selectDay) {
 		%>
@@ -204,162 +210,15 @@ if (isLogin) {
 <!-- //컨테이너 -->
 <% } %>
 
-
- 
-</form>
-<form action="#">
-<!-- 우측 사이드 박스 -->
-<div class="right-side open">
-	<div class="right-side_header">
-		<div class="search-box">
-			<input type="text" class="search__txt" name="searchKeyword" placeholder="검색어를 입력하세요" onkeyup="enterkey(this.value)" value="<%=searchKeyword %>"/>
-			<button type="button"  class="schedule__del search__del" value="X" onclick="schDel()">X</button>
-		</div>
-		<div class="ctgr-box">
-		<!-- 검색 시, 보여줘야 할 00 개수 여부에따라 버튼 활성화/비활성화 -->
-		<!-- js를 통해 버튼에 선택에 따라 btnSelect클래스 생성/삭제, select 클래스가있으면 배경색상변경 -->
-		<!-- 검색값 여부에  따라 btnNone 클래스 생성/삭제, btnNone 클래스가 있으면 버튼 비활성화 (=onclick 이벤트 삭제) -->
-	<button type="submit" name="placeCategory" value="0" class="display_none" onclick="placeCategoryChange(this.value)">전체</button>
-	<button type="submit" name="placeCategory" value="1" class="ctgr" onclick="placeCategoryChange(this.value)">숙소</button>
-	<button type="submit" name="placeCategory" value="2" class="ctgr" onclick="placeCategoryChange(this.value)">음식점</button>
-	<button type="submit" name="placeCategory" value="3" class="ctgr" onclick="placeCategoryChange(this.value)">관광지</button>
-		</div>
-	</div>
-</form>
-<form action="/traverSite/scheduleIn">
-	<div class="place-area">
-	<% if (isHaveLodging) { %>
-		<!-- 숙소 -->
-		<div class="place-section">
-		<% if (placeCategory == null || placeCategory.equals("0")) { %>
-			<div class="place-section__title">숙소</div>
-		<% } %>
-			<div class="place-list">
-		<% 
-		for(int i = 0; i < placeList.size() ; i ++) { 
-			PlaceInfo pi = placeList.get(i);
-			if (pi.getPi_ctgr().equals("1")) {
-		%>
-				<div class="place">
-					<div class="place__img">
-						<img src="/traverSite/file/img/map_img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
-					</div>
-					<div class="place-info">
-						<div class="place__title"><%=pi.getPi_name() %></div>
-						<div class="place__option-box">
-							<button type="button" class="place__option place__info">정보</button>
-							<button type="button" class="place__option place__review">리뷰</button>
-						<% if (isLogin) { %>
-							<button type="button" class="place__option place__add" value="<%=pi.getPi_id()%>" data-id="<%=pi.getPi_coords() %>">추가</button>
-							<button type="button" class="place__option place__love">찜</button>
-						<% } %>
-						</div>
-					</div>
-				</div>
-		<% 	
-			} 
-		}
-		%>
-			</div>
-		</div>
-		<!-- //숙소 -->
-	<% } %>
-	<% if (isHaveRestaurant) {  %>
-		<!-- 음식점 -->
-		<div class="place-section">
-		<% if (placeCategory == null || placeCategory.equals("0")) { %>
-			<div class="place-section__title">음식점</div>
-		<% } %>
-			<div class="place-list">
-		<% 
-		for(int i = 0; i < placeList.size() ; i ++) { 
-			PlaceInfo pi = placeList.get(i);
-			if (pi.getPi_ctgr().equals("2")) {
-		%>
-				<div class="place">
-					<div class="place__img">
-						<img src="traverSite/file/img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
-					</div>
-					<div class="place-info">
-						<div class="place__title"><%=pi.getPi_name() %></div>
-						<div class="place__option-box">
-							<button type="button" class="place__option place__info">정보</button>
-							<button type="button" class="place__option place__review">리뷰</button>
-						<% if (isLogin) { %>
-							<button type="button" class="place__option place__add" value="<%=pi.getPi_id()%>" data-id="<%=pi.getPi_coords() %>">추가</button>
-							<button type="button" class="place__option place__love">찜</button>
-						<% } %>
-						</div>
-					</div>
-				</div>
-		<% 	
-			} 
-		}
-		%>
-			</div>
-		</div>
-		<!-- //음식점 -->
-	<% } %>
-	<% if (isHaveTourist) {  %>
-		<!-- 관광지 -->
-		<div class="place-section">
-		<% if (placeCategory == null || placeCategory.equals("0")) { %>
-			<div class="place-section__title">관광지</div>
-		<% } %>
-			<div class="place-list">
-		<% 
-		for(int i = 0; i < placeList.size() ; i ++) { 
-			PlaceInfo pi = placeList.get(i);
-			if (pi.getPi_ctgr().equals("3")) {
-		%>
-				<div class="place">
-					<div class="place__img">
-						<img src="traverSite/file/img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
-					</div>
-					<div class="place-info">
-						<div class="place__title"><%=pi.getPi_name() %></div>
-						<div class="place__option-box">
-							<button type="button" class="place__option place__info">정보</button>
-							<button type="button" class="place__option place__review">리뷰</button>
-						<% if (isLogin) { %>
-							<button type="button" class="place__option place__add" value="<%=pi.getPi_id()%>" data-id="<%=pi.getPi_coords() %>">추가</button>
-							<button type="button" class="place__option place__love">찜</button>
-						<% } %>
-						</div>
-					</div>
-				</div>
-		<% 	
-			} 
-		}
-		%>
-			</div>
-		</div>
-		<!-- //관광지 -->
-	<% } %>
-	</div>
-	<button type="button" class="side__open right_open"><img src="../../file/img/open.png" class="side__open_img"></button>
-</div>
-
-<!-- //우측 사이드 박스 -->
-</form>
-
-
-<%@ include file="place_review.jsp" %>
-<!-- //리뷰 보기 -->
-
-<%@ include file="place_review_form.jsp" %>
-<!-- //리뷰작성 -->
-
-<%@ include file="place_info.jsp" %>
-<!-- //장소보기 -->
-
-
-
 <!-- 지도 -->
 <div id="map">
 </div>
-<!-- //지도 -->
 <!-- services와 카카오지도 라이브러리 불러오기 -->
+<style>
+	.label {margin-bottom: 50px; }
+</style>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b05cef42f58551f118588eb3f26ff67&libraries=services"></script>
+
 <style>
 	.label {margin-bottom: 50px; }
 </style>
@@ -381,22 +240,21 @@ window.onresize = function(event){ // 윈도우 크기 size 변경되면
 var map = new daum.maps.Map(mapContainer, mapOption); // 지도 생성
 
 <%
+
 for (int i = 0; i < placeList.size(); i++ ) {
 	PlaceInfo pi = placeList.get(i);
+	
+	if(addSchedulePlaceId.indexOf(pi.getPi_id()) < 0) {	// 해당 장소가 해당 날짜, 일정에 [추가된 장소]가 아니라면
 %>
 	var position<%=pi.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
 		 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=pi.getPi_name()%></div>", 
 	     latlng: new kakao.maps.LatLng<%=pi.getPi_coords()%>
 	});
-	<% if(addSchedulePlaceId.indexOf(pi.getPi_id()) < 0 ) {
-		// 해당 장소가 일정에 추가하지 않은 장소에다가
-		// 추가할 일차의 값이 현재 선택한 SelectDay값과 같지않다
-	%>
+
     var marker = new kakao.maps.Marker({ // 마커를 생성
         map: map, // 마커를 표시할 지도
         position: position<%=pi.getPi_id()%>.latlng
     });
-    <% } %>
 
     var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
         content: position<%=pi.getPi_id() %>.content 
@@ -410,6 +268,7 @@ for (int i = 0; i < placeList.size(); i++ ) {
     marker.setMap(map); // 맵에 표시
 
 <%
+	}
 }
 %>
 
@@ -426,31 +285,38 @@ if (isLogin) {
 	if (scheduleDayList != null) {
 		for (int j = 0 ; j < scheduleDayList.size(); j++) {
 			ScheduleDay sd = scheduleDayList.get(j);
-			
+%>
+			var schedulePlacePosition<%=sd.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
+				 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=sd.getPi_name()%></div>", 
+			    latlng: new kakao.maps.LatLng<%=sd.getSd_coords()%>
+			});
+<%
 			switch(viewOption) {	// 0 Day별로 / 1 전체보기 / 2 추가장소 / 3 찜 / 4 추가찜
 			case 0: // Day별로 보기 (선택안함)
 				if (sd.getSd_dnum() == selectDay) { // 만약 '추가장소 일차'가 '현재 보여주는 일차'라면
+					if(placeListString.indexOf(sd.getPi_name()) > 0) {// 장소 검색 결과에 추가한 장소가있으면
+					// 추가해야함 : 선택한 카테고리값이 있다면, 그중에서 해당 장소의 카테고리가 동일하다면
 %>
 					var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
 					markerPosition = new kakao.maps.LatLng(<%=sd.getSd_coords()%>);
 					//마커의 이미지정보를 가지고 있는 마커이미지를 생성
 					
 					
-					var position<%=sd.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
+					var schedulePlacePosition<%=sd.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
 						 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=sd.getPi_name()%></div>", 
 					     latlng: new kakao.maps.LatLng<%=sd.getSd_coords()%>
 					});
 					
 				    var marker = new kakao.maps.Marker({ // 마커를 생성
 				        map: map,
-				        position: position<%=sd.getPi_id()%>.latlng,
+				        position: schedulePlacePosition<%=sd.getPi_id()%>.latlng,
 				        image: markerImage, // 마커이미지 설정 
 				        zIndex: 5
 				    });
 				    addDayMarkers.push(marker);
 				    
 				    var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
-				        content: position<%=sd.getPi_id() %>.content 
+				        content: schedulePlacePosition<%=sd.getPi_id() %>.content 
 				    });
 				    
 				    var listBoxes = document.querySelector('.place');
@@ -462,8 +328,19 @@ if (isLogin) {
 				    
 					//커스텀 오버레이의 위치, 내용
 					var overlayPosition<%=sd.getPi_id()%> = new kakao.maps.LatLng<%=sd.getSd_coords() %>;
+			<% if (placeCategory == null || placeCategory.equals("0")) { //선택된 카테고리가 없다면 %>
 					var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%=viewDayNum %></span><span class="right"></span></div>';
-					
+			<% } else { //선택된 카테고리가 있다면  
+					addSchedulePlaceIdArr = addSchedulePlaceId.split(","); // 해당 일차에 추가한 장소들을 배열로 만듦
+					for (int y = 0 ; y < addSchedulePlaceIdArr.length; y++) {
+						if ( addSchedulePlaceIdArr[y].equals(sd.getPi_id())) { // 현재 보이는 장소가 y번째 배열의 값이라면
+			%>
+					var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%= y %></span><span class="right"></span></div>';
+			<%
+						}
+					}
+				} 
+			%>
 					 
 					 // 커스텀 오버레이를 생성
 					 var customOverlay = new kakao.maps.CustomOverlay({
@@ -476,6 +353,7 @@ if (isLogin) {
 					customOverlay.setMap(map);
 		<%		    				
 					viewDayNum ++; // 일차 번호값 증가 
+					}
 				}
 				break;
 			case 1 : // 전체보기
@@ -528,5 +406,160 @@ function makeOutListener(infowindow) {
     };
 }
 </script>
+<!-- //지도 -->
+ 
+ 
+ 
+</form>
+<form action="#">
+<input type="hidden" id="viewDayNum" name="viewDayNum" value="<%=viewDayNum %>">
+<!-- 우측 사이드 박스 -->
+<div class="right-side open">
+	<div class="right-side_header">
+		<div class="search-box">
+			<input type="text" class="search__txt" name="searchKeyword" placeholder="검색어를 입력하세요" onkeyup="enterkey(this.value,this.form.viewDayNum.value)" value="<%=searchKeyword %>"/>
+			<button type="button"  class="schedule__del search__del" value="X" onclick="schDel()">X</button>
+		</div>
+		<div class="ctgr-box">
+		<!-- 검색 시, 보여줘야 할 00 개수 여부에따라 버튼 활성화/비활성화 -->
+		<!-- js를 통해 버튼에 선택에 따라 btnSelect클래스 생성/삭제, select 클래스가있으면 배경색상변경 -->
+		<!-- 검색값 여부에  따라 btnNone 클래스 생성/삭제, btnNone 클래스가 있으면 버튼 비활성화 (=onclick 이벤트 삭제) -->
+	<button type="submit" name="placeCategory" value="0" class="display_none" onclick="placeCategoryChange(this.value,this.form.viewDayNum.value)">전체</button>
+	<button type="submit" name="placeCategory" value="1" class="ctgr" onclick="placeCategoryChange(this.value,this.form.viewDayNum.value)">숙소</button>
+	<button type="submit" name="placeCategory" value="2" class="ctgr" onclick="placeCategoryChange(this.value,this.form.viewDayNum.value)">음식점</button>
+	<button type="submit" name="placeCategory" value="3" class="ctgr" onclick="placeCategoryChange(this.value,this.form.viewDayNum.value)">관광지</button>
+		</div>
+	</div>
+</form>
+<form action="/traverSite/scheduleIn">
+	<div class="place-area">
+	<% if (isHaveLodging) { %>
+		<!-- 숙소 -->
+		<div class="place-section">
+		<% if (placeCategory == null || placeCategory.equals("0")) { %>
+			<div class="place-section__title">숙소</div>
+		<% } %>
+			<div class="place-list">
+		<% 
+		for(int i = 0; i < placeList.size() ; i ++) { 
+			PlaceInfo pi = placeList.get(i);
+			if (pi.getPi_ctgr().equals("1")) {
+		%>
+				<div class="place">
+					<div class="place__img">
+						<img src="/traverSite/file/img/map_img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
+					</div>
+					<div class="place-info">
+						<div class="place__title"><%=pi.getPi_name() %></div>
+						<div class="place__option-box">
+							<button type="button" class="place__option place__info">정보</button>
+							<button type="button" class="place__option place__review">리뷰</button>
+						<% if (isLogin) { %>
+							<button type="button" class="place__option place__add" value="<%=pi.getPi_id()%>" data-id="<%=pi.getPi_coords() %>" data-value="<%=pi.getPi_ctgr()%>">추가</button>
+							<button type="button" class="place__option place__love">찜</button>
+						<% } %>
+						</div>
+					</div>
+				</div>
+		<% 	
+			} 
+		}
+		%>
+			</div>
+		</div>
+		<!-- //숙소 -->
+	<% } %>
+	<% if (isHaveRestaurant) {  %>
+		<!-- 음식점 -->
+		<div class="place-section">
+		<% if (placeCategory == null || placeCategory.equals("0")) { %>
+			<div class="place-section__title">음식점</div>
+		<% } %>
+			<div class="place-list">
+		<% 
+		for(int i = 0; i < placeList.size() ; i ++) { 
+			PlaceInfo pi = placeList.get(i);
+			if (pi.getPi_ctgr().equals("2")) {
+		%>
+				<div class="place">
+					<div class="place__img">
+						<img src="traverSite/file/img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
+					</div>
+					<div class="place-info">
+						<div class="place__title"><%=pi.getPi_name() %></div>
+						<div class="place__option-box">
+							<button type="button" class="place__option place__info">정보</button>
+							<button type="button" class="place__option place__review">리뷰</button>
+						<% if (isLogin) { %>
+							<button type="button" class="place__option place__add" value="<%=pi.getPi_id()%>" data-id="<%=pi.getPi_coords() %>" data-value="<%=pi.getPi_ctgr()%>">추가</button>
+							<button type="button" class="place__option place__love">찜</button>
+						<% } %>
+						</div>
+					</div>
+				</div>
+		<% 	
+			} 
+		}
+		%>
+			</div>
+		</div>
+		<!-- //음식점 -->
+	<% } %>
+	<% if (isHaveTourist) {  %>
+		<!-- 관광지 -->
+		<div class="place-section">
+		<% if (placeCategory == null || placeCategory.equals("0")) { %>
+			<div class="place-section__title">관광지</div>
+		<% } %>
+			<div class="place-list">
+		<% 
+		for(int i = 0; i < placeList.size() ; i ++) { 
+			PlaceInfo pi = placeList.get(i);
+			if (pi.getPi_ctgr().equals("3")) {
+		%>
+				<div class="place">
+					<div class="place__img">
+						<img src="traverSite/file/img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
+					</div>
+					<div class="place-info">
+						<div class="place__title"><%=pi.getPi_name() %></div>
+						<div class="place__option-box">
+							<button type="button" class="place__option place__info">정보</button>
+							<button type="button" class="place__option place__review">리뷰</button>
+						<% if (isLogin) { %>
+							<button type="button" class="place__option place__add" value="<%=pi.getPi_id()%>" data-id="<%=pi.getPi_coords() %>" data-value="<%=pi.getPi_ctgr()%>">추가</button>
+							<button type="button" class="place__option place__love">찜</button>
+						<% } %>
+						</div>
+					</div>
+				</div>
+		<% 	
+			} 
+		}
+		%>
+			</div>
+		</div>
+		<!-- //관광지 -->
+	<% } %>
+	</div>
+	<button type="button" class="side__open right_open"><img src="../../file/img/open.png" class="side__open_img"></button>
+</div>
+</form>
+
+<!-- //우측 사이드 박스 -->
+
+
+<%@ include file="place_review.jsp" %>
+<!-- //리뷰 보기 -->
+
+<%@ include file="place_review_form.jsp" %>
+<!-- //리뷰작성 -->
+
+<%@ include file="place_info.jsp" %>
+<!-- //장소보기 -->
+
+
+
+
 </body>
 </html>

@@ -6,13 +6,14 @@ function enterkey(searchKeyword) {
     }
 }
 
-function placeCategoryChange(placeCategory) {
+function placeCategoryChange(placeCategory, viewDayNum) {
 // 카테고리 변경
 	$.ajax({
 		type : "POST",
 		url : "/traverSite/placeList",
 		data : {
-			"placeCategory" : placeCategory, 
+			"placeCategory" : placeCategory,
+			"viewDayNum" : viewDayNum,
 		},
 		success : function(placeList) {
 			if (placeList.size() == 0) {
@@ -22,13 +23,14 @@ function placeCategoryChange(placeCategory) {
 	});
 }
 
-function placeSearchChange(searchKeyword) {
+function placeSearchChange(searchKeyword, viewDayNum) {
 // 검색어로 장소 리스트 변경
 	$.ajax({
 		type : "POST",
 		url : "/traverSite/placeList",
 		data : {
-			"searchKeyword" : searchKeyword, 
+			"searchKeyword" : searchKeyword,
+			"viewDayNum" : viewDayNum,
 		},
 		success : function(placeList) {
 			if (placeList.size() == 0) {
