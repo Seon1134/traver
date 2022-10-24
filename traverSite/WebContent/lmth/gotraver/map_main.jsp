@@ -47,13 +47,12 @@ for (int i = 0; i < placeList.size(); i++ ) { // 장소들을 가져온다.
 <link rel="stylesheet" type="text/css" href="/traverSite/file/css/gotraver_main.css" >
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script type="text/javascript" src="/traverSite/file/js/map_main_move.js" ></script>
 <script type="text/javascript" src="/traverSite/file/jq/map_main_move.js" ></script>
 <script type="text/javascript" src="/traverSite/file/jq/map_main_view.js" ></script>
 <script type="text/javascript" src="/traverSite/file/jq/map_main_schedule_day.js" ></script>
-<script type="text/javascript" src="/traverSite/file/js/map_main_move.js" ></script>
 <script type="text/javascript" src="/traverSite/file/js/map_main_calendar.js" ></script>
 <script type="text/javascript" src="/traverSite/file/jq/map_main_schedule_info.js" ></script>
-
 </head>
 <body>
 <%@ include file="../../cni/header.jsp" %>
