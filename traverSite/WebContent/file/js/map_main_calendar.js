@@ -1,4 +1,5 @@
-	function limitDate() { // 시작일자 선택 시 종료일자 컨트롤 활성화
+
+function limitDate() { // 시작일자 선택 시 종료일자 컨트롤 활성화
 		var sdate = document.getElementById('sdate'); //시작일 컨트롤
 		var edate = document.getElementById('edate'); //종료일 컨트롤
 		var strDate = sdate.value; //시작일 컨트롤의 value
@@ -28,7 +29,7 @@
 		var arr2 = strDate2.split('-');
 		var dat1 = new Date(arr1[0], arr1[1] - 1, arr1[2]); // sdate, edate 모두 계산이 가능한 date값에 담음
 		var dat2 = new Date(arr2[0], arr2[1] - 1, arr2[2]);
-		var diffDay = (dat2 - dat1) / (24 * 60 * 60 * 1000);
+		var diffDay = (dat2 - dat1) / (24 * 60 * 60 * 1000) + 1;
 		// diffDay = '일정의 총 일수' (초단위로 빼서 하루를 기준으로 나눔)
 	
 		for (var i = target.options.length - 1; i > 0; i--) {

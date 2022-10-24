@@ -8,7 +8,6 @@ window.onload = function(){
 	const placeInfoBox = document.querySelector('#place_info_box');
 	
 
-	
 	const reviewViewOpenList = document.querySelectorAll('.place__review');
 	const reviewAddOpenList = document.querySelectorAll('.review_add');
 	const reviewAddBackList = document.querySelectorAll('.review_add_back');

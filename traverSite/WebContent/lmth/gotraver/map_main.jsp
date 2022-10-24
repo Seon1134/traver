@@ -122,7 +122,7 @@ if (isLogin) {
 				<option value="" class="schedule_day1" <%if (selectDay == 0){%>selected="selected"<% } %> >일차 선택</option>
 				<% 
 				if (si.getSi_dnum() != 0) { 
-					for(int j = 1; j <= si.getSi_dnum() + 1; j++) {
+					for(int j = 1; j <= si.getSi_dnum(); j++) {
 				%>
 				<option value="<%= j %>" <%if (selectDay == j) {%>selected="selected"<% } %>>Day<%=j %></option>
 				<%
@@ -164,7 +164,7 @@ if (isLogin) {
 					<div class="go_schedule_contnt">
 					<% 
 					if (si.getSi_dnum() != 0) { 
-						for(int i = 1; i <= si.getSi_dnum() + 1; i++) {
+						for(int i = 1; i <= si.getSi_dnum(); i++) {
 					%>
 						<div class="go_scheduel_day_box">
 							<div class="schedule-info">
