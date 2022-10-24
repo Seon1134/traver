@@ -94,9 +94,9 @@ if (!isLogin) {
 			</ul>
 			<ul>
 				<li class="menu_test menu_first"><a href="/traverSite/mypageList">내 작성 게시글 및 리뷰</a></li>
-				<li class="menu_test"><a href="lmth/mypage/info_up_form.jsp">회원 정보 수정</a></li>
-				<li class="menu_test"><a href="lmth/mypage/pw_check.jsp">비밀번호 변경</a></li>
-				<li class="menu_test"><a href="lmth/mypage/member_del.jsp">회원 탈퇴</a></li>
+				<li class="menu_test"><a href="info_up_form.jsp">회원 정보 수정</a></li>
+				<li class="menu_test"><a href="pw_check.jsp">비밀번호 변경</a></li>
+				<li class="menu_test"><a href="member_del.jsp">회원 탈퇴</a></li>
 			</ul>
 	 	</div>
 		<div class="pwChkBox_test">
