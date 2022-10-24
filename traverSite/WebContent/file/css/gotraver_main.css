@@ -28,6 +28,12 @@
 	}
 	
 	
+	.left__side__open_img {
+	    width: 100%;
+	}
+	.right__side__open_img {
+	    width: 100%;
+	}
 	
 	.left-side { 
 		position: absolute; 
@@ -48,9 +54,11 @@
 	}
 	.left_open {
 		left: 270px; 
+		width: 40px;
 	}
 	.right_open {
 		right: 290px;
+		width: 40px;
 	}
 	
 	.schedule-info {

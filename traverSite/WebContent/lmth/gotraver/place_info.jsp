@@ -5,9 +5,9 @@ request.setCharacterEncoding("utf-8");
 
 <!-- 장소보기 -->
 <div class="display_none" id="place_info_box">
- 	<img src="../../file/img/silla1.jpg" id="placeimg">
+ 	<img src="/traverSite/file/img/silla1.jpg" id="placeimg">
 	<div id="placedesc">
-		<img src="../../file/img/x.png" class="place_x"><br>
+		<img src="/traverSite/file/img/x.png" class="place_x"><br>
 		<br>
 		<div id="placedetail">
 			<span id="placename">신라 호텔</span><br><br>
@@ -19,17 +19,25 @@ request.setCharacterEncoding("utf-8");
 			주차 시설 완벽, 주변 관광지와 가까움<br>
 			주변에 맛집도 많음<br>
 			</span>
+		<% 
+		if(isLogin) { 
+			int selectDay = (int)session.getAttribute("selectDay");	// 선택 일차
+			if (selectDay != 0) {
+		%>
 			<div class="place_info_option_box">
 				<button class="place_info_option place__add">추가</button> |
 				<button class="place_info_option place__review">리뷰</button> |
 				<button class="place_info_option place__love">찜</button>
 			</div>
+		<% 
+			}
+		}
+		%>
 		</div>
 		</div>
 	</div>
-	<img src="../../file/img/silla1.jpg" id="placeimg1" class="descimg" onclick="swapImg('silla1.jpg');">
-	<img src="../../file/img/silla2.jpg" id="placeimg2" class="descimg" onclick="swapImg('silla2.jpg');">
-	<img src="../../file/img/silla3.jpg" id="placeimg3" class="descimg" onclick="swapImg('silla3.jpg');">
-	<img src="../../file/img/silla4.jpg" id="placeimg4" class="descimg" onclick="swapImg('silla4.jpg');">
+	<img src="/traverSite/file/img/silla1.jpg" id="placeimg1" class="descimg" onclick="swapImg('silla1.jpg');">
+	<img src="/traverSite/file/img/silla2.jpg" id="placeimg2" class="descimg" onclick="swapImg('silla2.jpg');">
+	<img src="/traverSite/file/img/silla3.jpg" id="placeimg3" class="descimg" onclick="swapImg('silla3.jpg');">
+	<img src="/traverSite/file/img/silla4.jpg" id="placeimg4" class="descimg" onclick="swapImg('silla4.jpg');">
 </div>
-

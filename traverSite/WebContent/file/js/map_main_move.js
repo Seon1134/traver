@@ -33,7 +33,6 @@ window.onload = function(){
 	reviewAddOpen.addEventListener('click', function() {
 		reviewViewBox.classList.add('display_none');
 		reviewAddBox.classList.remove('display_none');
-		
 	});
 	
 	// 작성취소 버튼 - 리뷰작성 display없애기, 리뷰 view 띄우기 (리뷰 작성->보기화면으로)

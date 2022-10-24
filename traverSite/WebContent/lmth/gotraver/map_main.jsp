@@ -98,7 +98,7 @@ if (isLogin) {
 		<input type="button" class="schedule__all_del" value="전체 삭제" onclick="scheAllDel()"/>
 	</div>
 	<div>
-		<button type="button"  class="side__open left_open"><img src="../../file/img/open.png" class="side__open_img"></button>
+		<button type="button"  class="side__open left_open"><img src="/traverSite/file/img/left_side_close.png" class="left__side__open_img"></button>
 	</div>
 </div>
 	<% } %>
@@ -541,7 +541,7 @@ function makeOutListener(infowindow) {
 		<!-- //관광지 -->
 	<% } %>
 	</div>
-	<button type="button" class="side__open right_open"><img src="../../file/img/open.png" class="side__open_img"></button>
+	<button type="button" class="side__open right_open"><img src="/traverSite/file/img/right_side_close.png" class="right__side__open_img"></button>
 </div>
 </form>
 
