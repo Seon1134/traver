@@ -3,16 +3,16 @@ window.onload = function(){
 	const goSchedule = document.querySelector('.go_schedule');	
 	const scheduleBox = document.querySelector('.go_schedule_area_box');
 	
-	const placeInfoOpen = document.querySelector('.place__info');
-	const placeInfoClose = document.querySelector('.place_x');
+	const placeInfoOpenList = document.querySelectorAll('.place__info');
+	const placeInfoCloseList = document.querySelectorAll('.place_x');
 	const placeInfoBox = document.querySelector('#place_info_box');
 	
 
 	
-	const reviewViewOpen = document.querySelector('.place__review');
-	const reviewAddOpen = document.querySelector('.review_add');
-	const reviewAddBack = document.querySelector('.review_add_back');
-	const reviewClose = document.querySelector('.review_x');
+	const reviewViewOpenList = document.querySelectorAll('.place__review');
+	const reviewAddOpenList = document.querySelectorAll('.review_add');
+	const reviewAddBackList = document.querySelectorAll('.review_add_back');
+	const reviewCloseList = document.querySelectorAll('.review_x');
 	const reviewViewBox = document.querySelector('.review_view_box');
 	const reviewAddBox = document.querySelector('.review_add_box');
 	
@@ -26,42 +26,43 @@ window.onload = function(){
 		scheduleBox.classList.remove('display_none');
 	});
 	
-	
-	// 장소 정보 버튼을 누르면 디스플레이 클래스 삭제 (보이기)
-	placeInfoOpen.addEventListener('click', function() {
-		placeInfoBox.classList.remove('display_none');
-	});
-	
-	// 장소 보기창 - x버튼을 누르면 디스플레이 클래스 추가 (가리기)
-	placeInfoClose.addEventListener('click', function() {
-		placeInfoBox.classList.add('display_none');
-	});
-	
-	
-
-	// 장소 리뷰 버튼 누르면 디스플레이 보이기 (리뷰보기 띄우기)
-	reviewViewOpen.addEventListener('click', function() {
-		reviewViewBox.classList.remove('display_none');
-	});
-	
-	// 리뷰추가 버튼 - 리뷰 display 없애기, 리뷰add 띄우기 (리뷰보기 -> 리뷰작성 화면으로)
-	reviewAddOpen.addEventListener('click', function() {
-		reviewViewBox.classList.add('display_none');
-		reviewAddBox.classList.remove('display_none');
+	for (let i = 0; i < placeInfoOpenList.length; i++) {
+		// 장소 정보 버튼을 누르면 디스플레이 클래스 삭제 (보이기)
+		placeInfoOpenList[i].addEventListener('click', function() {
+			placeInfoBox.classList.remove('display_none');
+		});
 		
-	});
+		// 장소 보기창 - x버튼을 누르면 디스플레이 클래스 추가 (가리기)
+		placeInfoCloseList[i].addEventListener('click', function() {
+			placeInfoBox.classList.add('display_none');
+		});
+		
+		
 	
-	// 작성취소 버튼 - 리뷰작성 display없애기, 리뷰 view 띄우기 (리뷰 작성->보기화면으로)
-	reviewAddBack.addEventListener('click', function() {
-		reviewViewBox.classList.remove('display_none');
-		reviewAddBox.classList.add('display_none');
-	});
-	
-	// 리뷰 x버튼을 누르면 디스플레이 클래스 추가 (리뷰보기/작성 없애기)
-	reviewClose.addEventListener('click', function() {
-		reviewViewBox.classList.add('display_none');
-		reviewAddBox.classList.add('display_none');
-	});
+		// 장소 리뷰 버튼 누르면 디스플레이 보이기 (리뷰보기 띄우기)
+		reviewViewOpenList[i].addEventListener('click', function() {
+			reviewViewBox.classList.remove('display_none');
+		});
+		
+		// 리뷰추가 버튼 - 리뷰 display 없애기, 리뷰add 띄우기 (리뷰보기 -> 리뷰작성 화면으로)
+		reviewAddOpenList[i].addEventListener('click', function() {
+			reviewViewBox.classList.add('display_none');
+			reviewAddBox.classList.remove('display_none');
+			
+		});
+		
+		// 작성취소 버튼 - 리뷰작성 display없애기, 리뷰 view 띄우기 (리뷰 작성->보기화면으로)
+		reviewAddBackList[i].addEventListener('click', function() {
+			reviewViewBox.classList.remove('display_none');
+			reviewAddBox.classList.add('display_none');
+		});
+		
+		// 리뷰 x버튼을 누르면 디스플레이 클래스 추가 (리뷰보기/작성 없애기)
+		reviewCloseList[i].addEventListener('click', function() {
+			reviewViewBox.classList.add('display_none');
+			reviewAddBox.classList.add('display_none');
+		});
+	}
 	
 	$( function() {
 		$( ".schedule-list" ).sortable();

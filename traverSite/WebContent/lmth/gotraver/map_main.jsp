@@ -164,7 +164,7 @@ if (isLogin) {
 					<div class="go_schedule_contnt">
 					<% 
 					if (si.getSi_dnum() != 0) { 
-						for(int i = 1; i < si.getSi_dnum() + 1; i++) {
+						for(int i = 1; i <= si.getSi_dnum() + 1; i++) {
 					%>
 						<div class="go_scheduel_day_box">
 							<div class="schedule-info">
