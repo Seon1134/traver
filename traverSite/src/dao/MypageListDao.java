@@ -27,7 +27,7 @@ public class MypageListDao {
         
         try {
              stmt = conn.createStatement();
-             String sql = "select gp_id, gp_title, gi_id, mi_id from t_good_post where mi_id = '" + miid + "'";
+             String sql = "select gp_id, gp_title, gi_id, mi_id from t_good_post where mi_id = '" + miid + "' order by gp_date desc";
              rs = stmt.executeQuery(sql);
              while (rs.next()) {
                 gp = new GoodPost();

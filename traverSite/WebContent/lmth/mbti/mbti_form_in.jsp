@@ -212,7 +212,7 @@ function submit(i) {
 <body>
 	<%@ include file="../../cni/header.jsp"%>
 	<div class="container">
-		<div class="container-default_box" style="height: 990px;">
+		<div class="container-default_box" >
 			<div id="section1">
 				<button class="btn" id="getoldbtn">
 					<image class="getbtn" src="file/img/getold.png" alt="기존 일정 가져오기">
@@ -334,14 +334,10 @@ function submit(i) {
 						
 							// 커스텀 오버레이를 지도에 표시
 							customOverlay.setMap(map);
-					    <% 
+					    <% }
 					    } 
 						%>
-						
-						
-					
 					</script>
-					<% } %>
 					<br>
 					<hr>
 					<label for="content" class="sub_font">일정소개</label><br>
@@ -373,7 +369,7 @@ function submit(i) {
           					<input type="hidden" name="content">    
           				<% 
 							String si_name = si.getSi_name();
-							if (si_name.length() > 10)	si_name = si_name.substring(0, 9) + " ...";
+							if (si_name.length() > 10)	si_name = si_name.substring(0, 7) + " ...";
 						%>
 							<div class="post" onclick="submit('<%=i %>');">
 								<div class="post_title">

@@ -40,6 +40,7 @@ public class PostProcInCtrl extends HttpServlet {
         goodPost.setGp_title(title);
         goodPost.setGp_list(sdList);
         goodPost.setGp_content(content);
+        goodPost.setGp_img(si[4]);
         goodPost.setGp_ip(request.getRemoteAddr());
         
         String gpgi = postProcInSvc.goodPostInsert(goodPost);

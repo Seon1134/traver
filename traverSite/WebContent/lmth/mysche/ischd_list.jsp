@@ -48,7 +48,7 @@ select { height: 29px; vertical-align: middle; cursor: pointer; }
     margin-bottom:50px;
 }
 input[type="text"] { height:23px; border: none; margin-left: 5px; }
-
+#scheCnt { position: relative; top: 6px; } 
 .linematch { display: flex; white-space: nowrap; }
 
 .btn {
@@ -146,7 +146,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 							<option value="b" <% if (o.equals("b")) { %>selected="selected"<% } %>>등록 오래된 순</option>
 					 	</select>
 				 
-				 		<span>&nbsp;&nbsp;&nbsp;일정 수 :  <%=goodList.size() %>   </span>
+				 		<span id="scheCnt">&nbsp;&nbsp;&nbsp;일정 수 :  <%=goodList.size() %>   </span>
 					 		<div id="schNbtn" style="display:flex;">
 								<div id= "search-box" >
 								 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >

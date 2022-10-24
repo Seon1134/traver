@@ -50,6 +50,8 @@ select { height: 29px; vertical-align: middle; cursor: pointer; }
     margin-bottom:50px;
 }
 input[type="text"] { height:23px; border: none; margin-left: 5px; }
+#scheCnt { position: relative; top: 6px; } 
+
 
 .linematch { display: flex; white-space: nowrap; }
 
@@ -93,7 +95,10 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 <%
 request.setCharacterEncoding("utf-8");
 ArrayList<ScheduleInfo> scheduleList = (ArrayList<ScheduleInfo>)request.getAttribute("scheduleList");
-// 일정 목록이 들어있는 ArrayList<ScheduleInfo>를 형변환하여 받아옴
+//일정 목록이 들어있는 ArrayList<ScheduleInfo>를 형변환하여 받아옴
+ArrayList<ScheduleInfo> fullScheduleList = (ArrayList<ScheduleInfo>)request.getAttribute("fullScheduleList");
+String sy = (String)request.getAttribute("sy");
+
 
 if (scheduleList.size() > 0) {
 for (int i = 0 ; i < scheduleList.size() ; i++) {
@@ -102,7 +107,6 @@ for (int i = 0 ; i < scheduleList.size() ; i++) {
 	}
 }
 
-String sy = request.getParameter("sy");
 String o = request.getParameter("o");
 String keyword = request.getParameter("keyword");
 
@@ -131,15 +135,25 @@ args = "&yargs=" + oargs + schargs; // 일정 디테일 보기용 쿼리
 
 			<div class="linematch">
 		   		<select name="sy" onchange="location.href='/traverSite/mschdList?<%=schargs + oargs%>&sy=' + this.value;">
-					<option value="">전체보기</option>
+					<option value="total" <%if (sy.equals("total")) {%> selected <%} %>>전체보기</option>
 <%
-String today = LocalDate.now() + "";
-int maxYear = Integer.parseInt(today.substring(0, 4));
-for (int i = 2020 ; i <= maxYear + 1 ; i++) {
-	
-%>	   		
-					<option value="<%=i %>" ><%=i %> 년</option>
-<%		
+if (fullScheduleList != null) {
+   int year =  Integer.parseInt(fullScheduleList.get(0).getSchYear());
+   for (int i = 0; i < fullScheduleList.size(); i++) {
+      ScheduleInfo si = fullScheduleList.get(i);
+      if ( i == 0 ) {
+%>            
+               		<option value="<%=year %>"  <%if (sy.equals(year+"")) {%> selected <%} %> ><%=year %> 년</option>
+<%      } else {
+         if ( Integer.parseInt(si.getSchYear()) != year ) {
+            year = Integer.parseInt(si.getSchYear());
+%>
+           			<option value="<%=year %>" <%if (sy.equals(year+"")) {%> selected <%} %> ><%=year %> 년</option>
+<%
+         }
+      }
+      
+   }
 }
 %>
 				 </select>		 
@@ -148,7 +162,7 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 					<option value="b" <% if (o.equals("b")) { %>selected="selected"<% } %>>등록 오래된 순</option>
 				 </select>
 				 
-				 <span>&nbsp;&nbsp;&nbsp;일정 수 : <%=scheduleList.size() %></span>
+				 <span  id="scheCnt">&nbsp;&nbsp;&nbsp;일정 수 : <%=scheduleList.size() %></span>
 				 	<div class="schNbtn">
 					 	<div id= "search-box" >
 						 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >

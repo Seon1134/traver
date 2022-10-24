@@ -483,7 +483,7 @@ function makeOutListener(infowindow) {
 		%>
 				<div class="place">
 					<div class="place__img">
-						<img src="traverSite/file/img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
+						<img src="/traverSite/file/img/map_img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
 					</div>
 					<div class="place-info">
 						<div class="place__title"><%=pi.getPi_name() %></div>
@@ -519,7 +519,7 @@ function makeOutListener(infowindow) {
 		%>
 				<div class="place">
 					<div class="place__img">
-						<img src="traverSite/file/img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
+						<img src="/traverSite/file/img/map_img/<%=pi.getPi_img1() %>" alt="<%=pi.getPi_name() %>섬네일 이미지" />
 					</div>
 					<div class="place-info">
 						<div class="place__title"><%=pi.getPi_name() %></div>

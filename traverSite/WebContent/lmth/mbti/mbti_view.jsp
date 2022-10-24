@@ -23,6 +23,7 @@ ArrayList<GoodDay> goodDayList = (ArrayList<GoodDay>) request.getAttribute("good
 #section1 { width: 1000px; margin: 50px auto; padding-bottom: 50px; position: relative; }
 #title { font-size: 25px; font-weight: bold; }
 #goodicon, #interest, #report { width: 30px; vertical-align: middle; margin-right: 3px;}
+#goodcnt2 { float: right; margin-right: 10px; }
 .ctt_font { font-size: 18px; line-height: 1.5; }
 #writer { position: relative; top: 4px; }
 #lastup, #date { font-size: 13px; float: right; margin-right: 10px; margin-top: 13px;}
@@ -177,6 +178,8 @@ var clickCnt = 0;
 			<button type="button" class="btn" id="goodbtn" onclick="gcntUpdate('<%=goodPost.getGp_id() %>', '<%=goodPost.getGi_id() %>','<%=loginInfo.getMi_id() %>');">
 			<img src=<% if ( isGood ) { %>"file/img/goood2.png" <% } else { %> "file/img/goood1.png" <% } %>
 			id="goodicon" alt="좋아요"><span id="goodcnt"> 추천 : <%=goodPost.getGp_gcnt() %></span></button>
+			<% } else { %> 
+			<span id="goodcnt2"> 추천 : <%=goodPost.getGp_gcnt() %></span>
 			<% } %>
 			<br>
 			<span class="ctt_font" id="writer"><%=goodPost.getMi_nickname() %>(<%=goodPost.getGp_mbti() %>)</span>
@@ -200,6 +203,9 @@ var clickCnt = 0;
 				%>
    			</select><button type="button" class="btn" id="pin">지도 핀</button><br><br>
 			<div id="map" style="width:100%;height:350px;"></div>
+			<style>
+				.label {margin-bottom: 50px; }
+			</style>
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b05cef42f58551f118588eb3f26ff67&libraries=services"></script>
 			<script>
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div ID 넣기
@@ -211,28 +217,52 @@ var clickCnt = 0;
 			// 지도를 표시할 div와  지도 옵션으로  지도를 생성
 			var map = new kakao.maps.Map(mapContainer, mapOption); 
 			<%
-			if ( goodDayList != null ) {
+			if ( goodDayList != null ){
 				for (int i = 0; i < goodDayList.size(); i++ ) {
 					GoodDay gd = goodDayList.get(i);
 					%> 
+					var imageSrc = '/traverSite/file/img/icon_map.png', // 마커이미지의 주소
+					imageSize = new kakao.maps.Size(29, 42), // 마커이미지의 크기
+					imageOption = {offset: new kakao.maps.Point(14, 39)} // 마커이미지의 옵션. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정한다.  
 					
-					var position<%=gd.getPi_id()%> = ({	// 마커의 윈도우인포에 장소 이름과 위치를 저장
-						 content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=gd.getGd_name()%></div>", 
-					     latlng: new kakao.maps.LatLng<%=gd.getGd_coords()%>
-					});
+					var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+					markerPosition = new kakao.maps.LatLng(<%=gd.getGd_coords()%>);
 					
-				    var marker = new kakao.maps.Marker({ // 마커를 생성
+					var position<%=gd.getPi_id()%> = ({   // 마커의 윈도우인포에 장소 이름과 위치를 저장
+		                   content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=gd.getGd_name()%></div>", 
+		                    latlng: new kakao.maps.LatLng<%=gd.getGd_coords()%>
+		               });
+					
+					var marker = new kakao.maps.Marker({ // 마커를 생성
 				        map: map, // 마커를 표시할 지도
-				        position: position<%=gd.getPi_id()%>.latlng 
+				        position: position<%=gd.getPi_id()%>.latlng, 
+				        image: markerImage, // 마커이미지 설정 
+				        zIndex: 5
 				    });
-				    
-				    var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
-				        content: position<%=gd.getPi_id()%>.content 
-				    });
-			    <% 
-			    } 
-			}	
-			%>
+		               
+	                var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
+	                    content: position<%=gd.getPi_id()%>.content 
+	                });
+	                
+	                marker.setMap(map); // 맵에 표시
+	                
+	              	//커스텀 오버레이의 위치, 내용
+					var overlayPosition<%=gd.getPi_id()%> = new kakao.maps.LatLng<%=gd.getGd_coords() %>;
+					var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%=goodDayList.get(1).getGd_seq() %></span><span class="right"></span></div>';
+	             	
+					// 커스텀 오버레이를 생성
+					 var customOverlay = new kakao.maps.CustomOverlay({
+					     position: overlayPosition<%=gd.getPi_id()%>,
+					     content: overlayContent,
+					     zIndex: 5
+					 });
+				
+					// 커스텀 오버레이를 지도에 표시
+					customOverlay.setMap(map);
+	             	<%
+	             } 
+	         }   
+	         %>
 			</script>
 			<br>
 			<div id="contentbox">

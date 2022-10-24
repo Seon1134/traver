@@ -90,6 +90,7 @@ hr { margin: 20px 0;}
 	display: inline-block; padding: 10px;
 	background-color: #efefef;
 	font-size: 18px; font-weight: bold; line-height: 1.5;
+	overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
 }
 .small { font-size: 14px; }
 .postimg { width: 200px; height: 200px; }
@@ -203,9 +204,6 @@ $(document).ready(function() {
 				   	if ( mbtiPostList.size() > 0) {
 				   		for (int i = 0; i < mbtiPostList.size(); i++) {
 				   			GoodPost mp = mbtiPostList.get(i);
-				   			
-				   			String title = mp.getGp_title();
-							if (title.length() > 10)	title = title.substring(0, 9) + " ...";
 				   	%>
 				   	<% if ( isLogin ) { %>
 					<a href="postView?gpid=<%=mp.getGp_id() %>&giid=<%=mp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
@@ -213,9 +211,9 @@ $(document).ready(function() {
 					<a href="postView?gpid=<%=mp.getGp_id() %>&giid=<%=mp.getGi_id() %>">
 					<% } %>
 				   		<div class="post">
-				   			<div class="post_title"><%=title %></div>
+				   			<div class="post_title"><%=mp.getGp_title() %></div>
 				   			<div class="post_img">
-				   				<img src="#" class="postimg">
+				   				<img src="file/img/<%=mp.getGp_img() %>" class="postimg">
 				   			</div>
 				   		</div>
 				   	</a>
@@ -242,9 +240,6 @@ $(document).ready(function() {
 					if ( mbtiPostList.size() > 0) {
 				   		for (int i = 0; i < popPostList.size(); i++) {
 			   			GoodPost pp = popPostList.get(i);
-			   			
-			   			String title = pp.getGp_title();
-						if (title.length() > 10)	title = title.substring(0, 9) + " ...";
 			   		%>
 			   		<% if ( isLogin ) { %>
 					<a href="postView?gpid=<%=pp.getGp_id() %>&giid=<%=pp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
@@ -252,9 +247,9 @@ $(document).ready(function() {
 					<a href="postView?gpid=<%=pp.getGp_id() %>&giid=<%=pp.getGi_id() %>">
 					<% } %>
 			   		<div class="post">
-			   			<div class="post_title"><%=title %></div>
+			   			<div class="post_title"><%=pp.getGp_title() %></div>
 			   			<div class="post_img">
-			   				<img src="#" class="postimg">
+			   				<img src="file/img/<%=pp.getGp_img() %>" class="postimg">
 			   			</div>
 			   		</div>
 			   		</a>

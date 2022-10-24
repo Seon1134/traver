@@ -37,6 +37,7 @@ public class PostViewDao {
                  goodPost.setGp_title(rs.getString("gp_title"));
                  goodPost.setGp_list(rs.getString("gp_list"));
                  goodPost.setGp_content(rs.getString("gp_content"));
+                 goodPost.setGp_img(rs.getString("gp_img"));
                  goodPost.setGp_gcnt(rs.getInt("gp_gcnt"));
                  goodPost.setGp_date(rs.getString("gp_date"));
                  goodPost.setGp_last(rs.getString("gp_last"));

@@ -136,7 +136,7 @@ public class MschdDao {
             stmt = conn.createStatement();
             String sql = "delete from t_schedule_info " + where;
             
-            //System.out.println(sql);
+            System.out.println(sql);
             result = stmt.executeUpdate(sql);
             
         } catch(Exception e) {
@@ -149,4 +149,31 @@ public class MschdDao {
         return result;
     }
 
+    public ArrayList<ScheduleInfo> getFullMschdList(String mi_id) {
+        Statement stmt = null;
+        ResultSet rs = null;    
+        ArrayList<ScheduleInfo> fullScheduleList = new ArrayList<ScheduleInfo>();
+        ScheduleInfo si = null;
+        
+        try {   
+            stmt = conn.createStatement();
+            String sql = "select left(si_sdate, 4) schYear from t_schedule_info where mi_id = '" + mi_id + "' order by si_sdate asc";
+            rs = stmt.executeQuery(sql);
+            
+            while (rs.next()) {
+                si = new ScheduleInfo();    // 하나의 일정을 저장할 인스턴스 생성
+                si.setSchYear(rs.getString("schYear"));
+                fullScheduleList.add(si);
+                // 루프를 돌면서 rs에 들어있는 일정 정보들을 scheduleList에 저장 
+            }
+            
+        } catch(Exception e) {
+            System.out.println("MschdDao 클래스의 getFullMschdList() 메소드 오류");
+            e.printStackTrace();
+        } finally {
+            close(rs); close(stmt);
+        }
+        
+        return fullScheduleList;
+    }
 }

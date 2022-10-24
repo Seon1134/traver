@@ -19,5 +19,17 @@ public class MschdListSvc {
         return scheduleList;
         
     }
+
+    public ArrayList<ScheduleInfo> getfullMschdList(String mi_id) {
+        ArrayList<ScheduleInfo> fullScheduleList = new ArrayList<ScheduleInfo>();
+        Connection conn = getConnection();
+        MschdDao mschdDao = MschdDao.getInstance();
+        mschdDao.setConnection(conn);
+        
+        fullScheduleList = mschdDao.getFullMschdList(mi_id);
+        close(conn);
+        
+        return fullScheduleList;
+    }
    
 }

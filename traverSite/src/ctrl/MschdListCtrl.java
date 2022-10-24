@@ -19,6 +19,9 @@ public class MschdListCtrl extends HttpServlet {
 		
 		ArrayList<ScheduleInfo> scheduleList = new ArrayList<ScheduleInfo>();
 		// 내일정 목록을 저장하기 위한 ArrayList로 안에 저장될 데이터는 ScheduleInfo형 인스턴스만 허용
+		ArrayList<ScheduleInfo> fullScheduleList = new ArrayList<ScheduleInfo>();
+	    // 년도 추출을 위한 어레이 리스트
+
 		
 		HttpSession session = request.getSession();
 		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
@@ -32,12 +35,20 @@ public class MschdListCtrl extends HttpServlet {
             out.close();
         } 
 		
+		
+		String where = " where mi_id ='" + loginInfo.getMi_id() + "' ";    // where절을 저장할 변수 
 		String sy = "";
-		if (request.getParameter("sy") != null)  sy = request.getParameter("sy");
+		if (request.getParameter("sy") != null )  { 
+		    if ( !request.getParameter("sy").equals("null") && ! request.getParameter("sy").equals("total") ) {
+	          sy = request.getParameter("sy");
+	          where += " and si_sdate like '%" + sy + "%' ";
+		    }
+	    } 
+
 		
 		String keyword = request.getParameter("keyword"); // 일정명 검색어 keyword
 		
-		String where = " where mi_id ='" + loginInfo.getMi_id() + "' ";	 // 검색어가 있을 경우 where절을 저장할 변수 
+		
 		if (keyword == null ) {                   // 검색어가 없으면
 		    keyword = ""; 
         } else if (!keyword.equals("")) {    // 검색어가 있을 경우
@@ -57,12 +68,14 @@ public class MschdListCtrl extends HttpServlet {
         }
 		
 		MschdListSvc mschdListSvc = new MschdListSvc();
+		fullScheduleList = mschdListSvc.getfullMschdList(loginInfo.getMi_id());
 		scheduleList = mschdListSvc.getMschdList(where, orderBy); // 목록화면에서 보여줄 일정 목록 ArrayList형으로 받아옴
 		
 		request.setAttribute("sy", sy); 
 		request.setAttribute("keyword", keyword); 
 		request.setAttribute("o", o); 
 		request.setAttribute("scheduleList", scheduleList);
+		request.setAttribute("fullScheduleList", fullScheduleList);
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("lmth/mysche/mschd_list.jsp");
         dispatcher.forward(request, response);

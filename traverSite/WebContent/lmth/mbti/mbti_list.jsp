@@ -155,6 +155,7 @@ input[type="radio"] {
 	font-size: 18px;
 	font-weight: bold;
 	line-height: 1.5;
+	overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
 }
 
 .small {
@@ -244,12 +245,14 @@ $(document).ready(function() {
 						<img src="file/img/x.png" id="x-sch">
 					</button>
 				</div>
-				<% if ( isLogin ) { %>
+				<% if ( isLogin ) {
+					if ( loginInfo.getMi_mbti() != null && !loginInfo.getMi_mbti().equals("0000") && !loginInfo.getMi_mbti().equals("")) { %>
 				<a href="/traverSite/postFormIn">
 				<button type="button" class="btn" id="gorecbtn">
 				<image id="gorecimg" src="file/img/gorec.png" alt="일정 추천하기">
 				</button></a> 
-				<% } %>
+				<%	}
+				} %>
 				<br><br><br>
 			</div>
 			<div id="bottom">
@@ -346,9 +349,6 @@ $(document).ready(function() {
 					<%
 						for (int i = 0; i < postList.size(); i++) {
 							GoodPost gp = postList.get(i);
-							
-							String title = gp.getGp_title();
-							if (title.length() > 10)	title = title.substring(0, 9) + "...";
 					%>
 					<% if ( isLogin ) { %>
 					<a href="postView?gpid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
@@ -356,9 +356,9 @@ $(document).ready(function() {
 					<a href="postView?gpid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>">
 					<% } %>
 					<div class="post">
-						<div class="post_title"><%=title %></div>
+						<div class="post_title"><%=gp.getGp_title() %></div>
 						<div class="post_img">
-							<img src="#" class="postimg">
+							<img src="file/img/<%=gp.getGp_img() %>" class="postimg">
 						</div>
 					</div>
 					</a>

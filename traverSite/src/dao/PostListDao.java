@@ -42,7 +42,9 @@ public class PostListDao {
                  gp.setMi_nickname(rs.getString("mi_nickname"));
                  gp.setGp_mbti(rs.getString("gp_mbti"));
                  gp.setGp_title(rs.getString("gp_title"));
+                 gp.setGp_list(rs.getString("gp_list"));
                  gp.setGp_content(rs.getString("gp_content"));
+                 gp.setGp_img(rs.getString("gp_img"));
                  gp.setGp_gcnt(rs.getInt("gp_gcnt"));
                  gp.setGp_date(rs.getString("gp_date"));
                  gp.setGp_last(rs.getString("gp_last"));

@@ -128,7 +128,7 @@ public class PostProcInDao {
             + goodPost.getGi_id() + "', '" + goodPost.getMi_id() + "', '"
             + goodPost.getMi_nickname() + "', '" + goodPost.getGp_mbti() + "', '" 
             + goodPost.getGp_title() + "', '" + goodPost.getGp_list() + "', '" 
-            + goodPost.getGp_content() + "', 0, now(), null, '" 
+            + goodPost.getGp_content() + "', '" + goodPost.getGp_img() + "', 0, now(), null, '" 
             + goodPost.getGp_ip() + "')"; 
             stmt.executeUpdate(sql);
             gpgi = gp_id + "," + goodPost.getGi_id();
