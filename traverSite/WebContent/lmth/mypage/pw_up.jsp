@@ -6,6 +6,25 @@
 <meta charset="UTF-8">
 <title>비밀번호 변경</title>
 <style>
+
+<!-- 재덕 css 수정 시작 -->
+
+.container_test {display: flex;}
+.container_test .container-default_box_test {width: 100%; height: 800px;}
+.container_test .leftBox_test { width: 250px; height: 30vh; border-right: #666; text-align: center; margin: 60px 0 0 273px; position: fixed;}
+.container_test .leftBox_test .mypage_test {font-size: 22px; font-weight: 600; padding-bottom: 45px; border-bottom: 1px solid gray;}
+.container_test .leftBox_test .menu_test {font-size: 18px; font-weight: 500; padding: 15px; }
+.container_test .leftBox_test .menu_test:hover {background: #10b492; color: white;}
+.container_test .leftBox_test .menu_test a:hover {color: white;}
+.container_test .leftBox_test .menu_first {}
+.container_test .changePwBox_test {width: calc(100% - 575px); background: #fff; padding: 60px; box-sizing: border-box; display: flex; justify-content: flex-end;}
+.container_test .changePwBox_test .pw_up_test {margin-top: 60px; border: 1px solid gray; border-radius: 5px; padding: 85px; text-align: center;}
+
+
+
+<!-- 재덕 css 수정 끝 -->
+
+
 .main_box {
 	width: 100%;
 	height: 800px;
@@ -51,6 +70,7 @@ a:hover {
 	font-size: 20px;
 	font-weight: bold;
 	text-align: center;
+	margin: 0 0 30px 0;
 }
 
 #newPwd1 {
@@ -129,41 +149,28 @@ if (!isLogin) {
 	}
 %>
 <!-- 컨테이너 시작 -->
-<div class="container">
-	<div class="container-default_box">
+<div class="container_test">
+	<div class="container-default_box_test">
 
-		<div class="main_box">
-			<div class="leftBox">
-				<br /> <br /> <br />
-				<a href="/traverSite/mypageList"><h2 class="mypage">&nbsp;&nbsp;마이페이지</h2></a>
-				<br /> <br />
-				<hr />
-				<ul>
-					<br />
-					<br />
-					<li><a href="/traverSite/mypageList" class="menu">&nbsp;&nbsp;| 내
-							작성 글/리뷰</a></li>
-					<br />
-					<li><a href="/info_form.jsp" class="menu">&nbsp;&nbsp;| 회원
-							정보 수정</a></li>
-					<br />
-					<li><a href="pw_check.jsp" class="menu">&nbsp;&nbsp;| 비밀번호
-							변경</a></li>
-					<br />
-					<li><a href="member_del.jsp" class="menu">&nbsp;&nbsp;| 회원
-							탈퇴</a></li>
-					<br />
-				</ul>
-			</div>
-			<div class="changePwBox" align="center">
-				<br /> <br /> <br /> <br />
+		<!-- <div class="main_box"> -->
+			<div class="leftBox_test">
+	   		<ul class="mypage_test">
+	   			<li><a href="/traverSite/mypageList"><h2>마이페이지</h2></a></li>
+			</ul>
+			<ul>
+				<li class="menu_test menu_first"><a href="/traverSite/mypageList">내 작성 게시글 및 리뷰</a></li>
+				<li class="menu_test"><a href="lmth/mypage/info_up_form.jsp">회원 정보 수정</a></li>
+				<li class="menu_test"><a href="lmth/mypage/pw_check.jsp">비밀번호 변경</a></li>
+				<li class="menu_test"><a href="lmth/mypage/member_del.jsp">회원 탈퇴</a></li>
+			</ul>
+	 	</div>
+			<div class="changePwBox_test" align="center">
+				<form name="changePwForm" action="member_proc.mem" method="post" class="pw_up_test">
 				<h2 class="pw1">비밀번호 변경</h2>
-				<br /> <br />
-				<form name="changePwForm" action="member_proc.mem" method="post">
 				<input type="hidden" name="kind" value="pwUp" /> 
 				<input type="hidden" name="pwChk" id="pwChk" value="n" /> 
        			<input type="hidden" name="pwChk2" id="pwChk2" value="n" /> 
-					<table width="70%">
+					<table>
 						<tr>
 							<td align="center"><input type="password" name="mi_pw"
 								id="newPwd1" maxlength="20" placeholder="새 비밀번호를 입력해주세요."
@@ -189,7 +196,7 @@ if (!isLogin) {
 					</table>
 				</form>
 			</div>
-		</div>
+		<!-- </div> -->
 		<!-- main_box -->
 	</div>
 </div>
