@@ -76,7 +76,7 @@ if (isLogin) {
 					<input type="hidden" name="url" value="<%=url %>" />
 					<div class="idBox" id="idmargin">
 						<label for="uid"><img src="../../file/img/id_logo.png" /></label>
-						<input type="text" name="uid" id="uid" value="test11" maxlength="20" required="required" /><br />
+						<input type="text" name="uid" id="uid" value="test01" maxlength="20" required="required" /><br />
 					</div>
 					<div class="pwBox">
 						<label for="pwd"><img src="../../file/img/pw_logo.png" /></label>

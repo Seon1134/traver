@@ -165,6 +165,7 @@ input[type="radio"] {
 .postimg {
 	width: 200px;
 	height: 200px;
+	object-fit: cover;
 }
 
 .display_none {
@@ -358,7 +359,7 @@ $(document).ready(function() {
 					<div class="post">
 						<div class="post_title"><%=gp.getGp_title() %></div>
 						<div class="post_img">
-							<img src="file/img/<%=gp.getGp_img() %>" class="postimg">
+							<img src="/traverSite/file/img/map_img/<%=gp.getGp_img() %>" class="postimg">
 						</div>
 					</div>
 					</a>

@@ -93,7 +93,7 @@ hr { margin: 20px 0;}
 	overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
 }
 .small { font-size: 14px; }
-.postimg { width: 200px; height: 200px; }
+.postimg { width: 200px; height: 200px; object-fit: cover;}
 
 .hide { opacity: 0.0; cursor: default; }
 </style>
@@ -164,6 +164,7 @@ $(document).ready(function() {
 	       	<form name="mbtiFrm" action="/traverSite/postMain" method="post">
 	       	<input type="hidden" name="mbti" id="mbti">
 	       	<select id="mbti_select">
+	       	<% if ( mbtiPostList != null ) { %>
 	   			<option value="ISTJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ISTJ")) {%> selected <%}%>>ISTJ</option>
 	   			<option value="ISTP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ISTP")) {%> selected <%}%>>ISTP</option>
 	   			<option value="ISFJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ISFJ")) {%> selected <%}%>>ISFJ</option>
@@ -180,6 +181,7 @@ $(document).ready(function() {
 	   			<option value="ENTP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ENTP")) {%> selected <%}%>>ENTP</option>
 	   			<option value="ENFJ" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ENFJ")) {%> selected <%}%>>ENFJ</option>
 	   			<option value="ENFP" <% if ((mbtiPostList.get(0).getGp_mbti()).equals("ENFP")) {%> selected <%}%>>ENFP</option>
+	   		<% } %>
 	   		</select>
 	   		</form>
 	   		<% if ( isLogin ) { %>
@@ -213,7 +215,7 @@ $(document).ready(function() {
 				   		<div class="post">
 				   			<div class="post_title"><%=mp.getGp_title() %></div>
 				   			<div class="post_img">
-				   				<img src="file/img/<%=mp.getGp_img() %>" class="postimg">
+				   				<img src="/traverSite/file/img/map_img/<%=mp.getGp_img() %>" class="postimg">
 				   			</div>
 				   		</div>
 				   	</a>
@@ -249,7 +251,7 @@ $(document).ready(function() {
 			   		<div class="post">
 			   			<div class="post_title"><%=pp.getGp_title() %></div>
 			   			<div class="post_img">
-			   				<img src="file/img/<%=pp.getGp_img() %>" class="postimg">
+			   				<img src="/traverSite/file/img/map_img/<%=pp.getGp_img() %>" class="postimg">
 			   			</div>
 			   		</div>
 			   		</a>

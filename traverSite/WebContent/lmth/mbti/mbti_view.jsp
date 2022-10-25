@@ -248,7 +248,7 @@ var clickCnt = 0;
 	                
 	              	//커스텀 오버레이의 위치, 내용
 					var overlayPosition<%=gd.getPi_id()%> = new kakao.maps.LatLng<%=gd.getGd_coords() %>;
-					var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%=goodDayList.get(1).getGd_seq() %></span><span class="right"></span></div>';
+					var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%=goodDayList.get(i).getGd_seq() %></span><span class="right"></span></div>';
 	             	
 					// 커스텀 오버레이를 생성
 					 var customOverlay = new kakao.maps.CustomOverlay({

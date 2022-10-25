@@ -50,21 +50,23 @@ select { height: 29px; vertical-align: middle; cursor: pointer; }
 input[type="text"] { height:23px; border: none; margin-left: 5px; }
 #scheCnt { position: relative; top: 6px; } 
 .linematch { display: flex; white-space: nowrap; }
-
-.btn {
-	margin-bottom:60px;
-	background: inherit; border: none; 
-	box-shadow: none; border-radius: 0; 
-	padding: 0;  cursor: pointer;
+#x-sch {
+	width: 15px;
+	border: none;
+	position: relative;
+    right: 5px;
+    top: 8px;
 }
 #schBtn { 
 	width:70px; height:33px; 
 	margin-left: 5px; 
+	bottom: 23px;
+    position: relative;
 }
 
 .upBox { 
 	background-color: #C5E0B4; width:225px; height:70px; 
-	border:solid 1px lightgray; color:black; padding-top:5px;
+	border:solid 1px #C5E0B4; color:black; padding-top:5px; padding-bottom:5px; line-height: 1.5;
 }
 .mouseEventBox:hover { background: #efefef; width:225px; height:260px; }
 .delbtnInside { width:220px; }
@@ -75,11 +77,19 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 	width: 180px;
 	height: 52px;
 	padding: 10px;
-	font-size: 17px;
+	font-size: 20px;
 	font-weight: bold;
 	line-height: 1.5;
 }
-
+.btn {
+	background: inherit;
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+	padding: 0;
+	overflow: visible;
+	cursor: pointer;
+}
 
 #subtitle { font-size: 25px; font-weight: bold;}
 .tableBox { width:100%; height:1000px; overflow:auto; }
@@ -100,12 +110,10 @@ for (int i = 0 ; i < goodList.size() ; i++) {
 	}
 }
 
-String sy = request.getParameter("sy");
 String o = request.getParameter("o");
 String keyword = request.getParameter("keyword");
 
 String args = "", yargs = "", oargs = "", schargs = "";
-if (sy != null && !sy.equals("")) 				yargs += "&sy=" + sy;
 if (o != null && !o.equals("")) 				oargs += "&o=" + o;
 else 	o = "";
 if (keyword != null && !keyword.equals("")) 	schargs += "&keyword=" + keyword; 
@@ -125,22 +133,8 @@ args = "&yargs=" + oargs + schargs; // 일정 디테일 보기용 쿼리
    		
    				<form name="frmSch" method="get">
 			 	<input type="hidden" name="o" value="<%=o%>"/>
-			 	<input type="hidden" name="sy" value="<%=sy %>"/>
 		 	
 		 		<div class="linematch">
-   					<select class="sy" onchange="location.href='/traverSite/ischdList?<%=schargs + oargs%>&sy=' + this.value;">
-						<option value="">전체보기</option>
-<%
-String today = LocalDate.now() + "";
-int maxYear = Integer.parseInt(today.substring(0, 4));
-for (int i = 2020 ; i <= maxYear + 1 ; i++) {
-	
-%>	   		
-						<option value="<%=i %>" ><%=i %> 년</option>
-<%		
-}
-%>
-				 		</select>
 						<select name="o" onchange="location.href='/traverSite/ischdList?<%=schargs + yargs%>&o=' + this.value;">
 							<option value="a" <% if (o.equals("a")) { %>selected="selected"<% } %>>등록 최신 순</option>
 							<option value="b" <% if (o.equals("b")) { %>selected="selected"<% } %>>등록 오래된 순</option>
@@ -183,14 +177,16 @@ for (int i = 2020 ; i <= maxYear + 1 ; i++) {
 					<td width="20%" align="center" >
 						<div class="mouseEventBox">
 							<div class="delbtnInside">
-								<input type="button" value="X" class="delBtn" onclick="mscdDel('<%=giid %>');" />
+								<button type="button" value="X" class="delBtn btn" onclick="mscdDel('<%=giid %>');" >
+								<img src="file/img/x.png" id="x-sch">
+								</button>
 							</div>
 								<a href="ischdDetail?giid=<%=gi.getGi_id() + args %>">
 									<div class="upBox" >
 										<span id="schdName"><%=title %></span><br />
 										<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
 									</div>	
-									<img src="/traverSite/file/img/<%=gi.getGi_img() %>" width="227" height="180"/>
+									<img src="/traverSite/file/img/map_img/<%=gi.getGi_img() %>" width="227" height="180"/>
 								</a>	
 						</div><br/><!-- mouseEventBox -->
 					</td>

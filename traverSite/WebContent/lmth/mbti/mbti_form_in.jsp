@@ -250,7 +250,7 @@ function submit(i) {
 					<input id="schd_name" type="text" 
 					value="<%=scheduleInfo.getSi_name()%>" size="20" readonly required><br>
 					<br>	
-				     <% 
+				     <% int daynum = 1;
 						for ( int j = 1; j <= scheduleInfo.getSi_dnum(); j++) {
 						  sdList += j + "일차 : ";
 							for ( int i = 0; i < scheduleDayList.size(); i++ ) { 
@@ -322,7 +322,7 @@ function submit(i) {
 						    
 							//커스텀 오버레이의 위치, 내용
 							var overlayPosition<%=sd.getPi_id()%> = new kakao.maps.LatLng<%=sd.getSd_coords() %>;
-							var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%=scheduleDayList.get(1).getSd_seq() %></span><span class="right"></span></div>';
+							var overlayContent = '<div class ="label"><span class="left"></span><span class="center"><%=scheduleDayList.get(i).getSd_seq() %></span><span class="right"></span></div>';
 							
 							 
 							 // 커스텀 오버레이를 생성
@@ -378,7 +378,7 @@ function submit(i) {
 									</span>
 								</div>
 								<div class="post_img">
-									<img src="file/img/<%=si.getSi_img() %>" class="postimg">
+									<img src="/traverSite/file/img/map_img/<%=si.getSi_img() %>" class="postimg">
 								</div>
 							</div>
 							</form>

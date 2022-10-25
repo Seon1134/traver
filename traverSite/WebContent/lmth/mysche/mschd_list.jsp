@@ -61,6 +61,14 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 	background: inherit; border: none; 
 	box-shadow: none; border-radius: 0; 
 	padding: 0;  cursor: pointer; 
+	float: right;
+}
+#x-sch {
+	width: 15px;
+	border: none;
+	position: relative;
+    right: 5px;
+    top: 8px;
 }
 #schBtn { 
 	width:70px; height:33px; 
@@ -69,20 +77,18 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 
 .upBox { 
 	background-color: #BDD7EE; width:225px; height:70px; 
-	border:solid 1px lightgray; color:black; padding-top:5px; padding-bottom:5px;
+	border:solid 1px #BDD7EE; color:black; padding-top:5px; padding-bottom:5px; line-height: 1.5;
 }
 .mouseEventBox:hover { background: #efefef; width:225px; height:260px; }
 .delbtnInside { width:220px; }
-.delBtn {cursor: pointer; float: right; }
 
 .dnumSize { font-size: 17px; font-weight: bold; ;}
 #schdName { 
 	width: 180px;
 	height: 52px;
 	padding: 10px;
-	font-size: 17px;
+	font-size: 20px;
 	font-weight: bold;
-	line-height: 1.5;
 }
 
 #subtitle { font-size: 25px; font-weight: bold;}
@@ -156,7 +162,7 @@ if (fullScheduleList != null) {
    }
 }
 %>
-				 </select>		 
+				 </select>&nbsp;		 
 				 <select name="o" onchange="location.href='/traverSite/mschdList?<%=schargs + yargs%>&o=' + this.value;">
 					<option value="a" <% if (o.equals("a")) { %>selected="selected"<% } %>>등록 최신 순</option>
 					<option value="b" <% if (o.equals("b")) { %>selected="selected"<% } %>>등록 오래된 순</option>
@@ -191,8 +197,14 @@ if (fullScheduleList != null) {
 			String title = si.getSi_name();
 			if (title.length() > 10)	title = title.substring(0, 9) + " ...";
 			
-			String dnum1 = (si.getSi_dnum() - 1) + "박";
-			String dnum2 = si.getSi_dnum() + "일";
+			String dnum = "";
+			if ( si.getSi_dnum() == 1) {
+				dnum = "당일치기";
+			} else {
+				String dnum1 = (si.getSi_dnum() - 1) + "박 ";
+				String dnum2 = si.getSi_dnum() + "일";
+				dnum = dnum1 + dnum2;
+			}
 			
 			if (i % 5 == 0) 	out.println("<tr>");
 %>
@@ -200,15 +212,17 @@ if (fullScheduleList != null) {
 				<td width="20%" align="center" >
 					<div class="mouseEventBox">
 						<div class="delbtnInside">
-							<input type="button" value="X" class="delBtn" onclick="mscdDel('<%=siid %>');" />
+							<button type="button" value="X" class="delBtn btn" onclick="mscdDel('<%=siid %>');" >
+							<img src="file/img/x.png" id="x-sch">
+							</button>
 						</div>
 							<a href="mschdDetail?siid=<%=si.getSi_id() + args %>">
 								<div class="upBox" >
 									<span id="schdName" ><%=title %></span><br />
-									<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
+									<span class="dnumSize"><%=dnum%></span><br />
 									<span><%=si.getSi_sdate() %>~<%=si.getSi_edate() %></span><br />
 								</div>	
-								<img src="/traverSite/file/img/<%=si.getSi_img() %>" width="227" height="180"/>
+								<img src="/traverSite/file/img/map_img/<%=si.getSi_img() %>" width="227" height="180"/>
 							</a>
 					</div><br/><!-- mouseEventBox -->
 				</td>
