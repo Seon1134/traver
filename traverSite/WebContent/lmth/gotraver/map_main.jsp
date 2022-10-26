@@ -143,14 +143,14 @@ if (isLogin) {
 	<!-- 일정 보러가기 -->
 	<div class="main-bottom-area">
 		<div class="schedule_all_view_box">
-			<input type="button" class="schedule_all_view_button go_schedule" value="일정 보러가기" />
+			<input type="button" class="schedule_all_view_button go_schedule" value="일정 등록 하러 가기" />
 		</div>
 	</div>
 	
 	<div class="go_schedule_area_box display_none">
 		<div class="go_schedule_area">
 			<div class="go_schedule_left">
-				<button type="button"><img src="" alt="&lt;" /></button>
+				<button type="button"><img class="arrow" src="file/img/left.png" alt="&lt;" /></button>
 			</div>
 			<div class="schedule_item">
 				<div class="go_schedule_top">
@@ -166,7 +166,7 @@ if (isLogin) {
 					if (si.getSi_dnum() != 0) { 
 						for(int i = 1; i <= si.getSi_dnum(); i++) {
 					%>
-						<div class="go_scheduel_day_box">
+						<div class="go_schedule_day_box">
 							<div class="schedule-info">
 								<span class="schedule_day_num">Day <%=i %></span>
 								<span class="schedule_day_date"><%=dateList[i]%></span>
@@ -200,7 +200,7 @@ if (isLogin) {
 				</div>
 			</div>
 			<div class="go_schedule_right">
-				<button type="button"><img src="" alt="&gt;" /></button>
+				<button type="button"><img class="arrow" src="file/img/right.png" alt="&gt;" /></button>
 			</div>
 		</div>
 	</div>

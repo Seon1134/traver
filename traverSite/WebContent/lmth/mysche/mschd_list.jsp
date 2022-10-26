@@ -81,6 +81,7 @@ input[type="text"] { height:23px; margin-left: 5px; position: relative; left: 70
 	background-color:#bdd7eeab; width:200px; height:70px; 
 	border:solid 1px #bdd7eeab; color:black; padding: 8px 0; line-height: 1.5;
 }
+.mouseEventBox { width: 240px; }
 .delbtnInside { width:220px; }
 .dnumSize { font-size: 17px; font-weight: bold; ;}
 #schdName { 

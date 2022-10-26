@@ -78,7 +78,7 @@
 	}
 
 	.schedule-area {
-	    height: 70%;
+	    height: 100%;
 	}
 	.schedule-list { 
 		list-style-type: none; 
@@ -344,6 +344,9 @@
 	    box-shadow: 0px 1px 1px 1px rgb(28 91 114 / 61%);
 	    border: 0px none;
     }
+    .arrow {
+    	width: 30px; 
+    }
     
 	
 	
@@ -392,9 +395,9 @@
 	    grid-gap: 10px;
 	}
 	
-	.go_scheduel_day_box {
+	.go_schedule_day_box {
 	    position: relative;
-	    height: 650px;
+	    height: 600px;
 	}
 	
 	.chedule_button {
