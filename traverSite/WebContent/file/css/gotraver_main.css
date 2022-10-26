@@ -40,7 +40,7 @@
 		width: 270px; 
 		height: 100vh; 
 		z-index: 20; 
-		background-color: #fdfdfd;
+		background-color: #f0f8ff;
 		box-shadow: 0.4px 0px 3px 0px rgb(58 98 120 / 27%);
 	}
 	.side__open { 
@@ -95,7 +95,9 @@
 		height: 18px; 
 		text-align: center;
 		border: 0.12em solid #7285bd;
-	    background-color: #fff;		
+	    background-color: #1193b1;
+   	 	border-radius: 18px;
+    	color: white;	
 	}
 	
 	.schedule-del_box {
@@ -105,7 +107,7 @@
 	    padding-top: 10px;
 	    margin: 0.5em auto;
 	    text-align: center;
-	    bottom: 70px;
+	    bottom: 100px;
 	}
 	.schedule__del { 
 		position:relative; 
@@ -124,8 +126,9 @@
 	    width: 76%;
 	    font-size: 15px;
 	    text-align: center;
-	    background-color: #fff;
+	    background-color: #d3d3d3;
 	    border: 0.13em solid #7285bd;
+	    border-radius: 18px;
 	}
 	
 	
@@ -157,7 +160,7 @@
 		position: relative;
 	    padding: 9px 6px 8px;
 	    margin-top: 4px;
-	    background-color: #fff;
+	    background-color: #f0f8ff;
 	}
 	
 	.place-section:first-child {
