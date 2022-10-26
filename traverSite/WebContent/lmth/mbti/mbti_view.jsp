@@ -5,7 +5,12 @@ GoodPost goodPost = (GoodPost)request.getAttribute("goodPost");
 boolean isGood = (boolean)request.getAttribute("isGood");
 boolean isInterest = (boolean)request.getAttribute("isInterest");
 GoodInfo goodInfo = (GoodInfo) request.getAttribute("goodInfo");
+ArrayList<GoodDay> fullGoodDayList = (ArrayList<GoodDay>) request.getAttribute("fullGoodDayList");
 ArrayList<GoodDay> goodDayList = (ArrayList<GoodDay>) request.getAttribute("goodDayList");
+String day = "1";
+if (request.getAttribute("day") != null ){
+	day = (String)request.getAttribute("day");
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -191,26 +196,31 @@ var clickCnt = 0;
 			<p id="schname"><%=goodInfo.getGi_name() %></p><br>
 			<%=goodPost.getGp_list() %>
    			<hr>
-   			<select id="dayselect">
+   			<select id="dayselect" onchange="location.href='/traverSite/postView?gpid=<%=goodPost.getGp_id() %>&giid=<%=goodPost.getGi_id() %>&day=' + this.value;">
    				<% 
 					if ( goodInfo != null ) {
 						for ( int i = 1; i <= goodInfo.getGi_dnum(); i++ ) { 
 				%>
-								<option value="<%=i %>"><%=i %>일차</option>
+								<option name="day" value="<%=i %>" <%if (day.equals(i+"")) {%> selected <%} %>><%=i %>일차</option>
 				<%			
 						}
 					}
 				%>
-   			</select><button type="button" class="btn" id="pin">지도 핀</button><br><br>
-			<div id="map" style="width:100%;height:350px;"></div>
+   			</select><br><br>
+			<div id="map" style="width:100%;height:500px;"></div>
 			<style>
 				.label {margin-bottom: 50px; }
+				.customoverlay {position:relative;bottom:50px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+				.customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+				.customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+				.customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
+				.customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 			</style>
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b05cef42f58551f118588eb3f26ff67&libraries=services"></script>
 			<script>
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div ID 넣기
 			    mapOption = { 
-			        center: new kakao.maps.LatLng(33.3880, 126.60000), // 지도의 중심좌표 : 제주도로 설정해놨어
+			        center: new kakao.maps.LatLng(33.4000, 126.55000), // 지도의 중심좌표 : 제주도로 설정해놨어
 			        level: 10 // 지도의 확대 레벨 : 줄이거나 늘리면댐
 			    };
 			
@@ -229,9 +239,9 @@ var clickCnt = 0;
 					markerPosition = new kakao.maps.LatLng(<%=gd.getGd_coords()%>);
 					
 					var position<%=gd.getPi_id()%> = ({   // 마커의 윈도우인포에 장소 이름과 위치를 저장
-		                   content: "<div style='display:inline-block; margin:5px 0 5px 5px;'><%=gd.getGd_name()%></div>", 
-		                    latlng: new kakao.maps.LatLng<%=gd.getGd_coords()%>
-		               });
+	                    content: '<span><%=gd.getGd_name()%></span>', 
+	                    latlng: new kakao.maps.LatLng<%=gd.getGd_coords()%>
+	               });
 					
 					var marker = new kakao.maps.Marker({ // 마커를 생성
 				        map: map, // 마커를 표시할 지도
@@ -239,12 +249,40 @@ var clickCnt = 0;
 				        image: markerImage, // 마커이미지 설정 
 				        zIndex: 5
 				    });
-		               
-	                var infowindow = new kakao.maps.InfoWindow({ // 마커에 표시할 툴팁 생성
-	                    content: position<%=gd.getPi_id()%>.content 
-	                });
 	                
-	                marker.setMap(map); // 맵에 표시
+				    marker.setMap(map)
+				    
+				    var content = '<div class="customoverlay">' +
+					    '<a href="#"><span class="title"><%=gd.getGd_name()%></span></a>' +
+					    '</div>';
+					
+					// 커스텀 오버레이가 표시될 위치입니다 
+					var position = new kakao.maps.LatLng<%=gd.getGd_coords()%>;  
+					
+					// 커스텀 오버레이를 생성합니다
+					var customOverlay1 = new kakao.maps.CustomOverlay({
+					    map: map,
+					    position: position,
+					    content: content,
+					    yAnchor: 1, 
+					    zIndex: 6
+					});
+				    
+				    //인포윈도우(툴팁)를 표시하는 클로저를 만드는 함수
+					function makeOverListener(map, marker, infowindow) {
+					    return function() {
+					        infowindow.open(map, marker);
+					
+					    };
+					}
+					
+					// 인포윈도우(툴팁)를 닫는 클로저를 만드는 함수
+					function makeOutListener(infowindow) {
+					    return function() {
+					        infowindow.close();
+					
+					    };
+					}
 	                
 	              	//커스텀 오버레이의 위치, 내용
 					var overlayPosition<%=gd.getPi_id()%> = new kakao.maps.LatLng<%=gd.getGd_coords() %>;
@@ -281,29 +319,6 @@ var clickCnt = 0;
    			<a href="/traverSite/postList"><button type="button" class="btn" id="list"><img class="btn3" src="file/img/list.png" id="list" alt="목록"></button></a>
    		
    		</div>
-   		<div class="display_none" id="section2">
-   			<img src="file/img/silla1.jpg" id="placeimg1">
-			<div id="placedesc">
-			<img src="file/img/x.png" id="x"><br>
-				<br>
-				<div id="placedetail">
-				<span id="placename">신라 호텔</span><br><br>
-				<div id="placeinfo">
-					<span>
-					번호 : 064 – 123 - 4567<br>
-					위치 : 제주 특별자치도 제주시 도련일동 1789-2<br>
-					홈페이지 : jeju.co.kr<br>
-					주차 시설 완벽, 주변 관광지와 가까움<br>
-					주변에 맛집도 많음<br>
-					</span>
-				</div>
-				</div>
-			</div>
-			<img src="file/img/silla2.jpg" id="placeimg2" class="descimg" onmouseover="swapImg('silla2.jpg');" onmouseout="bigImg();">
-			<img src="file/img/silla3.jpg" id="placeimg3" class="descimg" onmouseover="swapImg('silla3.jpg');" onmouseout="bigImg();">
-			<img src="file/img/silla4.jpg" id="placeimg4" class="descimg" onmouseover="swapImg('silla4.jpg');" onmouseout="bigImg();">
-			<img src="file/img/silla5.jpg" id="placeimg5" class="descimg" onmouseover="swapImg('silla5.jpg');" onmouseout="bigImg();">
-		</div>
 		<div class="display_none" id="section3">
 			<form name="reportFrm" action="/traverSite/report">
 			<input type="hidden" name="gp_id" value="<%=goodPost.getGp_id() %>">

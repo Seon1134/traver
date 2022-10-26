@@ -25,7 +25,7 @@ public class PostProcUpDao {
 
         try {
             stmt = conn.createStatement();
-            String sql = "update t_good_post set gp_title = '" + title + "' , gp_content = '" + content + "' where gp_id = '" + gpid + "'";
+            String sql = "update t_good_post set gp_title = '" + title + "' , gp_content = '" + content + "', gp_last = now() where gp_id = '" + gpid + "'";
             result = stmt.executeUpdate(sql);
 
         } catch(Exception e) {

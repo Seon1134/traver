@@ -6,7 +6,7 @@ public class ScheduleInfo {
 // '내 일정'에서 하나의 일정 정보를 저장할 클래스 
     private int si_dnum; 
     private String si_id, mi_id, si_sdate, si_edate, si_date, si_last, si_name, si_isTake, si_img;
-    private String schYear;
+    private String schYear, si_max;
     private ArrayList<ScheduleDay> schdDayList;
     
     public int getSi_dnum() {
@@ -74,6 +74,12 @@ public class ScheduleInfo {
     }
     public void setSchYear(String schYear) {
         this.schYear = schYear;
+    }
+    public String getSi_max() {
+        return si_max;
+    }
+    public void setSi_max(String si_max) {
+        this.si_max = si_max;
     }
     public ArrayList<ScheduleDay> getSchdDayList() {
         return schdDayList;

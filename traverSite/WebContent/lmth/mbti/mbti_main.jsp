@@ -93,7 +93,7 @@ hr { margin: 20px 0;}
 	overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
 }
 .small { font-size: 14px; }
-.postimg { width: 200px; height: 200px; object-fit: cover;}
+.postimg { width: 200px; height: 200px; object-fit: cover; margin-top: -2px;}
 
 .hide { opacity: 0.0; cursor: default; }
 </style>
@@ -208,9 +208,9 @@ $(document).ready(function() {
 				   			GoodPost mp = mbtiPostList.get(i);
 				   	%>
 				   	<% if ( isLogin ) { %>
-					<a href="postView?gpid=<%=mp.getGp_id() %>&giid=<%=mp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
+					<a href="postView?gpid=<%=mp.getGp_id() %>&giid=<%=mp.getGi_id() %>&day=1&miid=<%=loginInfo.getMi_id() %>" title="<%=mp.getGp_title()%>">
 					<% } else { %>
-					<a href="postView?gpid=<%=mp.getGp_id() %>&giid=<%=mp.getGi_id() %>">
+					<a href="postView?gpid=<%=mp.getGp_id() %>&giid=<%=mp.getGi_id() %>&day=1" title="<%=mp.getGp_title()%>">
 					<% } %>
 				   		<div class="post">
 				   			<div class="post_title"><%=mp.getGp_title() %></div>
@@ -244,9 +244,9 @@ $(document).ready(function() {
 			   			GoodPost pp = popPostList.get(i);
 			   		%>
 			   		<% if ( isLogin ) { %>
-					<a href="postView?gpid=<%=pp.getGp_id() %>&giid=<%=pp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
+					<a href="postView?gpid=<%=pp.getGp_id() %>&giid=<%=pp.getGi_id() %>&day=1&miid=<%=loginInfo.getMi_id() %>" title="<%=pp.getGp_title()%>">
 					<% } else { %>
-					<a href="postView?gpid=<%=pp.getGp_id() %>&giid=<%=pp.getGi_id() %>">
+					<a href="postView?gpid=<%=pp.getGp_id() %>&giid=<%=pp.getGi_id() %>&day=1" title="<%=pp.getGp_title()%>">
 					<% } %>
 			   		<div class="post">
 			   			<div class="post_title"><%=pp.getGp_title() %></div>

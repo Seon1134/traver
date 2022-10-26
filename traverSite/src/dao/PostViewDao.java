@@ -173,7 +173,40 @@ public class PostViewDao {
         return goodInfo;
     }
 
-    public ArrayList<GoodDay> getGoodDayList(String gi) {
+    public ArrayList<GoodDay> getFullGoodDayList(String giid) {
+        Statement stmt = null; 
+        ResultSet rs = null;
+        ArrayList<GoodDay> fullGoodDayList = new ArrayList<GoodDay>();
+        GoodDay gd = null;
+        
+        try {
+             stmt = conn.createStatement();
+             String sql = "select * from t_good_day where gi_id = '" + giid + "'";
+             rs = stmt.executeQuery(sql);
+                 
+             while(rs.next()) {
+                 gd = new GoodDay();
+                 gd.setGi_id(rs.getString("gi_id"));
+                 gd.setPi_id(rs.getInt("pi_id"));
+                 gd.setGd_dnum(rs.getInt("gd_dnum"));
+                 gd.setGd_seq(rs.getInt("gd_seq"));
+                 gd.setGd_name(rs.getString("gd_name"));
+                 gd.setGd_coords(rs.getString("gd_coords"));
+                 gd.setGd_date(rs.getString("gd_date"));
+                 fullGoodDayList.add(gd);
+             }
+           
+        } catch (Exception e) {
+             System.out.println("PostViewDao 클래스의 getGoodDayList() 메소드 오류");
+             e.printStackTrace();
+          } finally {
+             close(rs); close(stmt);
+          }
+        
+        return fullGoodDayList;
+    }
+    
+    public ArrayList<GoodDay> getGoodDayList(String giid, String day) {
         Statement stmt = null; 
         ResultSet rs = null;
         ArrayList<GoodDay> goodDayList = new ArrayList<GoodDay>();
@@ -181,7 +214,7 @@ public class PostViewDao {
         
         try {
              stmt = conn.createStatement();
-             String sql = "select * from t_good_day where gi_id = '" + gi + "'";
+             String sql = "select * from t_good_day where gi_id = '" + giid + "' and gd_dnum = '" + day + "'";
              rs = stmt.executeQuery(sql);
                  
              while(rs.next()) {
@@ -205,5 +238,4 @@ public class PostViewDao {
         
         return goodDayList;
     }
-
 }

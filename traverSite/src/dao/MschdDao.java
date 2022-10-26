@@ -61,14 +61,14 @@ public class MschdDao {
         return scheduleList;
     }
 
-    public ScheduleInfo getMschdDetail(String miid, String siid) {
+    public ScheduleInfo getMschdDetail(String miid, String siid, String day) {
     // 받아온(지정한) 일정아이디에 해당하는 일정 디테일 정보들을 ScheduleInfo형 인스턴스로 저장하여 리턴하는 메소드
         Statement stmt = null;
         ResultSet rs = null;
         ScheduleInfo si = null;
         
         try {
-            String sql = "select * from t_schedule_info where mi_id = '" + miid + "' and si_id = '" + siid + "' ";
+            String sql = "select * from t_schedule_info where mi_id = '" + miid + "' and si_id = '" + siid + "'";
             
             stmt = conn.createStatement();
             //System.out.println(sql);
@@ -79,7 +79,7 @@ public class MschdDao {
                 si.setSi_id(siid);
                 si.setSi_name(rs.getString("si_name"));
                 si.setSi_dnum(rs.getInt("si_dnum"));
-                si.setSchdDayList(getSchdDayList(siid)); // 현 일정의 일차 관련 목록을 ArrayList로 받아와 si에 저장
+                si.setSchdDayList(getSchdDayList(siid, day)); // 현 일정의 일차 관련 목록을 ArrayList로 받아와 si에 저장
             }
             
         } catch(Exception e) {
@@ -92,7 +92,7 @@ public class MschdDao {
         return si;
     }
     
-    public ArrayList<ScheduleDay> getSchdDayList(String siid) {
+    public ArrayList<ScheduleDay> getSchdDayList(String siid, String day) {
     // 받아온(지정한) 일정아이디에 해당하는 일차 정보들을 ArrayList<ScheduleDay>형 인스턴스로 저장하여 리턴하는 메소드
         Statement stmt = null;
         ResultSet rs = null;
@@ -100,7 +100,7 @@ public class MschdDao {
         ScheduleDay sd = null;
         
         try {
-            String sql = "select * from t_schedule_day where si_id = '" + siid + "' ";
+            String sql = "select * from t_schedule_day where si_id = '" + siid + "' and sd_dnum = '" + day + "'";
             stmt = conn.createStatement();
             
             //System.out.println(sql);
@@ -114,6 +114,8 @@ public class MschdDao {
                 sd.setPi_id(rs.getString("pi_id"));
                 sd.setSd_dnum(rs.getInt("sd_dnum"));
                 sd.setSd_coords(rs.getString("sd_coords"));
+                sd.setSd_date(rs.getString("sd_date"));
+                sd.setSd_seq(rs.getInt("sd_seq"));
                 schdDayList.add(sd);
             }
             
@@ -175,5 +177,71 @@ public class MschdDao {
         }
         
         return fullScheduleList;
+    }
+
+    public ScheduleInfo getFullmschdDetail(String miid, String siid) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        ScheduleInfo fullsi = null;
+        
+        try {
+            String sql = "select * from t_schedule_info where mi_id = '" + miid + "' and si_id = '" + siid + "'";
+            
+            stmt = conn.createStatement();
+            //System.out.println(sql);
+            rs = stmt.executeQuery(sql);
+            if (rs.next()) { 
+                fullsi = new ScheduleInfo();
+                fullsi.setMi_id(miid);
+                fullsi.setSi_id(siid);
+                fullsi.setSi_name(rs.getString("si_name"));
+                fullsi.setSi_dnum(rs.getInt("si_dnum"));
+                fullsi.setSchdDayList(getFullSchdDayList(siid)); // 현 일정의 일차 관련 목록을 ArrayList로 받아와 si에 저장
+            }
+            
+        } catch(Exception e) {
+            System.out.println("MschdDao 클래스의 getMschdDetail() 메소드 오류");
+            e.printStackTrace();
+        } finally {
+            close(rs); close(stmt);
+        }
+    
+        return fullsi;
+    }
+
+    private ArrayList<ScheduleDay> getFullSchdDayList(String siid) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        ArrayList<ScheduleDay> schdDayList = new ArrayList<ScheduleDay>();
+        ScheduleDay sd = null;
+        
+        try {
+            String sql = "select * from t_schedule_day where si_id = '" + siid + "'";
+            stmt = conn.createStatement();
+            
+            //System.out.println(sql);
+            
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {   // 하나의 일정에 해당하는 일차정보가 들어있는 rs
+                sd = new ScheduleDay();
+                sd.setSi_id(siid);
+                sd.setSd_id(rs.getString("sd_id"));
+                sd.setPi_name(rs.getString("pi_name"));
+                sd.setPi_id(rs.getString("pi_id"));
+                sd.setSd_dnum(rs.getInt("sd_dnum"));
+                sd.setSd_coords(rs.getString("sd_coords"));
+                sd.setSd_date(rs.getString("sd_date"));
+                sd.setSd_seq(rs.getInt("sd_seq"));
+                schdDayList.add(sd);
+            }
+            
+        } catch(Exception e) {
+            System.out.println("MschdDao 클래스의 getSchdDayList() 메소드 오류");
+            e.printStackTrace();
+        } finally {
+            close(rs); close(stmt);
+        }
+    
+        return schdDayList;
     }
 }

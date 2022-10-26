@@ -2,14 +2,15 @@
  * 
  */
 
-function scheduleInfo (sisdate, siedate, sidnum) {
+function scheduleInfo (sisdate, siedate, sidnum, simax) {
 	$.ajax({
 		type : "POST",
 		url : "/traverSite/scheduleInfo",
 		data : {
 			"sisdate" : sisdate,	//시작날짜
 			"siedate" : siedate,	//종료날짜
-			"sidnum" : sidnum	//총 일수
+			"sidnum" : sidnum,	//총 일수
+			"simax" : simax
 		},
 		success : function(result) {
 			if (result == 0) {

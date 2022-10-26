@@ -32,7 +32,6 @@ public class IschdDao {
             stmt = conn.createStatement();
             String sql = "select * from t_schedule_zzim a, t_good_info b "
             + where + orderBy;
-            //System.out.println(sql);
             rs = stmt.executeQuery(sql);
             
             while (rs.next()) {
@@ -56,7 +55,7 @@ public class IschdDao {
         return goodList;
     }
 
-    public GoodInfo getIschdDetail(String miid, String giid) {
+    public GoodInfo getIschdDetail(String miid, String giid, String day) {
     // 받아온(지정한) 일정아이디에 해당하는 관심일정 디테일 정보들을 GoodInfo형 인스턴스로 저장하여 리턴하는 메소드
         Statement stmt = null;
         ResultSet rs = null;
@@ -76,7 +75,7 @@ public class IschdDao {
                 gi.setGi_nickname(rs.getString("gi_nickname"));
                 gi.setGi_name(rs.getString("gi_name"));
                 gi.setGi_dnum(rs.getInt("gi_dnum"));
-                gi.setGoodDayList(getGoodDayList(giid)); // 현 관심일정의 일차 관련 목록을 ArrayList로 받아와 gi에 저장
+                gi.setGoodDayList(getGoodDayList(giid, day)); // 현 관심일정의 일차 관련 목록을 ArrayList로 받아와 gi에 저장
             }
             
         } catch(Exception e) {
@@ -89,14 +88,14 @@ public class IschdDao {
         return gi;
     }
 
-    public ArrayList<GoodDay> getGoodDayList(String giid) {
+    public ArrayList<GoodDay> getGoodDayList(String giid, String day) {
         Statement stmt = null;
         ResultSet rs = null;
         ArrayList<GoodDay> goodDayList = new ArrayList<GoodDay>();
         GoodDay gd = null;
         
         try {
-            String sql = "select * from t_good_day a, t_schedule_zzim b where a.gi_id = b.gi_id and a.gi_id = '" + giid + "' ";
+            String sql = "select * from t_good_day a, t_schedule_zzim b where a.gi_id = b.gi_id and a.gi_id = '" + giid + "' and gd_dnum = '" + day + "'";
             
             stmt = conn.createStatement();
            // System.out.println(sql);
@@ -109,6 +108,7 @@ public class IschdDao {
                 gd.setPi_id(rs.getInt("pi_id"));
                 gd.setGd_dnum(rs.getInt("gd_dnum"));
                 gd.setGd_coords(rs.getString("gd_coords"));
+                gd.setGd_seq(rs.getInt("gd_seq"));
                 goodDayList.add(gd);
             }
             
@@ -167,5 +167,72 @@ public class IschdDao {
           }
         
         return goodPost;
+    }
+
+    public GoodInfo getFullIschdDetail(String miid, String giid) {
+     // 받아온(지정한) 일정아이디에 해당하는 관심일정 디테일 정보들을 GoodInfo형 인스턴스로 저장하여 리턴하는 메소드
+        Statement stmt = null;
+        ResultSet rs = null;
+        GoodInfo fullgi = null;
+        
+        try {
+            String sql = "select * from t_good_info a, t_schedule_zzim b where b.mi_id = '" + miid + "' "
+            + " and a.gi_id = b.gi_id and a.gi_id = '" + giid + "' ";
+            
+            stmt = conn.createStatement();
+            //System.out.println(sql);
+            rs = stmt.executeQuery(sql);
+            if (rs.next()) { 
+                fullgi = new GoodInfo();
+                fullgi.setMi_id(miid);
+                fullgi.setGi_id(giid);
+                fullgi.setGi_nickname(rs.getString("gi_nickname"));
+                fullgi.setGi_name(rs.getString("gi_name"));
+                fullgi.setGi_dnum(rs.getInt("gi_dnum"));
+                fullgi.setGoodDayList(getGoodDayList(giid)); // 현 관심일정의 일차 관련 목록을 ArrayList로 받아와 gi에 저장
+            }
+            
+        } catch(Exception e) {
+            System.out.println("IschdDao 클래스의 getIschdDetail() 메소드 오류");
+            e.printStackTrace();
+        } finally {
+            close(rs); close(stmt);
+        }
+    
+        return fullgi;
+    }
+
+    private ArrayList<GoodDay> getGoodDayList(String giid) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        ArrayList<GoodDay> goodDayList = new ArrayList<GoodDay>();
+        GoodDay gd = null;
+        
+        try {
+            String sql = "select * from t_good_day a, t_schedule_zzim b where a.gi_id = b.gi_id and a.gi_id = '" + giid + "'";
+            
+            stmt = conn.createStatement();
+           // System.out.println(sql);
+            
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {   // 하나의 관심일정에 해당하는 일차정보가 들어있는 rs
+                gd = new GoodDay();
+                gd.setGi_id(giid);
+                gd.setGd_name(rs.getString("gd_name"));
+                gd.setPi_id(rs.getInt("pi_id"));
+                gd.setGd_dnum(rs.getInt("gd_dnum"));
+                gd.setGd_coords(rs.getString("gd_coords"));
+                gd.setGd_seq(rs.getInt("gd_seq"));
+                goodDayList.add(gd);
+            }
+            
+        } catch(Exception e) {
+            System.out.println("IschdDao 클래스의 getGoodDayList() 메소드 오류");
+            e.printStackTrace();
+        } finally {
+            close(rs); close(stmt);
+        }
+    
+        return goodDayList;
     }
 }

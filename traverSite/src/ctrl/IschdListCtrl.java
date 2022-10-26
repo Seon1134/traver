@@ -32,9 +32,6 @@ public class IschdListCtrl extends HttpServlet {
             out.close();
         } 
         
-	    String sy = ""; // 검색년도
-        if (request.getParameter("sy") != null)  sy = request.getParameter("sy");
-        
         String keyword = request.getParameter("keyword"); // 검색키워드
         
         // select * from t_schedule_zzim a, t_good_info b 
@@ -53,17 +50,15 @@ public class IschdListCtrl extends HttpServlet {
         String orderBy = "";
         switch (o) {
         case "a" : // 등록 최신 순
-            orderBy = " order by a.gi_id desc";   break;
+            orderBy = " order by a.sz_idx desc";   break;
         case "b" : // 등록 오래된 순
-            orderBy = " order by a.gi_id";        break;
+            orderBy = " order by a.sz_idx";        break;
         }
         
         IschdListSvc ischdListSvc = new IschdListSvc();
         
         goodList = ischdListSvc.getIschdList(where, orderBy); // 목록화면에서 보여줄 관심일정 목록 ArrayList형으로 받아옴
         
-        
-        request.setAttribute("sy", sy); 
         request.setAttribute("keyword", keyword); 
         request.setAttribute("o", o); 
         request.setAttribute("goodList", goodList);

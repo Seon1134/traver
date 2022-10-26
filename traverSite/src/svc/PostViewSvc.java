@@ -84,14 +84,26 @@ public class PostViewSvc {
         
         return goodInfo;
     }
+    
+    public ArrayList<GoodDay> getFullGoodDayList(String giid) {
+        Connection conn = getConnection();
+        ArrayList<GoodDay> fullGoodDayList = null;
+        PostViewDao postViewDao = PostViewDao.getInstance();
+        postViewDao.setConnection(conn);
+        
+        fullGoodDayList = postViewDao.getFullGoodDayList(giid);
+        close(conn);
+        
+        return fullGoodDayList;
+    }
 
-    public ArrayList<GoodDay> getGoodDayList(String gi) {
+    public ArrayList<GoodDay> getGoodDayList(String giid, String day) {
         Connection conn = getConnection();
         ArrayList<GoodDay> goodDayList = null;
         PostViewDao postViewDao = PostViewDao.getInstance();
         postViewDao.setConnection(conn);
         
-        goodDayList = postViewDao.getGoodDayList(gi);
+        goodDayList = postViewDao.getGoodDayList(giid, day);
         close(conn);
         
         return goodDayList;

@@ -166,6 +166,7 @@ input[type="radio"] {
 	width: 200px;
 	height: 200px;
 	object-fit: cover;
+	margin-top: -2px;
 }
 
 .display_none {
@@ -352,9 +353,9 @@ $(document).ready(function() {
 							GoodPost gp = postList.get(i);
 					%>
 					<% if ( isLogin ) { %>
-					<a href="postView?gpid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>&miid=<%=loginInfo.getMi_id() %>">
+					<a href="postView?gpid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>&day=1&miid=<%=loginInfo.getMi_id() %>" title="<%=gp.getGp_title()%>">
 					<% } else { %>
-					<a href="postView?gpid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>">
+					<a href="postView?gpid=<%=gp.getGp_id() %>&giid=<%=gp.getGi_id() %>&day=1" title="<%=gp.getGp_title()%>">
 					<% } %>
 					<div class="post">
 						<div class="post_title"><%=gp.getGp_title() %></div>

@@ -109,11 +109,12 @@ if (isLogin) {
 	<div class="main-top_area">
 		<div class="schedule_date">
 		<% if (si.getSi_sdate() == null) { %>
-			<input type="date" class="" id="sdate" name="sdate" onchange="limitDate(); setDay(this.value, this.form.edate.value, this.form.schedule_day);">~
+			<input type="date" class="" id="sdate" name="sdate" onchange="limitDate(); setDay(this.value, this.form.edate.value, this.form.schedule_day);"> ~
 			<input type="date" id="edate" name="edate" disabled onchange="setDay(this.form.sdate.value, this.value, this.form.schedule_day);">
 		<% } else {  %>
 			<input type="date" class="" id="sdate" name="sdate" value="<%=si.getSi_sdate()%>"onchange="limitDate(); setDay(this.value, this.form.edate.value, this.form.schedule_day);">~
-			<input type="date" id="edate" name="edate" value="<%=si.getSi_edate()%>" <% if (si.getSi_edate() == null) { %> disabled <% } %> onchange="setDay(this.form.sdate.value, this.value, this.form.schedule_day);">
+			<input type="date" id="edate" name="edate" value="<%=si.getSi_edate()%>" min="<%=si.getSi_sdate()%>" max="<%=si.getSi_max() %>"
+			<% if (si.getSi_edate() == null) { %> disabled <% } %> onchange="setDay(this.form.sdate.value, this.value, this.form.schedule_day);">
 		<% }  %>
 		</div>
 		<div class="">
@@ -404,20 +405,27 @@ function makeOutListener(infowindow) {
 
     };
 }
-</script>
-<!-- //지도 -->
- 
- 
- 
-</form>
-<form action="#">
-<input type="hidden" id="viewDayNum" name="viewDayNum" value="<%=viewDayNum %>">
-<!-- 우측 사이드 박스 -->
-<div class="right-side open">
-	<div class="right-side_header">
-		<div class="search-box">
-			<input type="text" class="search__txt" name="searchKeyword" placeholder="검색어를 입력하세요" onkeyup="enterkey(this.value,this.form.viewDayNum.value)" value="<%=searchKeyword %>"/>
-			<button type="button"  class="schedule__del search__del" value="X" onclick="schDel()">X</button>
+
+
+function delKeyword() {
+	   var frm = document.schCata;
+	   schCata.searchKeyword.value = "";
+	   frm.submit();
+	}
+	</script>
+	<!-- //지도 -->
+	 
+	 
+	 
+	</form>
+	<form name="schCata" id="schCata" action="#">
+	<input type="hidden" id="viewDayNum" name="viewDayNum" value="<%=viewDayNum %>">
+	<!-- 우측 사이드 박스 -->
+	<div class="right-side open">
+	   <div class="right-side_header">
+	      <div class="search-box">
+	         <input type="text" class="search__txt" name="searchKeyword" id="searchKeyword" placeholder="검색어를 입력하세요" onkeyup="enterkey(this.value,this.form.viewDayNum.value)" value="<%=searchKeyword %>"/>
+	         <button type="button"  class="schedule__del search__del" value="X" onclick="delKeyword()">X</button>
 		</div>
 		<div class="ctgr-box">
 		<!-- 검색 시, 보여줘야 할 00 개수 여부에따라 버튼 활성화/비활성화 -->

@@ -16,8 +16,8 @@ function limitDate() { // 시작일자 선택 시 종료일자 컨트롤 활성�
 		//종료일 스트링형으로 변환
 		var date2 = fullEDate.substring(8); //종료일의 date(일)값
 		if (date2 < 10) { date2 = "0" + date2; } //date(일) 값이 10보다 작으면 앞에 0붙이기 
-	
-		edate.setAttribute("max", fullEDate.substring(0, 8) + date2); //max값 설정
+		var max = fullEDate.substring(0, 8) + date2
+		edate.setAttribute("max", max); //max값 설정
 		setDay(sdate.value, edate.value, this.form.schedule_day);
 	}
 
@@ -31,12 +31,18 @@ function limitDate() { // 시작일자 선택 시 종료일자 컨트롤 활성�
 		var dat2 = new Date(arr2[0], arr2[1] - 1, arr2[2]);
 		var diffDay = (dat2 - dat1) / (24 * 60 * 60 * 1000) + 1;
 		// diffDay = '일정의 총 일수' (초단위로 빼서 하루를 기준으로 나눔)
+		var dat3 = new Date(dat1.setDate(dat1.getDate() + 9));
+		var fullEDate = dat3.toLocaleString().substring(0, 12)
+		.replaceAll(". ", "-").replace(".", "");
+		var date2 = fullEDate.substring(8);
+		if (date2 < 10) { date2 = "0" + date2; } //date(일) 값이 10보다 작으면 앞에 0붙이기 
+		var max = fullEDate.substring(0, 8) + date2
 	
 		for (var i = target.options.length - 1; i > 0; i--) {
 			target.options[i] = null;
 		} // 기존 day 삭제
 		
-		scheduleInfo(strDate1, strDate2, diffDay);
+		scheduleInfo(strDate1, strDate2, diffDay, max);
 		// 세션에 저장하기위해 필드값들에 현재 구해온 값들을 Ctrl로 넘기는 함수 실행
 	}
 	

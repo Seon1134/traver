@@ -47,7 +47,7 @@ public class PostProcInCtrl extends HttpServlet {
         
         String[] gpgiArr = gpgi.split(",");
        
-        String url = "postView?gpid=" + gpgiArr[0] + "&giid=" + gpgiArr[1] + "&miid=" + mi.getMi_id();
+        String url = "postView?gpid=" + gpgiArr[0] + "&giid=" + gpgiArr[1] + "&day=1" + "&miid=" + mi.getMi_id();
         response.sendRedirect(url);
     }
     

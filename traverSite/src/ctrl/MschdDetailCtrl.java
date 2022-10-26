@@ -17,6 +17,7 @@ public class MschdDetailCtrl extends HttpServlet {
 	    
 	    HttpSession session = request.getSession();
         MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+        String day = request.getParameter("day");
         
         if (loginInfo == null) { // 로그인 되어 있지 않으면
             response.setContentType("text/html; charset=utf-8"); 
@@ -33,7 +34,8 @@ public class MschdDetailCtrl extends HttpServlet {
         // 일정 상세 화면에서 보여줄 일정의 아이디로 where절에서 사용
         
         MschdDetailSvc mschdDetailSvc = new MschdDetailSvc();
-        ScheduleInfo si = mschdDetailSvc.getMschdDetail(miid, siid); 
+        ScheduleInfo fullsi = mschdDetailSvc.getFullmschdDetail(miid, siid);
+        ScheduleInfo si = mschdDetailSvc.getMschdDetail(miid, siid, day); 
          // 지정한 일정아이디에 해당하는 일정정보들을 ScheduleInfo형 인스턴스 si에 받아옴
         
         
@@ -41,6 +43,8 @@ public class MschdDetailCtrl extends HttpServlet {
         
         
         request.setAttribute("si", si);
+        request.setAttribute("fullsi", fullsi);
+        request.setAttribute("day", day);
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("lmth/mysche/mschd_detail.jsp");
         dispatcher.forward(request, response);

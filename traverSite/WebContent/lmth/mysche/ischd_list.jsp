@@ -47,39 +47,38 @@ select { height: 29px; vertical-align: middle; cursor: pointer; }
     margin-left:643px;
     margin-bottom:50px;
 }
-input[type="text"] { height:23px; border: none; margin-left: 5px; }
+input[type="text"] { height:23px; margin-left: 5px; position: relative; left: 783px; }
 #scheCnt { position: relative; top: 6px; } 
 .linematch { display: flex; white-space: nowrap; }
 #x-sch {
-	width: 15px;
+	width: 10px;
 	border: none;
 	position: relative;
-    right: 5px;
+    right: 18px;
     top: 8px;
 }
 #schBtn { 
-	width:70px; height:33px; 
-	margin-left: 5px; 
-	bottom: 23px;
-    position: relative;
+	width:30px; height:30px; 
+	margin-left: 5px;     
+	position: relative;
+    left: 785px;
 }
 
 .upBox { 
-	background-color: #C5E0B4; width:225px; height:70px; 
-	border:solid 1px #C5E0B4; color:black; padding-top:5px; padding-bottom:5px; line-height: 1.5;
+	background-color:#b4e0bda6; width:200px; height:50px; 
+	border:solid 1px #b4e0bda6; color:black; padding: 8px 0; line-height: 1.5;
 }
-.mouseEventBox:hover { background: #efefef; width:225px; height:260px; }
+.mouseEventBox { width: 240px; }
 .delbtnInside { width:220px; }
 .delBtn {cursor: pointer; float: right; }
 
 .dnumSize { font-size: 17px; font-weight: bold; ;}
 #schdName { 
 	width: 180px;
-	height: 52px;
-	padding: 10px;
-	font-size: 20px;
+	height: 50px;
+	padding-bottom: 10px;
+	font-size: 17px;
 	font-weight: bold;
-	line-height: 1.5;
 }
 .btn {
 	background: inherit;
@@ -142,9 +141,7 @@ args = "&yargs=" + oargs + schargs; // 일정 디테일 보기용 쿼리
 				 
 				 		<span id="scheCnt">&nbsp;&nbsp;&nbsp;일정 수 :  <%=goodList.size() %>   </span>
 					 		<div id="schNbtn" style="display:flex;">
-								<div id= "search-box" >
 								 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >
-								</div>
 								<button class="btn" onclick="btnClick()">
 									<img src="/traverSite/file/img/sch.png" id="schBtn"/>
 								</button>
@@ -153,11 +150,11 @@ args = "&yargs=" + oargs + schargs; // 일정 디테일 보기용 쿼리
 					</form>
 				
 			</div> <!-- contents_sch -->
-			<br/><br/><br/><br/>
+			<br/><br/>
 		 
 			<div class="tableBox">
 				<form name="frmSch2" method="post">
-					<table width="100%" callpadding="5" >
+					<table width="100%" >
 <%
 	if (goodList.size() > 0) { 	// 관심일정 목록이 있으면
 		int i = 0;
@@ -168,25 +165,31 @@ args = "&yargs=" + oargs + schargs; // 일정 디테일 보기용 쿼리
 			String title = gi.getGi_name();
 			if (title.length() > 10)	title = title.substring(0, 9) + " ...";
 			
-			String dnum1 = (gi.getGi_dnum() - 1) + "박";
-			String dnum2 = gi.getGi_dnum() + "일";
+			String dnum = "";
+			if ( gi.getGi_dnum() == 1) {
+				dnum = "당일치기";
+			} else {
+				String dnum1 = (gi.getGi_dnum() - 1) + "박 ";
+				String dnum2 = gi.getGi_dnum() + "일";
+				dnum = dnum1 + dnum2;
+			}
 			
 			if (i % 5 == 0) 	out.println("<tr>");
 %>
 
-					<td width="20%" align="center" >
+					<td width="200" align="center" >
 						<div class="mouseEventBox">
 							<div class="delbtnInside">
 								<button type="button" value="X" class="delBtn btn" onclick="mscdDel('<%=giid %>');" >
 								<img src="file/img/x.png" id="x-sch">
 								</button>
 							</div>
-								<a href="ischdDetail?giid=<%=gi.getGi_id() + args %>">
+								<a href="ischdDetail?giid=<%=gi.getGi_id()%>&day=1">
 									<div class="upBox" >
 										<span id="schdName"><%=title %></span><br />
-										<span class="dnumSize"><%=dnum1%>&nbsp;<%=dnum2%></span><br />
+										<span class="dnumSize"><%=dnum %></span><br />
 									</div>	
-									<img src="/traverSite/file/img/map_img/<%=gi.getGi_img() %>" width="227" height="180"/>
+									<img src="/traverSite/file/img/map_img/<%=gi.getGi_img() %>" width="202" height="180"/>
 								</a>	
 						</div><br/><!-- mouseEventBox -->
 					</td>

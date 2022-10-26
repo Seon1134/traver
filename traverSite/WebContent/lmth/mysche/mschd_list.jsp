@@ -49,7 +49,7 @@ select { height: 29px; vertical-align: middle; cursor: pointer; }
     margin-left: 643px;
     margin-bottom:50px;
 }
-input[type="text"] { height:23px; border: none; margin-left: 5px; }
+input[type="text"] { height:23px; margin-left: 5px; position: relative; left: 700px; }
 #scheCnt { position: relative; top: 6px; } 
 
 
@@ -64,30 +64,30 @@ input[type="text"] { height:23px; border: none; margin-left: 5px; }
 	float: right;
 }
 #x-sch {
-	width: 15px;
+	width: 10px;
 	border: none;
 	position: relative;
-    right: 5px;
+    right: 18px;
     top: 8px;
 }
 #schBtn { 
-	width:70px; height:33px; 
-	margin-left: 5px; 
+	width:30px; height:30px; 
+	margin-left: 5px;     
+	position: relative;
+    left: 702px;
 }
 
 .upBox { 
-	background-color: #BDD7EE; width:225px; height:70px; 
-	border:solid 1px #BDD7EE; color:black; padding-top:5px; padding-bottom:5px; line-height: 1.5;
+	background-color:#bdd7eeab; width:200px; height:70px; 
+	border:solid 1px #bdd7eeab; color:black; padding: 8px 0; line-height: 1.5;
 }
-.mouseEventBox:hover { background: #efefef; width:225px; height:260px; }
 .delbtnInside { width:220px; }
-
 .dnumSize { font-size: 17px; font-weight: bold; ;}
 #schdName { 
 	width: 180px;
 	height: 52px;
-	padding: 10px;
-	font-size: 20px;
+	padding-bottom: 10px;
+	font-size: 17px;
 	font-weight: bold;
 }
 
@@ -116,14 +116,14 @@ for (int i = 0 ; i < scheduleList.size() ; i++) {
 String o = request.getParameter("o");
 String keyword = request.getParameter("keyword");
 
-String args = "", yargs = "", oargs = "", schargs = "";
+String args = "", yargs = "" ,oargs = "", schargs = "";
 if (sy != null && !sy.equals("")) 				yargs += "&sy=" + sy;
 if (o != null && !o.equals("")) 				oargs += "&o=" + o;
 else 	o = "";
 if (keyword != null && !keyword.equals("")) 	schargs += "&keyword=" + keyword; 
 else 	keyword = "";
 
-args = "&yargs=" + oargs + schargs; // 일정 디테일 보기용 쿼리
+args = yargs + oargs + schargs; // 일정 디테일 보기용 쿼리
 
 %>
 <div class="container">
@@ -170,9 +170,7 @@ if (fullScheduleList != null) {
 				 
 				 <span  id="scheCnt">&nbsp;&nbsp;&nbsp;일정 수 : <%=scheduleList.size() %></span>
 				 	<div class="schNbtn">
-					 	<div id= "search-box" >
-						 	<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >
-						</div>
+						<input type="text" name="keyword" value="<%=keyword %>" placeholder="일정제목으로 검색하세요." >
 						<button class="btn" onclick="btnClick()">
 							<img src="/traverSite/file/img/sch.png" id="schBtn"/>
 						</button>
@@ -181,11 +179,11 @@ if (fullScheduleList != null) {
 			 </form>	
 			 	
 		</div> <!-- contents_sch -->
-		<br/><br/><br/><br/>
+		<br/><br/>
 		
 		<div class="tableBox">
 			<form name="frmSch2" method="post">
-				<table width="100%" callpadding="5" >
+				<table width="100%" >
 
 <%
 	if (scheduleList.size() > 0) { 	// 일정 목록이 있으면
@@ -209,20 +207,20 @@ if (fullScheduleList != null) {
 			if (i % 5 == 0) 	out.println("<tr>");
 %>
 			
-				<td width="20%" align="center" >
+				<td width="200" align="center" >
 					<div class="mouseEventBox">
 						<div class="delbtnInside">
 							<button type="button" value="X" class="delBtn btn" onclick="mscdDel('<%=siid %>');" >
 							<img src="file/img/x.png" id="x-sch">
 							</button>
 						</div>
-							<a href="mschdDetail?siid=<%=si.getSi_id() + args %>">
+							<a href="mschdDetail?siid=<%=si.getSi_id()%>&day=1">
 								<div class="upBox" >
 									<span id="schdName" ><%=title %></span><br />
 									<span class="dnumSize"><%=dnum%></span><br />
-									<span><%=si.getSi_sdate() %>~<%=si.getSi_edate() %></span><br />
+									<span><%=si.getSi_sdate() %> ~ <%=si.getSi_edate() %></span><br />
 								</div>	
-								<img src="/traverSite/file/img/map_img/<%=si.getSi_img() %>" width="227" height="180"/>
+								<img src="/traverSite/file/img/map_img/<%=si.getSi_img() %>" width="202" height="180"/>
 							</a>
 					</div><br/><!-- mouseEventBox -->
 				</td>

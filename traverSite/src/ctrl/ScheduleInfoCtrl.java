@@ -18,7 +18,8 @@ public class ScheduleInfoCtrl extends HttpServlet {
         String sisdate = request.getParameter("sisdate");       // 시작일
         String siedate = request.getParameter("siedate");       // 종료일
         int sidnum =  Integer.parseInt(request.getParameter("sidnum"));        // 총 일차수
-        
+        String simax = request.getParameter("simax");   // 종료일 캘린더 max 값
+        System.out.println(simax);
         /*
          * 만약 날짜를 수정하게되면?
          * 각 번호에 부여돼있던 모든 날짜가 바뀌어야해. 그건 곤란.
@@ -34,6 +35,8 @@ public class ScheduleInfoCtrl extends HttpServlet {
         scheduleInfo.setSi_sdate(sisdate);
         scheduleInfo.setSi_edate(siedate);
         scheduleInfo.setSi_dnum(sidnum);
+        scheduleInfo.setSi_max(simax);
+       
         
         session.setAttribute("scheduleInfo", scheduleInfo);
         int result = scheduleInfo.getSi_dnum();

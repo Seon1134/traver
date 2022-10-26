@@ -18,6 +18,7 @@ public class PostViewCtrl extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         String gpid = request.getParameter("gpid");
         String giid = request.getParameter("giid");
+        String day = request.getParameter("day");
         String miid = "";
         boolean isGood = false;
         boolean isInterest = false;
@@ -37,7 +38,8 @@ public class PostViewCtrl extends HttpServlet {
         }
         
         GoodInfo goodInfo = postViewSvc.getGoodInfo(giid);
-        ArrayList <GoodDay> goodDayList = postViewSvc.getGoodDayList(giid);
+        ArrayList <GoodDay> goodFullDayList = postViewSvc.getFullGoodDayList(giid);
+        ArrayList <GoodDay> goodDayList = postViewSvc.getGoodDayList(giid, day);
         
         GoodPost goodPost = postViewSvc.getGoodPost(gpid);
         request.setAttribute("goodPost", goodPost);
@@ -45,6 +47,7 @@ public class PostViewCtrl extends HttpServlet {
         request.setAttribute("isInterest", isInterest);
         request.setAttribute("goodInfo", goodInfo);
         request.setAttribute("goodDayList", goodDayList);
+        request.setAttribute("day", day);
         
         RequestDispatcher dispatcher = 
                 request.getRequestDispatcher("lmth/mbti/mbti_view.jsp");

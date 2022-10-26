@@ -36,6 +36,7 @@ textarea { border: 1px solid #888; width: 100%;}
 #content { padding: 5px; lint-height: 1.5; }
 #ctcnt { float: right; }
 #upbtn { margin: 16px 450px 40px 0; right: }
+#upimg { height: 40px; margin-top: -2px;}
 </style>
 <script src="../../file/js/jquery-3.6.1.js"></script>
 </head>
@@ -58,7 +59,7 @@ textarea { border: 1px solid #888; width: 100%;}
 	   			<textarea id="content" name="content" cols="117" rows="5"><%=content %></textarea>
 	   			<span id="ctcnt"><span id="count">0</span> / 1000</span>
 	   			<br><br>
-	   			<a href="mbti_view.jsp"><button type="submit" class="btn" id="upbtn"><image src="../../file/img/" alt="수정하기"></button></a>
+	   			<a href="mbti_view.jsp"><button type="submit" class="btn" id="upbtn"><image id="upimg" src="file/img/updatebtn.png" alt="수정하기"></button></a>
 	   		</form>
 	   		</div>
 	   </div>
